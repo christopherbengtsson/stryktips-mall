@@ -2,19 +2,18 @@ import { DrawEvent } from "../../api";
 import styled from "styled-components";
 import { BaseStrategy } from "../BaseStrategy";
 
+const oddsValue = (favoriteOdds?: string, svenskaFolket?: string) => {
+  if (!favoriteOdds || !svenskaFolket) {
+    return "-";
+  }
+
+  return (+favoriteOdds / +svenskaFolket).toFixed(2);
+};
+
 export function Table({ events }: { events: DrawEvent[] }) {
   return (
     <ul>
       {events.map((event: DrawEvent) => {
-        console.log(event);
-
-        const oddsValue = (favoriteOdds?: string, svenskaFolket?: string) => {
-          if (!favoriteOdds || !svenskaFolket) {
-            return "-";
-          }
-
-          return (+favoriteOdds / +svenskaFolket).toFixed(2);
-        };
         return (
           <li key={event.eventDescription}>
             <Row>
