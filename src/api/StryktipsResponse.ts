@@ -61,8 +61,8 @@ export interface DrawEvent {
   eventTypeId: number;
   participantType: string;
   match: Match;
-  odds: Odds;
-  favouriteOdds: FavouriteOdds;
+  odds?: Odds;
+  favouriteOdds?: FavouriteOdds;
   startOdds: StartOdds;
   betMetrics: BetMetrics;
   complementaryBetMetrics: any[];

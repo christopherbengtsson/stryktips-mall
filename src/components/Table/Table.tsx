@@ -6,6 +6,15 @@ export function Table({ events }: { events: DrawEvent[] }) {
   return (
     <ul>
       {events.map((event: DrawEvent) => {
+        console.log(event);
+
+        const oddsValue = (favoriteOdds?: string, svenskaFolket?: string) => {
+          if (!favoriteOdds || !svenskaFolket) {
+            return "-";
+          }
+
+          return (+favoriteOdds / +svenskaFolket).toFixed(2);
+        };
         return (
           <li key={event.eventDescription}>
             <Row>
@@ -21,18 +30,18 @@ export function Table({ events }: { events: DrawEvent[] }) {
             <Row>
               <p>Odds</p>
               <InnerRow>
-                <p>{event.odds.one}</p>
-                <p>{event.odds.x}</p>
-                <p>{event.odds.two}</p>
+                <p>{event.odds?.one ?? "-"}</p>
+                <p>{event.odds?.x ?? "-"}</p>
+                <p>{event.odds?.two ?? "-"}</p>
               </InnerRow>
             </Row>
 
             <Row>
               <p>Odds i procent</p>
               <InnerRow>
-                <p>{event.favouriteOdds.one}%</p>
-                <p>{event.favouriteOdds.x}%</p>
-                <p>{event.favouriteOdds.two}%</p>
+                <p>{event.favouriteOdds?.one ?? "-"}%</p>
+                <p>{event.favouriteOdds?.x ?? "-"}%</p>
+                <p>{event.favouriteOdds?.two ?? "-"}%</p>
               </InnerRow>
             </Row>
 
@@ -49,20 +58,13 @@ export function Table({ events }: { events: DrawEvent[] }) {
               <p>Spelvärde</p>
               <InnerRow>
                 <p>
-                  {" "}
-                  {(
-                    +event.favouriteOdds.one / +event.svenskaFolket.one
-                  ).toFixed(2)}
+                  {oddsValue(event.favouriteOdds?.one, event.svenskaFolket.one)}
                 </p>
                 <p>
-                  {" "}
-                  {(+event.favouriteOdds.x / +event.svenskaFolket.x).toFixed(2)}
+                  {oddsValue(event.favouriteOdds?.x, event.svenskaFolket.x)}
                 </p>
                 <p>
-                  {" "}
-                  {(
-                    +event.favouriteOdds.two / +event.svenskaFolket.two
-                  ).toFixed(2)}
+                  {oddsValue(event.favouriteOdds?.two, event.svenskaFolket.two)}
                 </p>
               </InnerRow>
             </Row>
