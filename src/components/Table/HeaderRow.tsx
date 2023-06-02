@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Bet, BetButton, Indeterminate } from "../BetButton";
+import { Bet, BetButton, BettingState } from "../BetButton";
 import { InnerRow } from "./shared";
 import { GameTitle } from "../GameTitle";
 
@@ -19,11 +19,11 @@ export interface HeaderRowProps {
   bets: {
     bet: Bet;
     gameNumber: number;
-    initialState?: Indeterminate;
+    initialState?: BettingState;
     onClick: (args: {
       bet: Bet;
       gameNumber: number;
-      state: Indeterminate;
+      state: BettingState;
     }) => void;
   }[];
 }

@@ -1,4 +1,3 @@
-import { Indeterminate } from "../components/BetButton";
 import {
   getLocalStorage,
   isLocalStorageAvailable,
@@ -73,12 +72,11 @@ export const initialSavedCoupon: Bets = {
   },
 };
 
-export type Key = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13;
-export type Bet = {
-  1: Indeterminate;
-  X: Indeterminate;
-  2: Indeterminate;
-};
+export type BettingOption = 1 | "X" | 2;
+export type BettingState = "clicked" | "unclicked" | "bettingState";
+
+export type Bet = Record<BettingOption, BettingState>;
+
 export type Bets = Record<number, Bet>;
 export type SavedCoupon = {
   drawNumber: number;

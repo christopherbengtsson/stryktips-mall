@@ -1,12 +1,17 @@
 import { observer } from "mobx-react";
 import { Layout, Table } from "../components";
 import { useMainStore } from "../stores/useMainStore";
-import { Bet, Indeterminate } from "../components/BetButton";
-import { Bets, initialSavedCoupon } from "../stores/StorageService";
-import { useState } from "react";
+import {
+  Bets,
+  BettingOption,
+  BettingState,
+  initialSavedCoupon,
+} from "../stores/StorageService";
+import { useMemo, useState } from "react";
 import styled from "styled-components";
 import { Body, Headline } from "../components/core/fonts";
 import { OutlinedButton } from "../components/OutlinedButton";
+import { buildSvenskaSpelURL } from "../utils/stryktipsUrl";
 
 export const Main = observer(function Main() {
   const store = useMainStore();
@@ -17,14 +22,27 @@ export const Main = observer(function Main() {
     store.storageService.savedCoupon?.bets ?? {}
   );
 
+  const valid = useMemo(() => {
+    const bettingOptions = Object.values(bets);
+    for (const bet of bettingOptions) {
+      const clickedOptions = Object.values(bet).filter(
+        (option) => option === "clicked"
+      );
+      if (clickedOptions.length === 0) {
+        return false;
+      }
+    }
+    return true;
+  }, [bets]);
+
   const handleBetClick = ({
     bet,
     gameNumber,
     state,
   }: {
-    bet: Bet;
+    bet: BettingOption;
     gameNumber: number;
-    state: Indeterminate;
+    state: BettingState;
   }) => {
     const newBets: Bets = { ...bets };
     newBets[gameNumber][bet] = state;
@@ -38,6 +56,13 @@ export const Main = observer(function Main() {
     store.storageService.bets = initialSavedCoupon;
   };
 
+  const openStryktipset = () => {
+    console.log(bets);
+    const url = buildSvenskaSpelURL(store.drawNumber as number, bets, valid);
+    console.log(url);
+    window.open(url, "_blank");
+  };
+
   return (
     <Layout>
       <Headline>
@@ -46,6 +71,9 @@ export const Main = observer(function Main() {
       <SpaceBetweenContainer>
         <Body>Senast uppdaterad {store.lastUpdated?.toLocaleTimeString()}</Body>
         <OutlinedButton onClick={clearCoupong}>Rensa kupong</OutlinedButton>
+        <OutlinedButton onClick={openStryktipset}>
+          För över till Stryktipset
+        </OutlinedButton>
       </SpaceBetweenContainer>
 
       {events && (

@@ -1,8 +1,7 @@
 import { ReactNode, useState } from "react";
 import styled, { css } from "styled-components";
+import { BettingOption, BettingState } from "../../stores/StorageService";
 
-export type Indeterminate = "clicked" | "unclicked" | "indeterminate";
-export type Bet = 1 | "X" | 2;
 export function BetButton({
   initialState,
   gameNumber,
@@ -10,22 +9,22 @@ export function BetButton({
   onClick,
   children,
 }: {
-  initialState?: Indeterminate;
+  initialState?: BettingState;
   gameNumber: number;
-  bet: Bet;
+  bet: BettingOption;
   onClick: (args: {
-    bet: Bet;
+    bet: BettingOption;
     gameNumber: number;
-    state: Indeterminate;
+    state: BettingState;
   }) => void;
   children: ReactNode;
 }) {
-  const [clicked, setClicked] = useState<Indeterminate>(
+  const [clicked, setClicked] = useState<BettingState>(
     initialState ?? "unclicked"
   );
 
   const handleClick = () => {
-    let state: Indeterminate = "indeterminate";
+    let state: BettingState = "bettingState";
 
     switch (clicked) {
       case "unclicked":
@@ -33,10 +32,10 @@ export function BetButton({
         break;
 
       case "clicked":
-        state = "indeterminate";
+        state = "bettingState";
         break;
 
-      case "indeterminate":
+      case "bettingState":
         state = "unclicked";
         break;
     }
@@ -47,14 +46,14 @@ export function BetButton({
 
   return (
     <BetBtn clicked={clicked} onClick={handleClick}>
-      <Indeterminate indeterminate={clicked === "indeterminate"}>
+      <BettingState bettingState={clicked === "bettingState"}>
         {children}
-      </Indeterminate>
+      </BettingState>
     </BetBtn>
   );
 }
 
-const BetBtn = styled.button<{ clicked: Indeterminate }>`
+const BetBtn = styled.button<{ clicked: BettingState }>`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -86,15 +85,15 @@ const BetBtn = styled.button<{ clicked: Indeterminate }>`
   }};
 `;
 
-const Indeterminate = styled.div<{ indeterminate: boolean }>`
+const BettingState = styled.div<{ bettingState: boolean }>`
   display: flex;
   align-items: center;
   justify-content: center;
 
   width: 70%;
   height: 70%;
-  ${({ indeterminate, theme }) => {
-    if (indeterminate) {
+  ${({ bettingState, theme }) => {
+    if (bettingState) {
       return `background: ${theme.tokens.palette.deepOcean}`;
     }
   }};

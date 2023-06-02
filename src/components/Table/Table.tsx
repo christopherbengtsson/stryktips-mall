@@ -1,7 +1,7 @@
 import { DrawEvent } from "../../api";
 import styled from "styled-components";
 import { BaseStrategy } from "../BaseStrategy";
-import { Bet, Indeterminate } from "../BetButton";
+import { Bet, BettingState } from "../BetButton";
 import { Bets } from "../../stores/StorageService";
 import { InnerRow, ThinRow } from "./shared";
 import { HeaderRow } from "./HeaderRow";
@@ -18,13 +18,13 @@ export function Table({
   onBetClick: (args: {
     bet: Bet;
     gameNumber: number;
-    state: Indeterminate;
+    state: BettingState;
   }) => void;
 }) {
   const handleClick = (args: {
     bet: Bet;
     gameNumber: number;
-    state: Indeterminate;
+    state: BettingState;
   }) => {
     onBetClick(args);
   };
