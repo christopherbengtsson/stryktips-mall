@@ -47,30 +47,41 @@ export function BetButton({
 
   return (
     <BetBtn clicked={clicked} onClick={handleClick}>
-      {children}
+      <Indeterminate indeterminate={clicked === "indeterminate"}>
+        {children}
+      </Indeterminate>
     </BetBtn>
   );
 }
 
 const BetBtn = styled.button<{ clicked: Indeterminate }>`
+  border: 1px solid black;
   height: 30px;
-  min-width: 30px;
+  min-width: 45px;
 
   color: ${(p) => (p.clicked === "unclicked" ? "black" : "white")};
   background-color: ${({ clicked }) => {
-    switch (clicked) {
-      case "unclicked":
-        return "unset";
-
-      case "indeterminate":
-        return "#5e5ea4";
-
-      case "clicked":
-        return "#0000ff";
+    if (clicked === "clicked") {
+      return "#0000ff";
     }
+
+    return "unset";
   }};
 
   :hover {
     cursor: pointer;
   }
+`;
+
+const Indeterminate = styled.div<{ indeterminate: boolean }>`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 80%;
+
+  ${({ indeterminate }) => {
+    if (indeterminate) {
+      return "background: #0000ff";
+    }
+  }}
 `;

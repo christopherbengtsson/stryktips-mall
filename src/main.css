@@ -1,0 +1,10 @@
+body {
+  margin: 0 auto;
+  background: #f9fafb;
+}
+
+#root {
+  display: flex;
+  -webkit-box-pack: center;
+  justify-content: center;
+}

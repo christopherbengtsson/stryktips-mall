@@ -34,12 +34,14 @@ export function Table({
   };
 
   return (
-    <ul>
+    <StyledList>
       {events.map((event: DrawEvent, idx) => {
         return (
-          <li key={event.eventDescription}>
+          <StyledListItem key={event.eventDescription}>
             <Row>
-              <h3>{event.eventDescription}</h3>
+              <h3>
+                {event.eventNumber}. {event.eventDescription}
+              </h3>
 
               <InnerRow>
                 <BetButton
@@ -125,12 +127,28 @@ export function Table({
                 </ul>
               </InnerRow>
             </ThinRow>
-          </li>
+          </StyledListItem>
         );
       })}
-    </ul>
+    </StyledList>
   );
 }
+
+const StyledList = styled.ol`
+  padding: 0;
+
+  li:nth-child(odd) {
+  }
+  li:nth-child(even) {
+    background: rgba(0, 66, 122, 0.03);
+  }
+`;
+
+const StyledListItem = styled.li`
+  list-style: none;
+  padding: 16px 8px;
+  border-top: #e1e1e5 1px solid;
+`;
 
 const Row = styled.div`
   display: flex;

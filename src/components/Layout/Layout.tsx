@@ -2,14 +2,10 @@ import { ReactNode } from "react";
 import styled from "styled-components";
 
 export function Layout({ children }: { children: ReactNode }) {
-  return (
-    <AppContainer>
-      <div>{children}</div>
-    </AppContainer>
-  );
+  return <AppContainer>{children}</AppContainer>;
 }
 
 const AppContainer = styled.div`
-  display: flex;
-  justify-content: center;
+  background: white;
+  padding: 16px 24px;
 `;
