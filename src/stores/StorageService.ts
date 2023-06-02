@@ -73,7 +73,7 @@ export const initialSavedCoupon: Bets = [
 ];
 
 export type BettingOption = 1 | "X" | 2;
-export type BettingState = "clicked" | "unclicked" | "bettingState";
+export type BettingState = "clicked" | "unclicked" | "indeterminate";
 
 export type Bet = Record<BettingOption, BettingState>;
 

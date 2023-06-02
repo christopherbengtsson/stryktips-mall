@@ -11,9 +11,10 @@ import { useMemo, useState } from "react";
 import styled from "styled-components";
 import { Share } from "@styled-icons/evaicons-solid";
 import { Trash2 as Trash } from "@styled-icons/evaicons-solid";
-import { Body, Headline } from "../components/core/fonts";
+import { Body, Subtitle, Headline } from "../components/core/fonts";
 import { OutlinedButton } from "../components/OutlinedButton";
 import { buildSvenskaSpelURL } from "../utils/stryktipsUrl";
+import { calculateCost } from "../utils/couponCost";
 
 export const Main = observer(function Main() {
   const store = useMainStore();
@@ -31,6 +32,8 @@ export const Main = observer(function Main() {
       );
     });
   }, [bets]);
+
+  const totalCost = useMemo(() => calculateCost(bets), [bets]);
 
   const handleBetClick = ({
     bet,
@@ -54,9 +57,7 @@ export const Main = observer(function Main() {
   };
 
   const openStryktipset = () => {
-    console.log(bets);
     const url = buildSvenskaSpelURL(store.drawNumber as number, bets, valid);
-    console.log(url);
     window.open(url, "_blank");
   };
 
@@ -72,11 +73,14 @@ export const Main = observer(function Main() {
         </OutlinedButton>
       </SpaceBetweenContainer>
 
-      <CoupongActionsContainer>
-        <OutlinedButton Icon={Trash} onClick={clearCoupong}>
-          Rensa kupong
-        </OutlinedButton>
-      </CoupongActionsContainer>
+      <SpaceBetweenContainer>
+        <Subtitle>{totalCost} KR</Subtitle>
+        <CoupongActionsContainer>
+          <OutlinedButton Icon={Trash} onClick={clearCoupong}>
+            Rensa kupong
+          </OutlinedButton>
+        </CoupongActionsContainer>
+      </SpaceBetweenContainer>
 
       {events && (
         <Table

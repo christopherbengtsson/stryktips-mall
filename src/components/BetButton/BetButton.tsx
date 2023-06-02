@@ -24,7 +24,7 @@ export function BetButton({
   );
 
   const handleClick = () => {
-    let state: BettingState = "bettingState";
+    let state: BettingState;
 
     switch (clicked) {
       case "unclicked":
@@ -32,10 +32,10 @@ export function BetButton({
         break;
 
       case "clicked":
-        state = "bettingState";
+        state = "indeterminate";
         break;
 
-      case "bettingState":
+      case "indeterminate":
         state = "unclicked";
         break;
     }
@@ -46,9 +46,9 @@ export function BetButton({
 
   return (
     <BetBtn clicked={clicked} onClick={handleClick}>
-      <BettingState bettingState={clicked === "bettingState"}>
+      <IndeterminateState indeterminate={clicked === "indeterminate"}>
         {children}
-      </BettingState>
+      </IndeterminateState>
     </BetBtn>
   );
 }
@@ -85,15 +85,15 @@ const BetBtn = styled.button<{ clicked: BettingState }>`
   }};
 `;
 
-const BettingState = styled.div<{ bettingState: boolean }>`
+const IndeterminateState = styled.div<{ indeterminate: boolean }>`
   display: flex;
   align-items: center;
   justify-content: center;
 
   width: 70%;
   height: 70%;
-  ${({ bettingState, theme }) => {
-    if (bettingState) {
+  ${({ indeterminate, theme }) => {
+    if (indeterminate) {
       return `background: ${theme.tokens.palette.deepOcean}`;
     }
   }};

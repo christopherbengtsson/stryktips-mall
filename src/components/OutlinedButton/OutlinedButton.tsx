@@ -13,18 +13,6 @@ export interface OutlineButtonProps {
   Icon?: StyledIcon;
 }
 
-const StyledIconWrapper = ({ Icon }: { Icon?: StyledIcon }) => {
-  if (Icon) {
-    const StyledIcon = styled(Icon)`
-      width: 20px;
-      height: 20px;
-    `;
-    return <StyledIcon />;
-  }
-
-  return null;
-};
-
 export function OutlinedButton({
   children,
   mediumWeight = false,
@@ -34,7 +22,7 @@ export function OutlinedButton({
   return (
     <StyledOutlineButton {...props}>
       <Container>
-        <StyledIconWrapper Icon={Icon} />
+        {Icon && <Icon size="20" />}
         <ButtonText mediumWeight={mediumWeight}>{children}</ButtonText>
       </Container>
     </StyledOutlineButton>
