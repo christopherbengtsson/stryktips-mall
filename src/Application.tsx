@@ -1,5 +1,5 @@
 import { isDev } from "./Constants";
-import { Main } from "./screens/Main";
+import { Routes } from "./Routes";
 
 import { MainStore } from "./stores/MainStore";
 import { MainStoreProvider } from "./stores/Providers/MainStoreProvider";
@@ -15,7 +15,7 @@ if (isDev) {
 export function Application() {
   return (
     <MainStoreProvider store={store}>
-      <Main />
+      <Routes />
     </MainStoreProvider>
   );
 }
