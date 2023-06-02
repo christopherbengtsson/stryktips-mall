@@ -109,6 +109,10 @@ const StyledList = styled.ol`
 `;
 
 const StyledListItem = styled.li`
+  display: flex;
+  flex-direction: column;
+  gap: ${(p) => p.theme.spacing.xs};
+
   padding: 16px 8px;
   border-top: 1px solid ${(p) => p.theme.border.color.default};
 `;

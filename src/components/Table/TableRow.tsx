@@ -1,4 +1,5 @@
 import { FavouriteOdds, Odds, SvenskaFolket } from "../../api";
+import { Tag } from "../Tag";
 import { Body } from "../core/fonts";
 import { InnerRow, ThinRow } from "./shared";
 
@@ -39,30 +40,38 @@ export function TableRow(
     <ThinRow>
       <Body>{props.type}</Body>
       <InnerRow>
-        <Body>
-          {props.type === "Spelvärde"
-            ? oddsValue(
-                props.odds?.favoriteOdds?.one,
-                props.odds?.svenskaFolket?.one
-              )
-            : transformData(props.type, props.odds?.one)}
-        </Body>
-        <Body>
-          {props.type === "Spelvärde"
-            ? oddsValue(
-                props.odds?.favoriteOdds?.x,
-                props.odds?.svenskaFolket?.x
-              )
-            : transformData(props.type, props.odds?.x)}
-        </Body>
-        <Body>
-          {props.type === "Spelvärde"
-            ? oddsValue(
-                props.odds?.favoriteOdds?.two,
-                props.odds?.svenskaFolket?.two
-              )
-            : transformData(props.type, props.odds?.two)}
-        </Body>
+        {props.type === "Spelvärde" ? (
+          <Tag
+            value={oddsValue(
+              props.odds?.favoriteOdds?.one,
+              props.odds?.svenskaFolket?.one
+            )}
+          />
+        ) : (
+          <Body>{transformData(props.type, props.odds?.one)}</Body>
+        )}
+
+        {props.type === "Spelvärde" ? (
+          <Tag
+            value={oddsValue(
+              props.odds?.favoriteOdds?.x,
+              props.odds?.svenskaFolket?.x
+            )}
+          />
+        ) : (
+          <Body>{transformData(props.type, props.odds?.x)}</Body>
+        )}
+
+        {props.type === "Spelvärde" ? (
+          <Tag
+            value={oddsValue(
+              props.odds?.favoriteOdds?.two,
+              props.odds?.svenskaFolket?.two
+            )}
+          />
+        ) : (
+          <Body>{transformData(props.type, props.odds?.two)}</Body>
+        )}
       </InnerRow>
     </ThinRow>
   );
