@@ -2,6 +2,7 @@ import { ReactNode } from "react";
 import styled, { css } from "styled-components";
 import { Body } from "../core/fonts";
 import type { StyledIcon } from "styled-icons/types";
+import { isMobile } from "../../utils/device";
 
 export interface OutlineButtonProps {
   onClick?: () => void;
@@ -23,7 +24,9 @@ export function OutlinedButton({
     <StyledOutlineButton {...props}>
       <Container>
         {Icon && <Icon size="20" />}
-        <ButtonText mediumWeight={mediumWeight}>{children}</ButtonText>
+        {(!Icon || !isMobile()) && (
+          <ButtonText mediumWeight={mediumWeight}>{children}</ButtonText>
+        )}
       </Container>
     </StyledOutlineButton>
   );
