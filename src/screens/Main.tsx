@@ -9,6 +9,8 @@ import {
 } from "../stores/StorageService";
 import { useMemo, useState } from "react";
 import styled from "styled-components";
+import { Share } from "@styled-icons/evaicons-solid";
+import { Trash2 as Trash } from "@styled-icons/evaicons-solid";
 import { Body, Headline } from "../components/core/fonts";
 import { OutlinedButton } from "../components/OutlinedButton";
 import { buildSvenskaSpelURL } from "../utils/stryktipsUrl";
@@ -65,11 +67,16 @@ export const Main = observer(function Main() {
       </Headline>
       <SpaceBetweenContainer>
         <Body>Senast uppdaterad {store.lastUpdated?.toLocaleTimeString()}</Body>
-        <OutlinedButton onClick={clearCoupong}>Rensa kupong</OutlinedButton>
-        <OutlinedButton onClick={openStryktipset}>
-          För över till Stryktipset
+        <OutlinedButton Icon={Share} onClick={openStryktipset}>
+          För över kupong till Stryktipset
         </OutlinedButton>
       </SpaceBetweenContainer>
+
+      <CoupongActionsContainer>
+        <OutlinedButton Icon={Trash} onClick={clearCoupong}>
+          Rensa kupong
+        </OutlinedButton>
+      </CoupongActionsContainer>
 
       {events && (
         <Table
@@ -86,4 +93,9 @@ const SpaceBetweenContainer = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+`;
+
+const CoupongActionsContainer = styled.div`
+  display: flex;
+  justify-content: flex-end;
 `;

@@ -1,6 +1,7 @@
 import { ReactNode } from "react";
 import styled, { css } from "styled-components";
 import { Body } from "../core/fonts";
+import type { StyledIcon } from "styled-icons/types";
 
 export interface OutlineButtonProps {
   onClick?: () => void;
@@ -9,19 +10,42 @@ export interface OutlineButtonProps {
   disabled?: boolean;
   className?: string;
   "data-testid"?: string;
+  Icon?: StyledIcon;
 }
+
+const StyledIconWrapper = ({ Icon }: { Icon?: StyledIcon }) => {
+  if (Icon) {
+    const StyledIcon = styled(Icon)`
+      width: 20px;
+      height: 20px;
+    `;
+    return <StyledIcon />;
+  }
+
+  return null;
+};
 
 export function OutlinedButton({
   children,
   mediumWeight = false,
+  Icon,
   ...props
 }: OutlineButtonProps) {
   return (
     <StyledOutlineButton {...props}>
-      <ButtonText mediumWeight={mediumWeight}>{children}</ButtonText>
+      <Container>
+        <StyledIconWrapper Icon={Icon} />
+        <ButtonText mediumWeight={mediumWeight}>{children}</ButtonText>
+      </Container>
     </StyledOutlineButton>
   );
 }
+
+const Container = styled.div`
+  display: flex;
+  align-items: center;
+  gap: ${(p) => p.theme.spacing.xs};
+`;
 
 const StyledOutlineButton = styled.button`
   display: flex;
