@@ -36,7 +36,6 @@ export function Table({
           event.match.participants.at(1)?.name
         }`;
 
-        // TODO: USE SHORT TITLE ON SMALLER SCREENS
         const shortGameTitle = `${
           event.match.participants.at(0)?.mediumName
         } - ${event.match.participants.at(1)?.mediumName}`;

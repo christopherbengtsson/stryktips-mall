@@ -42,5 +42,6 @@ body[data-theme="light"] {
     min-height: 100%;
     border: none;
     border-radius: 0;
+    top: 0;
   }
 }
