@@ -5,31 +5,31 @@ const baseBets: Bets = [
   {
     "1": "clicked",
     "2": "clicked",
-    X: "unclicked",
+    X: "clicked",
   },
   {
     "1": "clicked",
     "2": "unclicked",
-    X: "unclicked",
+    X: "clicked",
+  },
+  {
+    "1": "unclicked",
+    "2": "clicked",
+    X: "clicked",
   },
   {
     "1": "clicked",
-    "2": "unclicked",
+    "2": "clicked",
     X: "unclicked",
   },
   {
-    "1": "clicked",
+    "1": "unclicked",
     "2": "unclicked",
-    X: "unclicked",
+    X: "clicked",
   },
   {
-    "1": "clicked",
-    "2": "unclicked",
-    X: "unclicked",
-  },
-  {
-    "1": "clicked",
-    "2": "unclicked",
+    "1": "unclicked",
+    "2": "clicked",
     X: "unclicked",
   },
   {
@@ -72,7 +72,7 @@ describe("stryktipsUrl", () => {
         {
           "1": "clicked",
           "2": "clicked",
-          X: "clicked",
+          X: "unclicked",
         },
         ...baseBets,
       ],
@@ -80,11 +80,11 @@ describe("stryktipsUrl", () => {
     );
 
     expect(result).toBe(
-      "https://spela.svenskaspel.se/stryktipset?product=1&draw=123&signs=1%3A1%3BX%3B2%2C2%3A1%3B2%2C3%3A1%2C4%3A1%2C5%3A1%2C6%3A1%2C7%3A1%2C8%3A1%2C9%3A1%2C10%3A1%2C11%3A1%2C12%3A1%2C13%3A1&share=valid"
+      "https://spela.svenskaspel.se/stryktipset?product=1&draw=123&signs=1%3A1%3B2%2C2%3A1%3BX%3B2%2C3%3A1%3BX%2C4%3AX%3B2%2C5%3A1%3B2%2C6%3AX%2C7%3A2%2C8%3A1%2C9%3A1%2C10%3A1%2C11%3A1%2C12%3A1%2C13%3A1&share=valid"
     );
   });
 
-  it.only("works with invalid coupons", () => {
+  it("works with invalid coupons", () => {
     const result = buildSvenskaSpelURL(
       123,
       [
@@ -99,7 +99,7 @@ describe("stryktipsUrl", () => {
     );
 
     expect(result).toBe(
-      "https://spela.svenskaspel.se/stryktipset?product=1&draw=123&signs=1%3A1%3BX%3B2%2C2%3A1%3B2%2C4%3A1%2C5%3A1%2C6%3A1%2C7%3A1%2C8%3A1%2C9%3A1%2C10%3A1%2C11%3A1%2C12%3A1%2C13%3A1&share=invalid"
+      "https://spela.svenskaspel.se/stryktipset?product=1&draw=123&signs=2%3A1%3BX%3B2%2C3%3A1%3BX%2C4%3AX%3B2%2C5%3A1%3B2%2C6%3AX%2C7%3A2%2C8%3A1%2C9%3A1%2C10%3A1%2C11%3A1%2C12%3A1%2C13%3A1&share=invalid"
     );
   });
 });

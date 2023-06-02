@@ -24,5 +24,6 @@ export function buildSvenskaSpelURL(
   const url = `${baseUrl}?product=1&draw=${drawNumber}&signs=${encodeURIComponent(
     clickedKeys
   )}&share=${share}`;
+
   return url;
 }
