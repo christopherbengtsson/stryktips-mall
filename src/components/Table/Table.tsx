@@ -1,6 +1,8 @@
 import { DrawEvent } from "../../api";
 import styled from "styled-components";
 import { BaseStrategy } from "../BaseStrategy";
+import { Bet, BetButton, Indeterminate } from "../BetButton";
+import { Bets } from "../../stores/StorageService";
 
 const oddsValue = (favoriteOdds?: string, svenskaFolket?: string) => {
   if (!favoriteOdds || !svenskaFolket) {
@@ -10,50 +12,97 @@ const oddsValue = (favoriteOdds?: string, svenskaFolket?: string) => {
   return (+favoriteOdds / +svenskaFolket).toFixed(2);
 };
 
-export function Table({ events }: { events: DrawEvent[] }) {
+export function Table({
+  events,
+  initialsBets,
+  onBetClick,
+}: {
+  events: DrawEvent[];
+  initialsBets?: Bets;
+  onBetClick: (args: {
+    bet: Bet;
+    gameNumber: number;
+    state: Indeterminate;
+  }) => void;
+}) {
+  const handleClick = (args: {
+    bet: Bet;
+    gameNumber: number;
+    state: Indeterminate;
+  }) => {
+    onBetClick(args);
+  };
+
   return (
     <ul>
-      {events.map((event: DrawEvent) => {
+      {events.map((event: DrawEvent, idx) => {
         return (
           <li key={event.eventDescription}>
             <Row>
               <h3>{event.eventDescription}</h3>
 
               <InnerRow>
-                <h3>1</h3>
-                <h3>X</h3>
-                <h3>2</h3>
+                <BetButton
+                  initialState={
+                    initialsBets ? initialsBets[idx + 1][1] : undefined
+                  }
+                  bet={1}
+                  gameNumber={idx + 1}
+                  onClick={handleClick}
+                >
+                  1
+                </BetButton>
+                <BetButton
+                  initialState={
+                    initialsBets ? initialsBets[idx + 1].X : undefined
+                  }
+                  bet={"X"}
+                  gameNumber={idx + 1}
+                  onClick={handleClick}
+                >
+                  X
+                </BetButton>
+                <BetButton
+                  initialState={
+                    initialsBets ? initialsBets[idx + 1][2] : undefined
+                  }
+                  bet={2}
+                  gameNumber={idx + 1}
+                  onClick={handleClick}
+                >
+                  2
+                </BetButton>
               </InnerRow>
             </Row>
 
-            <Row>
+            <ThinRow>
               <p>Odds</p>
               <InnerRow>
                 <p>{event.odds?.one ?? "-"}</p>
                 <p>{event.odds?.x ?? "-"}</p>
                 <p>{event.odds?.two ?? "-"}</p>
               </InnerRow>
-            </Row>
+            </ThinRow>
 
-            <Row>
+            <ThinRow>
               <p>Odds i procent</p>
               <InnerRow>
-                <p>{event.favouriteOdds?.one ?? "-"}%</p>
-                <p>{event.favouriteOdds?.x ?? "-"}%</p>
-                <p>{event.favouriteOdds?.two ?? "-"}%</p>
+                <p>{Math.floor(+(event.favouriteOdds?.one ?? 0))}%</p>
+                <p>{Math.floor(+(event.favouriteOdds?.x ?? 0))}%</p>
+                <p>{Math.floor(+(event.favouriteOdds?.two ?? 0))}%</p>
               </InnerRow>
-            </Row>
+            </ThinRow>
 
-            <Row>
+            <ThinRow>
               <p>Svenska folket</p>
               <InnerRow>
                 <p>{event.svenskaFolket.one}%</p>
                 <p>{event.svenskaFolket.x}%</p>
                 <p>{event.svenskaFolket.two}%</p>
               </InnerRow>
-            </Row>
+            </ThinRow>
 
-            <Row>
+            <ThinRow>
               <p>Spelvärde</p>
               <InnerRow>
                 <p>
@@ -66,16 +115,16 @@ export function Table({ events }: { events: DrawEvent[] }) {
                   {oddsValue(event.favouriteOdds?.two, event.svenskaFolket.two)}
                 </p>
               </InnerRow>
-            </Row>
+            </ThinRow>
 
-            <Row>
+            <ThinRow>
               <p>Utgångspunkt</p>
               <InnerRow>
                 <ul>
                   <BaseStrategy peoplesOdds={event.svenskaFolket} />
                 </ul>
               </InnerRow>
-            </Row>
+            </ThinRow>
           </li>
         );
       })}
@@ -88,6 +137,12 @@ const Row = styled.div`
   justify-content: space-between;
 `;
 
+const ThinRow = styled(Row)`
+  align-items: center;
+  height: 30px;
+`;
+
 const InnerRow = styled(Row)`
+  align-items: center;
   gap: 8px;
 `;

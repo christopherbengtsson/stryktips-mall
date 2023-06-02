@@ -2,15 +2,14 @@ import { ReactNode } from "react";
 import styled from "styled-components";
 
 export function Layout({ children }: { children: ReactNode }) {
-  return <Container>{children}</Container>;
+  return (
+    <AppContainer>
+      <div>{children}</div>
+    </AppContainer>
+  );
 }
 
-const Container = styled.div`
-  flex: 1 1 auto;
-  position: relative;
-  overflow: hidden;
-
+const AppContainer = styled.div`
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  justify-content: center;
 `;
