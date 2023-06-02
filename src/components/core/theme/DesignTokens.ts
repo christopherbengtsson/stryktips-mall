@@ -21,14 +21,9 @@ export const palette = {
   concreteSuperLight: "#E4E2E4",
   /** Subtle component backgrounds  */
   fog: "#F4F2F4",
-  /** Green Link colors, aka forest */
-  deepForest: "#18794E",
-  /** Green Subtle background on interactive components, used behind links */
-  haze: "#E9F9EE",
-  /** used on error body text */
-  bloodIn: "#C30007",
   /** used on text field border when invalid */
   bloodOut: "#D90004",
+  /** Main action color */
   deepOcean: "#0000ff",
 } as const;
 

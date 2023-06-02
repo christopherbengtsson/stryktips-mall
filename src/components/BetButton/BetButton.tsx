@@ -82,9 +82,6 @@ const BetBtn = styled.button<{ clicked: Indeterminate }>`
         background-color: ${themed.background.disabled};
         cursor: not-allowed;
       }
-      :not(:disabled):hover {
-        background-color: ${themed.hover.background.default};
-      }
     `;
   }};
 `;
