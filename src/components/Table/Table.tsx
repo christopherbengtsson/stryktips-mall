@@ -1,16 +1,11 @@
 import { DrawEvent } from "../../api";
 import styled from "styled-components";
 import { BaseStrategy } from "../BaseStrategy";
-import { Bet, BetButton, Indeterminate } from "../BetButton";
+import { Bet, Indeterminate } from "../BetButton";
 import { Bets } from "../../stores/StorageService";
-
-const oddsValue = (favoriteOdds?: string, svenskaFolket?: string) => {
-  if (!favoriteOdds || !svenskaFolket) {
-    return "-";
-  }
-
-  return (+favoriteOdds / +svenskaFolket).toFixed(2);
-};
+import { InnerRow, ThinRow } from "./shared";
+import { HeaderRow } from "./HeaderRow";
+import { TableRow } from "./TableRow";
 
 export function Table({
   events,
@@ -36,90 +31,60 @@ export function Table({
   return (
     <StyledList>
       {events.map((event: DrawEvent, idx) => {
+        const fullGameTitle = `${event.match.participants.at(0)?.name} - ${
+          event.match.participants.at(1)?.name
+        }`;
+
+        // TODO: USE SHORT TITLE ON SMALLER SCREENSS
+        // const shortGameTitle = `${
+        //   event.match.participants.at(0)?.mediumName
+        // } - ${event.match.participants.at(1)?.mediumName}`;
+
         return (
           <StyledListItem key={event.eventDescription}>
-            <Row>
-              <h3>
-                {event.eventNumber}. {event.eventDescription}
-              </h3>
+            <HeaderRow
+              bets={[
+                {
+                  bet: 1,
+                  gameNumber: idx + 1,
+                  onClick: handleClick,
+                  initialState: initialsBets
+                    ? initialsBets[idx + 1][1]
+                    : undefined,
+                },
+                {
+                  bet: "X",
+                  gameNumber: idx + 1,
+                  onClick: handleClick,
+                  initialState: initialsBets
+                    ? initialsBets[idx + 1].X
+                    : undefined,
+                },
+                {
+                  bet: 2,
+                  gameNumber: idx + 1,
+                  onClick: handleClick,
+                  initialState: initialsBets
+                    ? initialsBets[idx + 1][2]
+                    : undefined,
+                },
+              ]}
+              eventNumber={event.eventNumber}
+              eventDescription={fullGameTitle}
+            />
 
-              <InnerRow>
-                <BetButton
-                  initialState={
-                    initialsBets ? initialsBets[idx + 1][1] : undefined
-                  }
-                  bet={1}
-                  gameNumber={idx + 1}
-                  onClick={handleClick}
-                >
-                  1
-                </BetButton>
-                <BetButton
-                  initialState={
-                    initialsBets ? initialsBets[idx + 1].X : undefined
-                  }
-                  bet={"X"}
-                  gameNumber={idx + 1}
-                  onClick={handleClick}
-                >
-                  X
-                </BetButton>
-                <BetButton
-                  initialState={
-                    initialsBets ? initialsBets[idx + 1][2] : undefined
-                  }
-                  bet={2}
-                  gameNumber={idx + 1}
-                  onClick={handleClick}
-                >
-                  2
-                </BetButton>
-              </InnerRow>
-            </Row>
+            <TableRow type="Odds" odds={event.odds} />
+            <TableRow type="Favoritskap" odds={event.favouriteOdds} />
+            <TableRow type="Svenska folket" odds={event.svenskaFolket} />
+            <TableRow
+              type="Spelvärde"
+              odds={{
+                favoriteOdds: event.favouriteOdds,
+                svenskaFolket: event.svenskaFolket,
+              }}
+            />
 
-            <ThinRow>
-              <p>Odds</p>
-              <InnerRow>
-                <p>{event.odds?.one ?? "-"}</p>
-                <p>{event.odds?.x ?? "-"}</p>
-                <p>{event.odds?.two ?? "-"}</p>
-              </InnerRow>
-            </ThinRow>
-
-            <ThinRow>
-              <p>Odds i procent</p>
-              <InnerRow>
-                <p>{Math.floor(+(event.favouriteOdds?.one ?? 0))}%</p>
-                <p>{Math.floor(+(event.favouriteOdds?.x ?? 0))}%</p>
-                <p>{Math.floor(+(event.favouriteOdds?.two ?? 0))}%</p>
-              </InnerRow>
-            </ThinRow>
-
-            <ThinRow>
-              <p>Svenska folket</p>
-              <InnerRow>
-                <p>{event.svenskaFolket.one}%</p>
-                <p>{event.svenskaFolket.x}%</p>
-                <p>{event.svenskaFolket.two}%</p>
-              </InnerRow>
-            </ThinRow>
-
-            <ThinRow>
-              <p>Spelvärde</p>
-              <InnerRow>
-                <p>
-                  {oddsValue(event.favouriteOdds?.one, event.svenskaFolket.one)}
-                </p>
-                <p>
-                  {oddsValue(event.favouriteOdds?.x, event.svenskaFolket.x)}
-                </p>
-                <p>
-                  {oddsValue(event.favouriteOdds?.two, event.svenskaFolket.two)}
-                </p>
-              </InnerRow>
-            </ThinRow>
-
-            <ThinRow>
+            <ThinRow fullHeight>
               <p>Utgångspunkt</p>
               <InnerRow>
                 <ul>
@@ -148,19 +113,4 @@ const StyledListItem = styled.li`
   list-style: none;
   padding: 16px 8px;
   border-top: #e1e1e5 1px solid;
-`;
-
-const Row = styled.div`
-  display: flex;
-  justify-content: space-between;
-`;
-
-const ThinRow = styled(Row)`
-  align-items: center;
-  height: 30px;
-`;
-
-const InnerRow = styled(Row)`
-  align-items: center;
-  gap: 8px;
 `;

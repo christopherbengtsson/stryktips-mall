@@ -7,5 +7,6 @@ export function Layout({ children }: { children: ReactNode }) {
 
 const AppContainer = styled.div`
   background: white;
+  max-width: 1023px;
   padding: 16px 24px;
 `;
