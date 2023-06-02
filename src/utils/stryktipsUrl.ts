@@ -7,23 +7,18 @@ export function buildSvenskaSpelURL(
 ) {
   const baseUrl = "https://spela.svenskaspel.se/stryktipset";
 
-  let clickedKeys = "";
+  const order: BettingOption[] = [1, "X", 2];
 
-  for (const key in data) {
-    const matchBets = data[key];
-    const matchSigns = (Object.keys(matchBets) as BettingOption[])
-      .filter((sign) => matchBets[sign] === "clicked")
-      .join(";");
+  const clickedKeys = data
+    .map((match, index) => {
+      const matchSigns = order
+        .filter((sign) => match[sign] === "clicked")
+        .join(";");
 
-    if (matchSigns) {
-      clickedKeys += `${key}:${matchSigns},`;
-    }
-  }
-
-  // Remove the trailing comma and space if they exist
-  if (clickedKeys.endsWith(",")) {
-    clickedKeys = clickedKeys.slice(0, -1);
-  }
+      return matchSigns ? `${index + 1}:${matchSigns}` : "";
+    })
+    .filter(Boolean)
+    .join(",");
 
   const share = valid ? "valid" : "invalid";
   const url = `${baseUrl}?product=1&draw=${drawNumber}&signs=${encodeURIComponent(

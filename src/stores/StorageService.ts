@@ -4,80 +4,80 @@ import {
   setLocalStorage,
 } from "../utils/storage";
 
-export const initialSavedCoupon: Bets = {
-  1: {
+export const initialSavedCoupon: Bets = [
+  {
     1: "unclicked",
     X: "unclicked",
     2: "unclicked",
   },
-  2: {
+  {
     1: "unclicked",
     X: "unclicked",
     2: "unclicked",
   },
-  3: {
+  {
     1: "unclicked",
     X: "unclicked",
     2: "unclicked",
   },
-  4: {
+  {
     1: "unclicked",
     X: "unclicked",
     2: "unclicked",
   },
-  5: {
+  {
     1: "unclicked",
     X: "unclicked",
     2: "unclicked",
   },
-  6: {
+  {
     1: "unclicked",
     X: "unclicked",
     2: "unclicked",
   },
-  7: {
+  {
     1: "unclicked",
     X: "unclicked",
     2: "unclicked",
   },
-  8: {
+  {
     1: "unclicked",
     X: "unclicked",
     2: "unclicked",
   },
-  9: {
+  {
     1: "unclicked",
     X: "unclicked",
     2: "unclicked",
   },
-  10: {
+  {
     1: "unclicked",
     X: "unclicked",
     2: "unclicked",
   },
-  11: {
+  {
     1: "unclicked",
     X: "unclicked",
     2: "unclicked",
   },
-  12: {
+  {
     1: "unclicked",
     X: "unclicked",
     2: "unclicked",
   },
-  13: {
+  {
     1: "unclicked",
     X: "unclicked",
     2: "unclicked",
   },
-};
+];
 
 export type BettingOption = 1 | "X" | 2;
 export type BettingState = "clicked" | "unclicked" | "bettingState";
 
 export type Bet = Record<BettingOption, BettingState>;
 
-export type Bets = Record<number, Bet>;
+export type Bets = Array<Bet>;
 export type SavedCoupon = {
   drawNumber: number;
   bets: Bets;

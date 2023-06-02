@@ -1,8 +1,7 @@
 import { DrawEvent } from "../../api";
 import styled from "styled-components";
 import { BaseStrategy } from "../BaseStrategy";
-import { Bet, BettingState } from "../BetButton";
-import { Bets } from "../../stores/StorageService";
+import { Bets, BettingOption, BettingState } from "../../stores/StorageService";
 import { InnerRow, ThinRow } from "./shared";
 import { HeaderRow } from "./HeaderRow";
 import { TableRow } from "./TableRow";
@@ -16,13 +15,13 @@ export function Table({
   events: DrawEvent[];
   initialsBets?: Bets;
   onBetClick: (args: {
-    bet: Bet;
+    bet: BettingOption;
     gameNumber: number;
     state: BettingState;
   }) => void;
 }) {
   const handleClick = (args: {
-    bet: Bet;
+    bet: BettingOption;
     gameNumber: number;
     state: BettingState;
   }) => {
@@ -48,25 +47,19 @@ export function Table({
                   bet: 1,
                   gameNumber: idx + 1,
                   onClick: handleClick,
-                  initialState: initialsBets
-                    ? initialsBets[idx + 1][1]
-                    : undefined,
+                  initialState: initialsBets ? initialsBets[idx][1] : undefined,
                 },
                 {
                   bet: "X",
                   gameNumber: idx + 1,
                   onClick: handleClick,
-                  initialState: initialsBets
-                    ? initialsBets[idx + 1].X
-                    : undefined,
+                  initialState: initialsBets ? initialsBets[idx].X : undefined,
                 },
                 {
                   bet: 2,
                   gameNumber: idx + 1,
                   onClick: handleClick,
-                  initialState: initialsBets
-                    ? initialsBets[idx + 1][2]
-                    : undefined,
+                  initialState: initialsBets ? initialsBets[idx][2] : undefined,
                 },
               ]}
               eventNumber={event.eventNumber}

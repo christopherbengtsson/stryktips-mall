@@ -19,20 +19,15 @@ export const Main = observer(function Main() {
   const events = draws?.drawEvents;
 
   const [bets, setBets] = useState<Bets>(
-    store.storageService.savedCoupon?.bets ?? {}
+    store.storageService.savedCoupon?.bets ?? []
   );
 
   const valid = useMemo(() => {
-    const bettingOptions = Object.values(bets);
-    for (const bet of bettingOptions) {
-      const clickedOptions = Object.values(bet).filter(
-        (option) => option === "clicked"
+    return bets.every((bet) => {
+      return (
+        bet[1] === "clicked" || bet.X === "clicked" || bet[2] === "clicked"
       );
-      if (clickedOptions.length === 0) {
-        return false;
-      }
-    }
-    return true;
+    });
   }, [bets]);
 
   const handleBetClick = ({
@@ -44,15 +39,15 @@ export const Main = observer(function Main() {
     gameNumber: number;
     state: BettingState;
   }) => {
-    const newBets: Bets = { ...bets };
-    newBets[gameNumber][bet] = state;
+    const newBets: Bets = [...bets];
+    newBets[gameNumber - 1][bet] = state;
 
     setBets(newBets);
     store.storageService.bets = newBets;
   };
 
   const clearCoupong = () => {
-    setBets({});
+    setBets([]);
     store.storageService.bets = initialSavedCoupon;
   };
 

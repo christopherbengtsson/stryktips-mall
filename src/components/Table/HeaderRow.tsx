@@ -1,7 +1,8 @@
 import styled from "styled-components";
-import { Bet, BetButton, BettingState } from "../BetButton";
+import { BetButton } from "../BetButton";
 import { InnerRow } from "./shared";
 import { GameTitle } from "../GameTitle";
+import { BettingOption, BettingState } from "../../stores/StorageService";
 
 const Row = styled.div`
   display: flex;
@@ -17,11 +18,11 @@ export interface HeaderRowProps {
   eventNumber: number;
   eventDescription: string;
   bets: {
-    bet: Bet;
+    bet: BettingOption;
     gameNumber: number;
     initialState?: BettingState;
     onClick: (args: {
-      bet: Bet;
+      bet: BettingOption;
       gameNumber: number;
       state: BettingState;
     }) => void;
