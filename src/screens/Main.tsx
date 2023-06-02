@@ -15,11 +15,8 @@ import { Body, Subtitle, Headline } from "../components/core/fonts";
 import { OutlinedButton } from "../components/OutlinedButton";
 import { buildSvenskaSpelURL } from "../utils/stryktipsUrl";
 import { calculateCost } from "../utils/couponCost";
-import { isMobile } from "../utils/device";
 
 export const Main = observer(function Main() {
-  const isDesktop = !isMobile();
-
   const store = useMainStore();
   const draws = store.draws?.at(0);
   const events = draws?.drawEvents;
