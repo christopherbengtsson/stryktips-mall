@@ -1,4 +1,4 @@
-import { palette, DesignTokens } from '../DesignTokens';
+import { palette, DesignTokens } from "../DesignTokens";
 
 export const LightTheme = {
   font: {
@@ -6,7 +6,7 @@ export const LightTheme = {
       default: palette.black,
       disabled: palette.concrete,
       inverted: palette.white,
-      action: palette.deepForest,
+      action: palette.deepOcean,
       error: palette.bloodIn,
     },
   },
@@ -56,7 +56,7 @@ export const LightTheme = {
   },
   radio: {
     background: {
-      default: 'transparent',
+      default: "transparent",
       action: palette.almostBlack,
       disabled: palette.concreteSuperLight,
     },
@@ -81,7 +81,6 @@ export const LightTheme = {
     color: {
       default: palette.black,
       disabled: palette.concrete,
-      secondary: palette.deepForest,
     },
   },
   primaryButton: {
@@ -120,7 +119,7 @@ export const LightTheme = {
   },
   plainButton: {
     hover: {
-      primary: palette.deepForest,
+      primary: palette.concreteLight,
       secondary: palette.black,
     },
   },

@@ -23,6 +23,8 @@ export const palette = {
   fog: "#F4F2F4",
   /** used on text field border when invalid */
   bloodOut: "#D90004",
+  /** used on error body text */
+  bloodIn: "#C30007",
   /** Main action color */
   deepOcean: "#0000ff",
 } as const;
