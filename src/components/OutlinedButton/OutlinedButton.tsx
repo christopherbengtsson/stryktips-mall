@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { FunctionComponent, ReactNode } from "react";
 import styled, { css } from "styled-components";
 import { Body } from "../core/fonts";
 import type { StyledIcon } from "styled-icons/types";
@@ -11,20 +11,22 @@ export interface OutlineButtonProps {
   disabled?: boolean;
   className?: string;
   "data-testid"?: string;
-  Icon?: StyledIcon;
+  Icon?: StyledIcon | FunctionComponent<React.SVGAttributes<SVGElement>>;
+  displayText?: boolean;
 }
 
 export function OutlinedButton({
   children,
   mediumWeight = false,
   Icon,
+  displayText,
   ...props
 }: OutlineButtonProps) {
   return (
     <StyledOutlineButton {...props}>
       <Container>
         {Icon && <Icon size="20" />}
-        {(!Icon || !isMobile()) && (
+        {(displayText || !Icon || !isMobile()) && (
           <ButtonText mediumWeight={mediumWeight}>{children}</ButtonText>
         )}
       </Container>

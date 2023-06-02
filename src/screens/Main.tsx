@@ -9,12 +9,13 @@ import {
 } from "../stores/StorageService";
 import { useMemo, useState } from "react";
 import styled from "styled-components";
-import { Share } from "@styled-icons/evaicons-solid";
 import { Trash2 as Trash } from "@styled-icons/evaicons-solid";
-import { Body, Subtitle, Headline } from "../components/core/fonts";
+import { SvenskaSpelIcon } from "../components/assets/icons";
+import { Body, Headline } from "../components/core/fonts";
 import { OutlinedButton } from "../components/OutlinedButton";
 import { buildSvenskaSpelURL } from "../utils/stryktipsUrl";
 import { calculateCost } from "../utils/couponCost";
+import { Footer } from "../components/Layout/Footer";
 
 export const Main = observer(function Main() {
   const store = useMainStore();
@@ -66,21 +67,16 @@ export const Main = observer(function Main() {
       <Headline>
         {draws?.regCloseDescription ?? "Stryktipset öppnar tisdag kl. 07:00."}
       </Headline>
-      <SpaceBetweenContainer>
-        <Body>Senast uppdaterad {store.lastUpdated?.toLocaleTimeString()}</Body>
-        <OutlinedButton Icon={Share} onClick={openStryktipset}>
-          För över kupong till Stryktipset
-        </OutlinedButton>
-      </SpaceBetweenContainer>
 
       <SpaceBetweenContainer>
-        <Subtitle>{totalCost} KR</Subtitle>
-        <CoupongActionsContainer>
-          <OutlinedButton Icon={Trash} onClick={clearCoupong}>
-            Rensa kupong
-          </OutlinedButton>
-        </CoupongActionsContainer>
+        <Body>Senast uppdaterad {store.lastUpdated?.toLocaleTimeString()}</Body>
       </SpaceBetweenContainer>
+
+      <CoupongActionsContainer>
+        <OutlinedButton Icon={Trash} onClick={clearCoupong}>
+          Rensa kupong
+        </OutlinedButton>
+      </CoupongActionsContainer>
 
       {events && (
         <Table
@@ -89,9 +85,27 @@ export const Main = observer(function Main() {
           onBetClick={handleBetClick}
         />
       )}
+
+      <Footer>
+        <CoupongActionsContainer>
+          <OutlinedButton
+            Icon={StyledSvenskaSpelIcon}
+            onClick={openStryktipset}
+            displayText
+          >
+            {totalCost} KR
+          </OutlinedButton>
+        </CoupongActionsContainer>
+      </Footer>
     </Layout>
   );
 });
+
+const StyledSvenskaSpelIcon = styled(SvenskaSpelIcon)`
+  width: 20px;
+  height: 20px;
+  background: red;
+`;
 
 const SpaceBetweenContainer = styled.div`
   display: flex;
