@@ -1,5 +1,6 @@
 import { isDev } from "./Constants";
 import { Routes } from "./Routes";
+import { ThemeProvider } from "./components/core/theme";
 
 import { MainStore } from "./stores/MainStore";
 import { MainStoreProvider } from "./stores/Providers/MainStoreProvider";
@@ -14,8 +15,10 @@ if (isDev) {
 
 export function Application() {
   return (
-    <MainStoreProvider store={store}>
-      <Routes />
-    </MainStoreProvider>
+    <ThemeProvider>
+      <MainStoreProvider store={store}>
+        <Routes />
+      </MainStoreProvider>
+    </ThemeProvider>
   );
 }

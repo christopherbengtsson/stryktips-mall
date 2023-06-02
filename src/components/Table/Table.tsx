@@ -6,6 +6,7 @@ import { Bets } from "../../stores/StorageService";
 import { InnerRow, ThinRow } from "./shared";
 import { HeaderRow } from "./HeaderRow";
 import { TableRow } from "./TableRow";
+import { isMobile } from "../../utils/device";
 
 export function Table({
   events,
@@ -35,10 +36,10 @@ export function Table({
           event.match.participants.at(1)?.name
         }`;
 
-        // TODO: USE SHORT TITLE ON SMALLER SCREENSS
-        // const shortGameTitle = `${
-        //   event.match.participants.at(0)?.mediumName
-        // } - ${event.match.participants.at(1)?.mediumName}`;
+        // TODO: USE SHORT TITLE ON SMALLER SCREENS
+        const shortGameTitle = `${
+          event.match.participants.at(0)?.mediumName
+        } - ${event.match.participants.at(1)?.mediumName}`;
 
         return (
           <StyledListItem key={event.eventDescription}>
@@ -70,7 +71,7 @@ export function Table({
                 },
               ]}
               eventNumber={event.eventNumber}
-              eventDescription={fullGameTitle}
+              eventDescription={isMobile() ? shortGameTitle : fullGameTitle}
             />
 
             <TableRow type="Odds" odds={event.odds} />
@@ -100,17 +101,15 @@ export function Table({
 }
 
 const StyledList = styled.ol`
+  margin-top: ${(p) => p.theme.spacing.xl}
   padding: 0;
 
-  li:nth-child(odd) {
-  }
-  li:nth-child(even) {
-    background: rgba(0, 66, 122, 0.03);
+  > li:nth-child(even) {
+    background: ${(p) => p.theme.tokens.palette.fog};
   }
 `;
 
 const StyledListItem = styled.li`
-  list-style: none;
   padding: 16px 8px;
-  border-top: #e1e1e5 1px solid;
+  border-top: 1px solid ${(p) => p.theme.border.color.default};
 `;

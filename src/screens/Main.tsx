@@ -5,6 +5,8 @@ import { Bet, Indeterminate } from "../components/BetButton";
 import { Bets, initialSavedCoupon } from "../stores/StorageService";
 import { useState } from "react";
 import styled from "styled-components";
+import { Body, Headline, Title2 } from "../components/core/fonts";
+import { OutlinedButton } from "../components/OutlinedButton";
 
 export const Main = observer(function Main() {
   const store = useMainStore();
@@ -38,12 +40,12 @@ export const Main = observer(function Main() {
 
   return (
     <Layout>
-      <h1>
+      <Headline>
         {draws?.regCloseDescription ?? "Stryktipset öppnar tisdag kl. 07:00."}
-      </h1>
+      </Headline>
       <SpaceBetweenContainer>
-        <h4>Senast uppdaterad {store.lastUpdated?.toLocaleTimeString()}</h4>
-        <StyledButton onClick={clearCoupong}>Rensa kupong</StyledButton>
+        <Body>Senast uppdaterad {store.lastUpdated?.toLocaleTimeString()}</Body>
+        <OutlinedButton onClick={clearCoupong}>Rensa kupong</OutlinedButton>
       </SpaceBetweenContainer>
 
       {events && (
@@ -61,8 +63,4 @@ const SpaceBetweenContainer = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-`;
-
-const StyledButton = styled.button`
-  height: 40px;
 `;

@@ -1,4 +1,5 @@
 import { FavouriteOdds, Odds, SvenskaFolket } from "../../api";
+import { Body } from "../core/fonts";
 import { InnerRow, ThinRow } from "./shared";
 
 type OddsType = "Odds" | "Svenska folket" | "Favoritskap";
@@ -36,32 +37,32 @@ export function TableRow(
 ) {
   return (
     <ThinRow>
-      <p>{props.type}</p>
+      <Body>{props.type}</Body>
       <InnerRow>
-        <p>
+        <Body>
           {props.type === "Spelvärde"
             ? oddsValue(
                 props.odds?.favoriteOdds?.one,
                 props.odds?.svenskaFolket?.one
               )
             : transformData(props.type, props.odds?.one)}
-        </p>
-        <p>
+        </Body>
+        <Body>
           {props.type === "Spelvärde"
             ? oddsValue(
                 props.odds?.favoriteOdds?.x,
                 props.odds?.svenskaFolket?.x
               )
             : transformData(props.type, props.odds?.x)}
-        </p>
-        <p>
+        </Body>
+        <Body>
           {props.type === "Spelvärde"
             ? oddsValue(
                 props.odds?.favoriteOdds?.two,
                 props.odds?.svenskaFolket?.two
               )
             : transformData(props.type, props.odds?.two)}
-        </p>
+        </Body>
       </InnerRow>
     </ThinRow>
   );

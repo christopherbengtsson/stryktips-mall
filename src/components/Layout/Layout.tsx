@@ -6,7 +6,18 @@ export function Layout({ children }: { children: ReactNode }) {
 }
 
 const AppContainer = styled.div`
+  position: relative;
+
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  gap: ${(p) => p.theme.spacing.m};
+
   background: white;
   max-width: 1023px;
   padding: 16px 24px;
+
+  ${(p) => p.theme.screens.large} {
+    margin: ${(p) => p.theme.spacing.xxl} 0;
+  }
 `;

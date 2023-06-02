@@ -1,4 +1,6 @@
 import styled from "styled-components";
+import { Subtitle } from "../core/fonts";
+import { isMobile } from "../../utils/device";
 
 export function GameTitle({
   title,
@@ -7,10 +9,12 @@ export function GameTitle({
   title: string;
   gameNumber: number;
 }) {
+  const mobile = isMobile();
+
   return (
     <Container>
-      <GameNumber>{gameNumber}</GameNumber>
-      <h3>{title}</h3>
+      {!mobile && <GameNumber>{gameNumber}</GameNumber>}
+      <Subtitle>{mobile ? `${gameNumber}. ${title}` : title}</Subtitle>
     </Container>
   );
 }
@@ -31,5 +35,4 @@ const GameNumber = styled.div`
   border-radius: 50%;
   background: rgb(0, 0, 255);
   color: white;
-  font-weight: bolder;
 `;

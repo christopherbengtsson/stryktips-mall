@@ -1,5 +1,5 @@
 import { ReactNode, useState } from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 export type Indeterminate = "clicked" | "unclicked" | "indeterminate";
 export type Bet = 1 | "X" | 2;
@@ -55,33 +55,52 @@ export function BetButton({
 }
 
 const BetBtn = styled.button<{ clicked: Indeterminate }>`
-  border: 1px solid black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
   height: 30px;
   min-width: 45px;
+  cursor: pointer;
+  transition: background 0.25s ease, color 0.25s ease;
 
-  color: ${(p) => (p.clicked === "unclicked" ? "black" : "white")};
-  background-color: ${({ clicked }) => {
-    if (clicked === "clicked") {
-      return "#0000ff";
-    }
+  ${(props) => {
+    const themed = props.theme.primaryButton;
 
-    return "unset";
+    return css`
+      border-radius: ${props.theme.radius.s};
+      border: ${props.theme.tokens.border.default.size} solid
+        ${props.theme.tokens.palette.almostBlack};
+      background-color: ${props.clicked === "clicked"
+        ? props.theme.tokens.palette.deepOcean
+        : props.theme.tokens.palette.white};
+      color: ${themed.font.color.default};
+      color: ${props.clicked === "unclicked"
+        ? props.theme.tokens.palette.almostBlack
+        : themed.font.color.default};
+      &:disabled {
+        background-color: ${themed.background.disabled};
+        cursor: not-allowed;
+      }
+      :not(:disabled):hover {
+        background-color: ${themed.hover.background.default};
+      }
+    `;
   }};
-
-  :hover {
-    cursor: pointer;
-  }
 `;
 
 const Indeterminate = styled.div<{ indeterminate: boolean }>`
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 80%;
 
-  ${({ indeterminate }) => {
+  width: 70%;
+  height: 70%;
+  ${({ indeterminate, theme }) => {
     if (indeterminate) {
-      return "background: #0000ff";
+      return `background: ${theme.tokens.palette.deepOcean}`;
     }
-  }}
+  }};
+
+  border-radius: ${(p) => p.theme.radius.tiny};
 `;

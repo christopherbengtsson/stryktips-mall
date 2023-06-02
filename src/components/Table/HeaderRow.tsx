@@ -6,7 +6,11 @@ import { GameTitle } from "../GameTitle";
 const Row = styled.div`
   display: flex;
   justify-content: space-between;
-  gap: 5em;
+  gap: ${(p) => p.theme.spacing.s};
+  
+  ${(p) => p.theme.screens.large} {
+    gap: ${(p) => p.theme.spacing.xxl}
+  }};
 `;
 
 export interface HeaderRowProps {
