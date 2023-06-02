@@ -5,7 +5,7 @@ import { Bet, Indeterminate } from "../components/BetButton";
 import { Bets, initialSavedCoupon } from "../stores/StorageService";
 import { useState } from "react";
 import styled from "styled-components";
-import { Body, Headline, Title2 } from "../components/core/fonts";
+import { Body, Headline } from "../components/core/fonts";
 import { OutlinedButton } from "../components/OutlinedButton";
 
 export const Main = observer(function Main() {
