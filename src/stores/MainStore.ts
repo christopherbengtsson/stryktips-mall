@@ -1,10 +1,12 @@
 import { makeAutoObservable, observable, runInAction } from "mobx";
 import { ApiService, StryktipsResponse } from "../api";
+import { StorageService } from "./StorageService";
 
 export type FetchingState = "DONE" | "LOADING" | "ERROR";
 
 export class MainStore {
   apiService: ApiService;
+  storageService: StorageService;
 
   fetchingState: FetchingState = "LOADING";
   stryktipsResponse: StryktipsResponse | null = null;
@@ -15,18 +17,33 @@ export class MainStore {
     makeAutoObservable(this, {
       stryktipsResponse: observable.ref,
       apiService: false,
+      storageService: false,
     });
 
     this.apiService = new ApiService();
+    this.storageService = new StorageService();
   }
 
   public async init() {
     await this.fetchState();
+
+    if (this.drawNumber) {
+      this.storageService.drawNumber = this.drawNumber;
+    }
+
     this.setupWindowActiveListener();
   }
 
   get isLoading() {
+    if (!this.drawNumber || this.fetchingState === "LOADING") {
+      return true;
+    }
+
     return false;
+  }
+
+  get drawNumber() {
+    return this.draws?.at(0)?.drawNumber;
   }
 
   get draws() {
