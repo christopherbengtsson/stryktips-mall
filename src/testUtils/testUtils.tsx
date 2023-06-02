@@ -24,7 +24,7 @@ export { customRender as render };
 export const suppressErrorLog = async (fn: () => Promise<void> | void) => {
   // React test library is unable to suppress console logs of errors even though the error is expected and properly handled
   // This is due to internal issues in React test renderer https://github.com/facebook/react/issues/15520
-  /* eslint-disable no-console */
+
   const original = console.error;
   console.error = () => {};
   await fn();
