@@ -1,5 +1,5 @@
 import { makeAutoObservable, observable, runInAction } from "mobx";
-import { ApiService, StryktipsResponse } from "../api";
+import { ApiService, CouponType, StryktipsResponse } from "../api";
 import { StorageService } from "./StorageService";
 
 export type FetchingState = "DONE" | "LOADING" | "ERROR";
@@ -25,7 +25,7 @@ export class MainStore {
   }
 
   public async init() {
-    await this.fetchState();
+    await this.fetchState({ couponType: this.couponType });
 
     this.setupWindowActiveListener();
   }
@@ -38,6 +38,10 @@ export class MainStore {
     return false;
   }
 
+  get couponType() {
+    return this.storageService.getCouponType() ?? "stryktipset";
+  }
+
   get drawNumber() {
     return this.draws?.at(0)?.drawNumber ?? -1;
   }
@@ -46,13 +50,19 @@ export class MainStore {
     return this.stryktipsResponse?.draws;
   }
 
-  public async fetchState(inBackground?: boolean) {
+  public async fetchState({
+    couponType = "stryktipset",
+    inBackground,
+  }: {
+    couponType?: CouponType;
+    inBackground?: boolean;
+  }) {
     if (!inBackground) {
       this.fetchingState = "LOADING";
     }
 
     try {
-      const response = await this.apiService.fetchLatestCoupon();
+      const response = await this.apiService.fetchLatestCoupon(couponType);
       this.setApiResponse(response);
     } catch (error) {
       console.error("Error fetching state", error);
@@ -73,7 +83,7 @@ export class MainStore {
     // Refetch state in background when user returns to tab
     document.addEventListener("visibilitychange", () => {
       if (document.visibilityState == "visible") {
-        this.fetchState(true);
+        this.fetchState({ inBackground: true });
       }
     });
   }

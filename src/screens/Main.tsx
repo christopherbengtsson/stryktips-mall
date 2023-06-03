@@ -7,7 +7,7 @@ import {
   BettingState,
   initialSavedCoupon,
 } from "../stores/StorageService";
-import { useMemo, useState } from "react";
+import { ChangeEventHandler, useMemo, useState } from "react";
 import styled from "styled-components";
 import { Trash2 as Trash } from "@styled-icons/evaicons-solid";
 import { SvenskaSpelIcon } from "../components/assets/icons";
@@ -16,6 +16,7 @@ import { OutlinedButton } from "../components/OutlinedButton";
 import { buildSvenskaSpelURL } from "../utils/stryktipsUrl";
 import { calculateCost } from "../utils/couponCost";
 import { Footer } from "../components/Layout/Footer";
+import { CouponType } from "../api";
 
 export const Main = observer(function Main() {
   const store = useMainStore();
@@ -62,8 +63,32 @@ export const Main = observer(function Main() {
     window.open(url, "_blank");
   };
 
+  const handleCouponChange: ChangeEventHandler<HTMLSelectElement> = async ({
+    target,
+  }) => {
+    if (target.value) {
+      const couponType = target.value as CouponType;
+      store.storageService.setCouponType(couponType);
+
+      await store.fetchState({ couponType });
+
+      const coupon = store.storageService.getCoupon(store.drawNumber);
+      setBets(coupon?.bets ?? []);
+    }
+  };
+
   return (
     <Layout>
+      <select
+        name="coupon"
+        id="coupon-select"
+        value={store.couponType}
+        onChange={handleCouponChange}
+      >
+        <option value="stryktipset">Stryktipset</option>
+        <option value="europatipset">Europatipset</option>
+      </select>
+
       <Headline>
         {draw?.regCloseDescription ?? "Stryktipset öppnar tisdag kl. 07:00."}
       </Headline>
