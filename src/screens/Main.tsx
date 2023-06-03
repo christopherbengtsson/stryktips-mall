@@ -15,7 +15,7 @@ import { Body, Headline } from "../components/core/fonts";
 import { OutlinedButton } from "../components/OutlinedButton";
 import { buildSvenskaSpelURL } from "../utils/stryktipsUrl";
 import { calculateCost } from "../utils/couponCost";
-import { Footer } from "../components/Layout/Footer";
+import { Footer } from "../components/Layout/OldFooter";
 
 export const Main = observer(function Main() {
   const store = useMainStore();
@@ -63,7 +63,22 @@ export const Main = observer(function Main() {
   };
 
   return (
-    <Layout>
+    <Layout
+      scrollContainer
+      footerProps={
+        draw && (
+          <CoupongActionsContainer>
+            <OutlinedButton
+              Icon={StyledSvenskaSpelIcon}
+              onClick={openStryktipset}
+              displayText
+            >
+              {totalCost} KR
+            </OutlinedButton>
+          </CoupongActionsContainer>
+        )
+      }
+    >
       <Headline>
         {draw?.regCloseDescription ?? "Stryktipset öppnar tisdag kl. 07:00."}
       </Headline>
@@ -72,11 +87,13 @@ export const Main = observer(function Main() {
         <Body>Senast uppdaterad {store.lastUpdated?.toLocaleTimeString()}</Body>
       </SpaceBetweenContainer>
 
-      <CoupongActionsContainer>
-        <OutlinedButton Icon={Trash} onClick={clearCoupong}>
-          Rensa kupong
-        </OutlinedButton>
-      </CoupongActionsContainer>
+      {draw && (
+        <CoupongActionsContainer>
+          <OutlinedButton Icon={Trash} onClick={clearCoupong}>
+            Rensa kupong
+          </OutlinedButton>
+        </CoupongActionsContainer>
+      )}
 
       {events && (
         <Table
@@ -85,18 +102,6 @@ export const Main = observer(function Main() {
           onBetClick={handleBetClick}
         />
       )}
-
-      <Footer>
-        <CoupongActionsContainer>
-          <OutlinedButton
-            Icon={StyledSvenskaSpelIcon}
-            onClick={openStryktipset}
-            displayText
-          >
-            {totalCost} KR
-          </OutlinedButton>
-        </CoupongActionsContainer>
-      </Footer>
     </Layout>
   );
 });

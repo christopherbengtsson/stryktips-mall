@@ -1,22 +1,31 @@
-import { ReactNode } from "react";
 import styled from "styled-components";
+import { LayoutIdMap } from "./Constants";
 
-export function Footer({ children }: { children: ReactNode }) {
-  return <StyledFooterContainer>{children}</StyledFooterContainer>;
-}
+import { ReactNode } from "react";
+import { FooterShadow } from "./LayoutShadow";
 
-const StyledFooterContainer = styled.div`
-  position: fixed;
-  bottom: 0;
-  left: 0;
+const FooterContainer = styled.footer`
+  flex-shrink: 0;
+
+  position: relative;
   width: 100%;
-  height: 4rem;
 
-  background: ${(p) => p.theme.tokens.palette.concreteBlack};
-  color: white;
-  box-shadow: 0 -9px 8px 0 rgba(0, 0, 0, 0.28);
+  background: ${(p) => p.theme.background.default};
+  transition: opacity 0.2s;
 
-  display: grid;
-  align-items: center;
-  padding: 0 ${(p) => p.theme.spacing.l};
+  display: flex;
+  flex-direction: column;
+
+  ${FooterShadow}
 `;
+
+export interface FooterProps {
+  children?: ReactNode;
+}
+export function Footer({ children }: FooterProps) {
+  return (
+    <FooterContainer id={LayoutIdMap.footerContainer}>
+      {children}
+    </FooterContainer>
+  );
+}

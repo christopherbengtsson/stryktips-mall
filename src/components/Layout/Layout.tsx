@@ -1,23 +1,76 @@
 import { ReactNode } from "react";
-import styled from "styled-components";
+import { AppContainer } from "./AppContainer";
+import { Footer } from "./Footer";
+import { FormContentContainer, FormWrapper } from "./FormWrapper";
+import { NavigationHeader } from "./NavigationHeader";
+import { ScrollContainer } from "./ScrollContainer";
+import { handleLayoutScroll } from "./handleLayoutScroll";
+import { LayoutIdMap } from "./Constants";
 
-export function Layout({ children }: { children: ReactNode }) {
-  return <AppContainer>{children}</AppContainer>;
+export interface LayoutProps {
+  hideHeader?: boolean;
+
+  scrollContainer?: boolean;
+
+  leftNavigationItem?: ReactNode;
+  centerNavigationItem?: ReactNode;
+  rightNavigationItem?: ReactNode;
+
+  /** Defaults to true. Adds spacing to the bottom of the container. */
+  bottomPadding?: boolean;
+
+  footerProps?: ReactNode;
+
+  children: React.ReactNode;
 }
 
-const AppContainer = styled.div`
-  position: relative;
+function WrapperScrollContainer({ children }: { children: ReactNode }) {
+  return (
+    <ScrollContainer
+      onScroll={handleLayoutScroll}
+      id={LayoutIdMap.scrollContainer}
+      ref={(e) => handleLayoutScroll({ currentTarget: e })}
+    >
+      {children}
+    </ScrollContainer>
+  );
+}
+function EmptyContainer({ children }: { children: ReactNode }) {
+  return <ScrollContainer>{children}</ScrollContainer>;
+}
 
-  flex: 1 1 auto;
-  display: flex;
-  flex-direction: column;
-  gap: ${(p) => p.theme.spacing.m};
+export function Layout({
+  hideHeader,
+  scrollContainer,
+  leftNavigationItem,
+  centerNavigationItem,
+  rightNavigationItem,
+  bottomPadding = true,
+  children,
+  footerProps,
+}: LayoutProps) {
+  const ScrollWrapper = scrollContainer
+    ? WrapperScrollContainer
+    : EmptyContainer;
 
-  background: white;
-  max-width: 1023px;
-  padding: 16px 24px;
+  return (
+    <AppContainer>
+      {!hideHeader && (
+        <NavigationHeader
+          centerNavigationItem={centerNavigationItem}
+          leftNavigationItem={leftNavigationItem}
+          rightNavigationItem={rightNavigationItem}
+        />
+      )}
 
-  ${(p) => p.theme.screens.large} {
-    margin: ${(p) => p.theme.spacing.xxl} 0;
-  }
-`;
+      <FormWrapper>
+        <ScrollWrapper>
+          <FormContentContainer bottomPadding={bottomPadding}>
+            {children}
+          </FormContentContainer>
+        </ScrollWrapper>
+      </FormWrapper>
+      <Footer>{footerProps}</Footer>
+    </AppContainer>
+  );
+}
