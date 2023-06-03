@@ -19,11 +19,11 @@ import { Footer } from "../components/Layout/Footer";
 
 export const Main = observer(function Main() {
   const store = useMainStore();
-  const draws = store.draws?.at(0);
-  const events = draws?.drawEvents;
+  const draw = store.draws?.at(0);
+  const events = draw?.drawEvents;
 
   const [bets, setBets] = useState<Bets>(
-    store.storageService.savedCoupon?.bets ?? []
+    store.storageService.getCoupon(store.drawNumber)?.bets ?? []
   );
 
   const valid = useMemo(() => {
@@ -49,12 +49,12 @@ export const Main = observer(function Main() {
     newBets[gameNumber - 1][bet] = state;
 
     setBets(newBets);
-    store.storageService.bets = newBets;
+    store.storageService.setBets(newBets, store.drawNumber);
   };
 
   const clearCoupong = () => {
     setBets([]);
-    store.storageService.bets = initialSavedCoupon;
+    store.storageService.setBets(initialSavedCoupon, store.drawNumber);
   };
 
   const openStryktipset = () => {
@@ -65,7 +65,7 @@ export const Main = observer(function Main() {
   return (
     <Layout>
       <Headline>
-        {draws?.regCloseDescription ?? "Stryktipset öppnar tisdag kl. 07:00."}
+        {draw?.regCloseDescription ?? "Stryktipset öppnar tisdag kl. 07:00."}
       </Headline>
 
       <SpaceBetweenContainer>
@@ -80,7 +80,7 @@ export const Main = observer(function Main() {
 
       {events && (
         <Table
-          initialsBets={store.storageService?.savedCoupon?.bets}
+          initialsBets={bets}
           events={events}
           onBetClick={handleBetClick}
         />

@@ -88,7 +88,6 @@ export const BASE_KEY = "saved_strykis_";
 export class StorageService {
   private _localStorageAvailable = false;
 
-  private _drawNumber = -1;
   private _coupon: SavedCoupon | null = null;
 
   constructor() {
@@ -99,22 +98,20 @@ export class StorageService {
     return this._localStorageAvailable;
   }
 
-  set drawNumber(drawNumber: number) {
-    this._drawNumber = drawNumber;
-  }
-
-  get savedCoupon(): SavedCoupon | null {
-    if (!this.localStorageAvailable) return null;
+  public getCoupon(drawNumber: number) {
+    if (!this.localStorageAvailable) {
+      return null;
+    }
 
     if (this._coupon) {
       return this._coupon;
     }
 
-    const savedCoupon = getLocalStorage(BASE_KEY + this._drawNumber);
+    const savedCoupon = getLocalStorage(BASE_KEY + drawNumber);
 
     if (!savedCoupon) {
-      this.bets = initialSavedCoupon;
-      return { bets: this.bets, drawNumber: this.drawNumber };
+      const { bets } = this.setBets(initialSavedCoupon, drawNumber);
+      return { bets, drawNumber };
     }
 
     try {
@@ -127,11 +124,13 @@ export class StorageService {
     }
   }
 
-  set bets(bets: Bets) {
+  public setBets(bets: Bets, drawNumber: number) {
     const coupon: SavedCoupon = {
-      drawNumber: this._drawNumber,
+      drawNumber,
       bets,
     };
-    setLocalStorage(BASE_KEY + this._drawNumber, JSON.stringify(coupon));
+    setLocalStorage(BASE_KEY + drawNumber, JSON.stringify(coupon));
+
+    return coupon;
   }
 }

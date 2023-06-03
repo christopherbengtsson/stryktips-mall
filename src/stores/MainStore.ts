@@ -27,10 +27,6 @@ export class MainStore {
   public async init() {
     await this.fetchState();
 
-    if (this.drawNumber) {
-      this.storageService.drawNumber = this.drawNumber;
-    }
-
     this.setupWindowActiveListener();
   }
 
@@ -43,7 +39,7 @@ export class MainStore {
   }
 
   get drawNumber() {
-    return this.draws?.at(0)?.drawNumber;
+    return this.draws?.at(0)?.drawNumber ?? -1;
   }
 
   get draws() {
