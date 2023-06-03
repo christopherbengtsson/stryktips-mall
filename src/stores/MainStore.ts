@@ -83,7 +83,7 @@ export class MainStore {
     // Refetch state in background when user returns to tab
     document.addEventListener("visibilitychange", () => {
       if (document.visibilityState == "visible") {
-        this.fetchState({ inBackground: true });
+        this.fetchState({ inBackground: true, couponType: this.couponType });
       }
     });
   }

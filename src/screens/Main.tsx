@@ -59,7 +59,12 @@ export const Main = observer(function Main() {
   };
 
   const openStryktipset = () => {
-    const url = buildSvenskaSpelURL(store.drawNumber as number, bets, valid);
+    const url = buildSvenskaSpelURL({
+      drawNumber: store.drawNumber as number,
+      bets,
+      valid,
+      couponType: store.couponType,
+    });
     window.open(url, "_blank");
   };
 
