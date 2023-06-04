@@ -1,4 +1,5 @@
 import { ChangeEventHandler } from "react";
+import styled from "styled-components";
 
 export function Select({
   name,
@@ -12,12 +13,17 @@ export function Select({
   onChange: ChangeEventHandler<HTMLSelectElement>;
 }) {
   return (
-    <select name={name} value={value} onChange={onChange}>
+    <SelectBox name={name} value={value} onChange={onChange}>
       {options.map(({ label, value }) => (
         <option key={value} value={value}>
           {label}
         </option>
       ))}
-    </select>
+    </SelectBox>
   );
 }
+
+const SelectBox = styled.select`
+  height: 35px;
+  width: 30vw;
+`;
