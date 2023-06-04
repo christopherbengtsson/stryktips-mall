@@ -14,7 +14,9 @@ export function Select({
   return (
     <select name={name} value={value} onChange={onChange}>
       {options.map(({ label, value }) => (
-        <option value={value}>{label}</option>
+        <option key={value} value={value}>
+          {label}
+        </option>
       ))}
     </select>
   );
