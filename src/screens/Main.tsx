@@ -17,6 +17,18 @@ import { buildSvenskaSpelURL } from "../utils/stryktipsUrl";
 import { calculateCost } from "../utils/couponCost";
 import { Footer } from "../components/Layout/Footer";
 import { CouponType } from "../api";
+import { Select } from "../components/Select";
+
+const SELECT_OPTIONS = [
+  {
+    label: "Stryktipset",
+    value: "stryktipset",
+  },
+  {
+    label: "Europatipset",
+    value: "europatipset",
+  },
+];
 
 export const Main = observer(function Main() {
   const store = useMainStore();
@@ -84,15 +96,12 @@ export const Main = observer(function Main() {
 
   return (
     <Layout>
-      <select
-        name="coupon"
-        id="coupon-select"
+      <Select
+        name="coupon-select"
         value={store.couponType}
+        options={SELECT_OPTIONS}
         onChange={handleCouponChange}
-      >
-        <option value="stryktipset">Stryktipset</option>
-        <option value="europatipset">Europatipset</option>
-      </select>
+      />
 
       <Headline>
         {draw?.regCloseDescription ?? "Stryktipset öppnar tisdag kl. 07:00."}
