@@ -24,6 +24,6 @@ export function Select({
 }
 
 const SelectBox = styled.select`
-  height: 35px;
-  width: 30vw;
+  border: none;
+  padding: ${(p) => p.theme.spacing.xs} ${(p) => p.theme.spacing.s};
 `;

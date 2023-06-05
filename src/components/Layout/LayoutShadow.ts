@@ -1,20 +1,24 @@
-import { css } from 'styled-components';
-import { LayoutClassMap } from './Constants';
+import { css } from "styled-components";
+import { LayoutClassMap } from "./Constants";
 
 export const HeaderShadow = css`
   /* Shadow */
   &:after {
-    content: '';
+    content: "";
     width: 100%;
-    height: 1px;
+    height: 7px;
 
     position: absolute;
-    bottom: -1px;
+    bottom: -7px;
     left: 0;
 
     transition: opacity 0.15s ease-in-out;
     opacity: 0;
-    background: ${(p) => p.theme.tokens.palette.concreteSuperLight};
+    background: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.07),
+      rgba(0, 0, 0, 0)
+    );
   }
   &.${LayoutClassMap.gradientActive} {
     &:after {
@@ -25,15 +29,15 @@ export const HeaderShadow = css`
 
 export const FooterShadow = css`
   &:before {
-    content: '';
+    content: "";
     width: 100%;
-    height: 1px;
+    height: 7px;
 
     position: absolute;
-    top: -1px;
+    top: -7px;
     left: 0;
 
-    background: ${(p) => p.theme.tokens.palette.concreteSuperLight};
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.07), rgba(0, 0, 0, 0));
     opacity: 0;
     transition: opacity 0.15s ease-in-out;
   }

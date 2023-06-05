@@ -11,7 +11,7 @@ import { ChangeEventHandler, useMemo, useState } from "react";
 import styled from "styled-components";
 import { Trash2 as Trash } from "@styled-icons/evaicons-solid";
 import { SvenskaSpelIcon } from "../components/assets/icons";
-import { Body, Headline } from "../components/core/fonts";
+import { Body, Headline, Title1 } from "../components/core/fonts";
 import { OutlinedButton } from "../components/OutlinedButton";
 import { buildSvenskaSpelURL } from "../utils/stryktipsUrl";
 import { calculateCost } from "../utils/couponCost";
@@ -96,9 +96,17 @@ export const Main = observer(function Main() {
   return (
     <Layout
       scrollContainer
+      leftNavigationItem={
+        <Select
+          name="coupon-select"
+          value={store.couponType}
+          options={SELECT_OPTIONS}
+          onChange={handleCouponChange}
+        />
+      }
       footerProps={
         draw && (
-          <CoupongActionsContainer>
+          <CoupongActionsContainer padding>
             <OutlinedButton
               Icon={StyledSvenskaSpelIcon}
               onClick={openStryktipset}
@@ -110,16 +118,9 @@ export const Main = observer(function Main() {
         )
       }
     >
-      <Select
-        name="coupon-select"
-        value={store.couponType}
-        options={SELECT_OPTIONS}
-        onChange={handleCouponChange}
-      />
-
-      <Headline>
+      <Title1>
         {draw?.regCloseDescription ?? "Stryktipset öppnar tisdag kl. 07:00."}
-      </Headline>
+      </Title1>
 
       <SpaceBetweenContainer>
         <Body>Senast uppdaterad {store.lastUpdated?.toLocaleTimeString()}</Body>
@@ -156,7 +157,9 @@ const SpaceBetweenContainer = styled.div`
   align-items: center;
 `;
 
-const CoupongActionsContainer = styled.div`
+const CoupongActionsContainer = styled.div<{ padding?: boolean }>`
   display: flex;
   justify-content: flex-end;
+
+  ${(p) => p.padding && `padding: ${p.theme.spacing.xs} ${p.theme.spacing.s}`}
 `;

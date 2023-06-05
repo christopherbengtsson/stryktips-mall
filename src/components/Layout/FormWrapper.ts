@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { FORM_MAX_WIDTH_DESKTOP } from "../core/Constants";
 
 export const FormWrapper = styled.main`
   width: 100%;
@@ -15,8 +14,9 @@ export const FormContentContainer = styled.div<{ bottomPadding?: boolean }>`
   flex-direction: column;
   flex: 1 1 auto;
   width: 100%;
-  max-width: ${FORM_MAX_WIDTH_DESKTOP}px;
   margin: 0 auto;
+
+  gap: ${(p) => p.theme.spacing.m};
 
   ${(p) => p.theme.screens.small} {
     padding-left: ${(p) => p.theme.spacing.m};
