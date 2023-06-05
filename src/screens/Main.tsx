@@ -7,7 +7,7 @@ import {
   BettingState,
   initialSavedCoupon,
 } from "../stores/StorageService";
-import { useMemo, useState } from "react";
+import { ChangeEventHandler, useMemo, useState } from "react";
 import styled from "styled-components";
 import { Trash2 as Trash } from "@styled-icons/evaicons-solid";
 import { SvenskaSpelIcon } from "../components/assets/icons";
@@ -15,7 +15,19 @@ import { Body, Headline } from "../components/core/fonts";
 import { OutlinedButton } from "../components/OutlinedButton";
 import { buildSvenskaSpelURL } from "../utils/stryktipsUrl";
 import { calculateCost } from "../utils/couponCost";
-import { Footer } from "../components/Layout/OldFooter";
+import { CouponType } from "../api";
+import { Select } from "../components/Select";
+
+const SELECT_OPTIONS = [
+  {
+    label: "Stryktipset",
+    value: "stryktipset",
+  },
+  {
+    label: "Europatipset",
+    value: "europatipset",
+  },
+];
 
 export const Main = observer(function Main() {
   const store = useMainStore();
@@ -58,8 +70,27 @@ export const Main = observer(function Main() {
   };
 
   const openStryktipset = () => {
-    const url = buildSvenskaSpelURL(store.drawNumber as number, bets, valid);
+    const url = buildSvenskaSpelURL({
+      drawNumber: store.drawNumber as number,
+      bets,
+      valid,
+      couponType: store.couponType,
+    });
     window.open(url, "_blank");
+  };
+
+  const handleCouponChange: ChangeEventHandler<HTMLSelectElement> = async ({
+    target,
+  }) => {
+    if (target.value) {
+      const couponType = target.value as CouponType;
+      store.storageService.setCouponType(couponType);
+
+      await store.fetchState({ couponType });
+
+      const coupon = store.storageService.getCoupon(store.drawNumber);
+      setBets(coupon?.bets ?? []);
+    }
   };
 
   return (
@@ -79,6 +110,13 @@ export const Main = observer(function Main() {
         )
       }
     >
+      <Select
+        name="coupon-select"
+        value={store.couponType}
+        options={SELECT_OPTIONS}
+        onChange={handleCouponChange}
+      />
+
       <Headline>
         {draw?.regCloseDescription ?? "Stryktipset öppnar tisdag kl. 07:00."}
       </Headline>

@@ -1,3 +1,4 @@
+import { CouponType } from "../api";
 import {
   getLocalStorage,
   isLocalStorageAvailable,
@@ -88,8 +89,6 @@ export const BASE_KEY = "saved_strykis_";
 export class StorageService {
   private _localStorageAvailable = false;
 
-  private _coupon: SavedCoupon | null = null;
-
   constructor() {
     this._localStorageAvailable = isLocalStorageAvailable();
   }
@@ -98,13 +97,29 @@ export class StorageService {
     return this._localStorageAvailable;
   }
 
-  public getCoupon(drawNumber: number) {
+  public getCouponType(): CouponType | null {
     if (!this.localStorageAvailable) {
       return null;
     }
 
-    if (this._coupon) {
-      return this._coupon;
+    const couponType = getLocalStorage(BASE_KEY + "couponType");
+
+    if (couponType) {
+      return couponType as CouponType;
+    }
+
+    return null;
+  }
+
+  public setCouponType(couponType: CouponType) {
+    setLocalStorage(BASE_KEY + "couponType", couponType);
+
+    return couponType;
+  }
+
+  public getCoupon(drawNumber: number) {
+    if (!this.localStorageAvailable) {
+      return null;
     }
 
     const savedCoupon = getLocalStorage(BASE_KEY + drawNumber);
@@ -115,9 +130,7 @@ export class StorageService {
     }
 
     try {
-      const coupon = JSON.parse(savedCoupon);
-      this._coupon = coupon;
-      return this._coupon;
+      return JSON.parse(savedCoupon);
     } catch (error) {
       console.error(error);
       return null;

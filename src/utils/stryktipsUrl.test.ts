@@ -66,9 +66,9 @@ const baseBets: Bets = [
 
 describe("stryktipsUrl", () => {
   it("works with valid coupons", () => {
-    const result = buildSvenskaSpelURL(
-      123,
-      [
+    const result = buildSvenskaSpelURL({
+      drawNumber: 123,
+      bets: [
         {
           "1": "clicked",
           "2": "clicked",
@@ -76,8 +76,9 @@ describe("stryktipsUrl", () => {
         },
         ...baseBets,
       ],
-      true
-    );
+      valid: true,
+      couponType: "stryktipset",
+    });
 
     expect(result).toBe(
       "https://spela.svenskaspel.se/stryktipset?product=1&draw=123&signs=1%3A1%3B2%2C2%3A1%3BX%3B2%2C3%3A1%3BX%2C4%3AX%3B2%2C5%3A1%3B2%2C6%3AX%2C7%3A2%2C8%3A1%2C9%3A1%2C10%3A1%2C11%3A1%2C12%3A1%2C13%3A1&share=valid"
@@ -85,9 +86,9 @@ describe("stryktipsUrl", () => {
   });
 
   it("works with invalid coupons", () => {
-    const result = buildSvenskaSpelURL(
-      123,
-      [
+    const result = buildSvenskaSpelURL({
+      drawNumber: 123,
+      bets: [
         {
           "1": "unclicked",
           "2": "unclicked",
@@ -95,8 +96,9 @@ describe("stryktipsUrl", () => {
         },
         ...baseBets,
       ],
-      false
-    );
+      valid: false,
+      couponType: "stryktipset",
+    });
 
     expect(result).toBe(
       "https://spela.svenskaspel.se/stryktipset?product=1&draw=123&signs=2%3A1%3BX%3B2%2C3%3A1%3BX%2C4%3AX%3B2%2C5%3A1%3B2%2C6%3AX%2C7%3A2%2C8%3A1%2C9%3A1%2C10%3A1%2C11%3A1%2C12%3A1%2C13%3A1&share=invalid"
