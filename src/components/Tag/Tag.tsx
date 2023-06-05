@@ -7,6 +7,8 @@ const Container = styled.div<{ color?: string }>`
   border-radius: ${(p) => p.theme.radius.m};
   border: 1px solid ${(p) => p.color ?? "initial"};
   box-shadow: 0 0 0 2px ${(p) => darkenBackground(p.color ?? "initial")};
+  min-width: 48px;
+  text-align: center;
 `;
 
 export function Tag({ value }: { value: string }) {
@@ -19,7 +21,7 @@ export function Tag({ value }: { value: string }) {
 
 function getColorCode(value: string) {
   if (value === "-") {
-    return;
+    return "#ffffff";
   }
   const intensity = getColorIntensity(+value);
   return calculateHexColor(intensity);
