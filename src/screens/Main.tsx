@@ -11,7 +11,7 @@ import { ChangeEventHandler, useMemo, useState } from "react";
 import styled from "styled-components";
 import { Trash2 as Trash } from "@styled-icons/evaicons-solid";
 import { SvenskaSpelIcon } from "../components/assets/icons";
-import { Body, Headline, Title1 } from "../components/core/fonts";
+import { Body, Title1 } from "../components/core/fonts";
 import { OutlinedButton } from "../components/OutlinedButton";
 import { buildSvenskaSpelURL } from "../utils/stryktipsUrl";
 import { calculateCost } from "../utils/couponCost";
