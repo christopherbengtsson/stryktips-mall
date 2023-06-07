@@ -118,6 +118,6 @@ const BetsContainer = styled.div`
 
   ${(p) => p.theme.screens.small} {
     grid-column-end: 4;
-    margin-top: 0;
+    margin-top: ${(p) => p.theme.spacing.xs};
   }
 `;
