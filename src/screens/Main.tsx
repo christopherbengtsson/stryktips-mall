@@ -125,7 +125,13 @@ export const Main = observer(function Main() {
       }
     >
       <Header>
-        <Title1>{draw?.regCloseDescription ?? 'Stryktipset öppnar tisdag kl. 07:00.'}</Title1>
+        <Title1>
+          {draw?.regCloseDescription
+            ? draw?.regCloseDescription
+            : store.couponType === 'europatipset'
+            ? 'Europatipset öppnar snart för spel igen.'
+            : 'Stryktipset öppnar snart för spel igen.'}
+        </Title1>
 
         <SpaceBetweenContainer>
           <Body>Senast uppdaterad {store.lastUpdated?.toLocaleTimeString()}</Body>
