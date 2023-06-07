@@ -3,29 +3,14 @@ import { DrawEvent, FavouriteOdds, Odds, SvenskaFolket } from "../../api";
 import { Body } from "../core/fonts";
 import { Tag } from "../Tag";
 import { BaseStrategy } from "../BaseStrategy";
+import { oddsValue, transformData } from "../../utils/transformers";
 
-export type OddsLabel = "Odds" | "Svenska folket" | "Favoritskap";
+export type OddsLabel =
+  | "Odds"
+  | "Svenska folket"
+  | "Favoritskap"
+  | "Odds i procent";
 export type OddsType = Odds | SvenskaFolket | FavouriteOdds;
-
-const transformData = (type: OddsLabel, odds?: string) => {
-  if (type === "Favoritskap") {
-    return Math.floor(+(odds ?? 0)) + "%";
-  }
-
-  if (type === "Svenska folket") {
-    return odds + "%";
-  }
-
-  return odds ?? "-";
-};
-
-const oddsValue = (favoriteOdds?: string, svenskaFolket?: string) => {
-  if (!favoriteOdds || !svenskaFolket) {
-    return "-";
-  }
-
-  return (+favoriteOdds / +svenskaFolket).toFixed(2);
-};
 
 export function BetRow({
   title,
@@ -45,15 +30,9 @@ export function BetRow({
       <BetValues justifyStart={title === "Utgångspunkt"}>
         {title === "Spelvärde" ? (
           <>
-            <Tag
-              value={oddsValue(odds.favouriteOdds?.one, odds.svenskaFolket.one)}
-            />
-            <Tag
-              value={oddsValue(odds.favouriteOdds?.x, odds.svenskaFolket.x)}
-            />
-            <Tag
-              value={oddsValue(odds.favouriteOdds?.two, odds.svenskaFolket.two)}
-            />
+            <Tag value={oddsValue(odds.odds?.one, odds.svenskaFolket.one)} />
+            <Tag value={oddsValue(odds.odds?.x, odds.svenskaFolket.x)} />
+            <Tag value={oddsValue(odds.odds?.two, odds.svenskaFolket.two)} />
           </>
         ) : title === "Utgångspunkt" ? (
           <ul>

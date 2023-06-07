@@ -40,6 +40,7 @@ export function Table({
 
             <BetsContainer>
               <BetRow title="Odds" odds={event.odds} />
+              <BetRow title="Odds i procent" odds={event.odds} />
               <BetRow title="Favoritskap" odds={event.favouriteOdds} />
               <BetRow title="Svenska folket" odds={event.svenskaFolket} />
               <BetRow title="Spelvärde" odds={event} />
@@ -55,6 +56,7 @@ export function Table({
 const StyledList = styled.ol`
   margin-top: ${(p) => p.theme.spacing.xl}
   padding: 0;
+  border-left: 6px solid white;
 
   > li:nth-child(even) {
     background: ${(p) => p.theme.tokens.palette.fog};
