@@ -46,7 +46,10 @@ export const Main = observer(function Main() {
     });
   }, [bets]);
 
-  const totalCost = useMemo(() => calculateCost(bets), [bets]);
+  const { totalCost, totalCostIndetermined } = useMemo(
+    () => calculateCost(bets),
+    [bets]
+  );
 
   const handleBetClick = ({
     bet,
@@ -112,7 +115,10 @@ export const Main = observer(function Main() {
               onClick={openStryktipset}
               displayText
             >
-              {totalCost} KR
+              {totalCost === totalCostIndetermined
+                ? totalCost
+                : `${totalCost} (${totalCostIndetermined})`}{" "}
+              KR
             </OutlinedButton>
           </CoupongActionsContainer>
         )
