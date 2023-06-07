@@ -1,8 +1,8 @@
 export const LayoutIdMap = {
-  headerContainer: 'header-container',
-  footerContainer: 'footer-container',
-  scrollContainer: 'main-scroll-container',
-  modalHeaderContainer: 'modal-header-container',
+  headerContainer: "header-container",
+  footerContainer: "footer-container",
+  scrollContainer: "main-scroll-container",
+  modalHeaderContainer: "modal-header-container",
 };
 
 export const getScrollContainer = () => {
@@ -10,5 +10,5 @@ export const getScrollContainer = () => {
 };
 
 export const LayoutClassMap = {
-  gradientActive: 'gradient-active',
+  gradientActive: "gradient-active",
 };
