@@ -146,6 +146,7 @@ export const Main = observer(function Main() {
 
       {events && (
         <Table
+          couponType={store.couponType}
           initialsBets={bets}
           events={events}
           onBetClick={handleBetClick}

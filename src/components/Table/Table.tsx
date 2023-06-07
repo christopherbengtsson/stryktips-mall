@@ -1,4 +1,4 @@
-import { DrawEvent } from "../../api";
+import { CouponType, DrawEvent } from "../../api";
 import styled from "styled-components";
 import { Bets, BettingOption, BettingState } from "../../stores/StorageService";
 import { BetHeader } from "./BetHeader";
@@ -10,6 +10,7 @@ export function Table({
   events,
   initialsBets,
   onBetClick,
+  couponType,
 }: {
   events: DrawEvent[];
   initialsBets?: Bets;
@@ -18,6 +19,7 @@ export function Table({
     gameNumber: number;
     state: BettingState;
   }) => void;
+  couponType: CouponType;
 }) {
   const handleBetClick = (args: {
     bet: BettingOption;
@@ -29,7 +31,7 @@ export function Table({
 
   const handleEventClick = (eventNumber: number) => {
     window.open(
-      `https://spela.svenskaspel.se/stryktipset/statistik?event=${eventNumber}&openStatistic=`,
+      `https://spela.svenskaspel.se/${couponType}/statistik?event=${eventNumber}&openStatistic=`,
       "_blank"
     );
   };
