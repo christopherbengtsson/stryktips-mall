@@ -1,23 +1,39 @@
 import styled from "styled-components";
 import { Body } from "../core/fonts";
+import { useMemo } from "react";
 
-const Container = styled.div<{ color?: string }>`
+const Container = styled.div<{
+  backgroundColor?: string;
+  isDarkBackground?: boolean;
+}>`
   display: flex;
   justify-content: center;
   align-items: center;
 
-  background-color: ${(p) => p.color ?? "initial"};
+  background-color: ${(p) => p.backgroundColor ?? "initial"};
   padding: 0 ${(p) => p.theme.spacing.s};
-  border-radius: ${(p) => p.theme.radius.m};
-  border: 1px solid ${(p) => p.color ?? "initial"};
-  box-shadow: 0 0 0 2px ${(p) => darkenBackground(p.color ?? "initial")};
+  border-radius: ${(p) => p.theme.radius.tiny};
   min-width: 30px;
   text-align: center;
+  color: ${(p) => (p.isDarkBackground ? "white" : "black")};
+
+  ${(p) => p.theme.screens.large} {
+    border-radius: ${(p) => p.theme.radius.s};
+    box-shadow: inset 0 0 0 2px
+      ${(p) => darkenBackground(p.backgroundColor ?? "initial")};
+  }
 `;
 
 export function Tag({ value }: { value: string }) {
+  const { background, isDarkBackground } = useMemo(() => {
+    const background = getColorCode(value);
+    const isDarkBackground = isColorDark(background);
+
+    return { background, isDarkBackground };
+  }, [value]);
+
   return (
-    <Container color={getColorCode(value)}>
+    <Container backgroundColor={background} isDarkBackground={isDarkBackground}>
       <Body>{value}</Body>
     </Container>
   );
@@ -121,4 +137,37 @@ function convertToHex(rgbColor: [number, number, number]): string {
   const hexColor = `#${hexR}${hexG}${hexB}`;
 
   return hexColor;
+}
+
+function isColorDark(color: string): boolean {
+  // Convert the color string to a valid RGB value
+  const rgbColor = convertToRGB(color);
+
+  // Calculate the luminance of the RGB color
+  const luminance = calculateLuminance(rgbColor);
+
+  // Determine if the color is considered dark based on the luminance value
+  return luminance < 0.5; // Adjust the threshold as needed
+}
+
+function calculateLuminance(rgbColor: [number, number, number]): number {
+  const [r, g, b] = rgbColor;
+
+  // Convert RGB values to relative values
+  const rsrgb = r / 255;
+  const gsrgb = g / 255;
+  const bsrgb = b / 255;
+
+  // Calculate the luminance using the relative RGB values
+  const rL =
+    rsrgb <= 0.03928 ? rsrgb / 12.92 : Math.pow((rsrgb + 0.055) / 1.055, 2.4);
+  const gL =
+    gsrgb <= 0.03928 ? gsrgb / 12.92 : Math.pow((gsrgb + 0.055) / 1.055, 2.4);
+  const bL =
+    bsrgb <= 0.03928 ? bsrgb / 12.92 : Math.pow((bsrgb + 0.055) / 1.055, 2.4);
+
+  // Calculate the relative luminance value
+  const luminance = 0.2126 * rL + 0.7152 * gL + 0.0722 * bL;
+
+  return luminance;
 }

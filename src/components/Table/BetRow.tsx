@@ -56,11 +56,11 @@ const BetRowContainer = styled.div`
   grid-template-areas: "title stats";
   margin-top: ${(p) => p.theme.spacing.tiny};
   align-items: center;
+  padding: ${(p) => p.theme.spacing.tiny} 0;
+  border-bottom: 1px dashed #86848c;
 
   ${(p) => p.theme.screens.small} {
     grid-template-columns: auto minmax(102px, 30%);
-    margin-top: ${(p) => p.theme.spacing.tiny};
-    align-items: center;
   }
 `;
 
