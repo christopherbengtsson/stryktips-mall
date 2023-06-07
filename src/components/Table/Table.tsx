@@ -4,6 +4,7 @@ import { Bets, BettingOption, BettingState } from "../../stores/StorageService";
 import { BetHeader } from "./BetHeader";
 import { BetButtons } from "./BetButtons";
 import { BetRow } from "./BetRow";
+import { OutlinedButton } from "../OutlinedButton";
 
 export function Table({
   events,
@@ -18,12 +19,19 @@ export function Table({
     state: BettingState;
   }) => void;
 }) {
-  const handleClick = (args: {
+  const handleBetClick = (args: {
     bet: BettingOption;
     gameNumber: number;
     state: BettingState;
   }) => {
     onBetClick(args);
+  };
+
+  const handleEventClick = (eventNumber: number) => {
+    window.open(
+      `https://spela.svenskaspel.se/stryktipset/statistik?event=${eventNumber}&openStatistic=`,
+      "_blank"
+    );
   };
 
   return (
@@ -35,7 +43,7 @@ export function Table({
             <BetButtons
               event={event}
               initialBets={initialsBets}
-              onClick={handleClick}
+              onClick={handleBetClick}
             />
 
             <BetsContainer>
@@ -45,6 +53,14 @@ export function Table({
               <BetRow title="Svenska folket" odds={event.svenskaFolket} />
               <BetRow title="Spelvärde" odds={event} />
               <BetRow title="Utgångspunkt" odds={event} />
+            </BetsContainer>
+
+            <BetsContainer>
+              <OutlinedButton
+                onClick={() => handleEventClick(event.eventNumber)}
+              >
+                Analys
+              </OutlinedButton>
             </BetsContainer>
           </StyledListItem>
         );
