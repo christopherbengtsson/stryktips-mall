@@ -1,5 +1,5 @@
-import { ChangeEventHandler } from "react";
-import styled from "styled-components";
+import { ChangeEventHandler } from 'react';
+import styled from 'styled-components';
 
 export function Select({
   name,

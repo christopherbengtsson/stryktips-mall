@@ -1,15 +1,15 @@
-import { makeAutoObservable, observable, runInAction } from "mobx";
-import { ApiService, CouponType, StryktipsResponse } from "../api";
-import { StorageService } from "./StorageService";
-import { AnalysisResponse } from "../api/AnalysResponse";
+import { makeAutoObservable, observable, runInAction } from 'mobx';
+import { ApiService, CouponType, StryktipsResponse } from '../api';
+import { StorageService } from './StorageService';
+import { AnalysisResponse } from '../api/AnalysResponse';
 
-export type FetchingState = "DONE" | "LOADING" | "ERROR";
+export type FetchingState = 'DONE' | 'LOADING' | 'ERROR';
 
 export class MainStore {
   apiService: ApiService;
   storageService: StorageService;
 
-  fetchingState: FetchingState = "LOADING";
+  fetchingState: FetchingState = 'LOADING';
   stryktipsResponse: StryktipsResponse | null = null;
   analysisResponse: AnalysisResponse | null = null;
   lastUpdated: Date | null = null;
@@ -36,7 +36,7 @@ export class MainStore {
   }
 
   get isLoading() {
-    if (!this.drawNumber || this.fetchingState === "LOADING") {
+    if (!this.drawNumber || this.fetchingState === 'LOADING') {
       return true;
     }
 
@@ -44,7 +44,7 @@ export class MainStore {
   }
 
   get couponType() {
-    return this.storageService.getCouponType() ?? "stryktipset";
+    return this.storageService.getCouponType() ?? 'stryktipset';
   }
 
   get drawNumber() {
@@ -60,7 +60,7 @@ export class MainStore {
   }
 
   public async fetchState({
-    couponType = "stryktipset",
+    couponType = 'stryktipset',
     fetchAnalysis = this.showAnalysis,
     inBackground,
   }: {
@@ -69,17 +69,16 @@ export class MainStore {
     inBackground?: boolean;
   }) {
     if (!inBackground) {
-      this.fetchingState = "LOADING";
+      this.fetchingState = 'LOADING';
     }
 
     try {
-      const promises: [Promise<StryktipsResponse>, Promise<AnalysisResponse>?] =
-        [this.apiService.fetchLatestCoupon(couponType)];
+      const promises: [Promise<StryktipsResponse>, Promise<AnalysisResponse>?] = [
+        this.apiService.fetchLatestCoupon(couponType),
+      ];
 
       if (fetchAnalysis) {
-        promises.push(
-          this.apiService.fetchLatestAnalyse(this.couponType, this.drawNumber)
-        );
+        promises.push(this.apiService.fetchLatestAnalyse(this.couponType, this.drawNumber));
       }
 
       const [couponRes, analysisRes] = await Promise.all(promises);
@@ -89,24 +88,24 @@ export class MainStore {
         this.analysisResponse = analysisRes;
       }
     } catch (error) {
-      console.error("Error fetching state", error);
+      console.error('Error fetching state', error);
       runInAction(() => {
-        this.fetchingState = "ERROR";
+        this.fetchingState = 'ERROR';
       });
-      throw new Error("Server/Network error");
+      throw new Error('Server/Network error');
     }
   }
 
   private setCouponResponse(response: StryktipsResponse) {
     this.stryktipsResponse = response;
-    this.fetchingState = "DONE";
+    this.fetchingState = 'DONE';
     this.lastUpdated = new Date();
   }
 
   private setupWindowActiveListener() {
     // Refetch state in background when user returns to tab
-    document.addEventListener("visibilitychange", () => {
-      if (document.visibilityState == "visible") {
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState == 'visible') {
         this.fetchState({ inBackground: true, couponType: this.couponType });
       }
     });

@@ -1,5 +1,5 @@
-import { ChangeEventHandler } from "react";
-import styled from "styled-components";
+import { ChangeEventHandler } from 'react';
+import styled from 'styled-components';
 
 export function Checkbox({
   name,
@@ -15,13 +15,7 @@ export function Checkbox({
   return (
     <CheckboxContainer>
       <label htmlFor={name}>{label}</label>
-      <input
-        name={name}
-        id={name}
-        type="checkbox"
-        checked={checked}
-        onChange={onChange}
-      />
+      <input name={name} id={name} type="checkbox" checked={checked} onChange={onChange} />
     </CheckboxContainer>
   );
 }

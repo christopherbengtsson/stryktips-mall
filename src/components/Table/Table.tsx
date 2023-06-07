@@ -1,13 +1,13 @@
-import { CouponType, DrawEvent } from "../../api";
-import styled from "styled-components";
-import { Bets, BettingOption, BettingState } from "../../stores/StorageService";
-import { BetHeader } from "./BetHeader";
-import { BetButtons } from "./BetButtons";
-import { BetRow } from "./BetRow";
-import { OutlinedButton } from "../OutlinedButton";
-import { GameAnalyse } from "../../api/AnalysResponse";
-import { Caption } from "../core/fonts";
-import { stripHtml } from "string-strip-html";
+import { CouponType, DrawEvent } from '../../api';
+import styled from 'styled-components';
+import { Bets, BettingOption, BettingState } from '../../stores/StorageService';
+import { BetHeader } from './BetHeader';
+import { BetButtons } from './BetButtons';
+import { BetRow } from './BetRow';
+import { OutlinedButton } from '../OutlinedButton';
+import { GameAnalyse } from '../../api/AnalysResponse';
+import { Caption } from '../core/fonts';
+import { stripHtml } from 'string-strip-html';
 
 export function Table({
   events,
@@ -18,11 +18,7 @@ export function Table({
 }: {
   events: DrawEvent[];
   initialsBets?: Bets;
-  onBetClick: (args: {
-    bet: BettingOption;
-    gameNumber: number;
-    state: BettingState;
-  }) => void;
+  onBetClick: (args: { bet: BettingOption; gameNumber: number; state: BettingState }) => void;
   couponType: CouponType;
   gameAnalysis?: GameAnalyse[];
 }) {
@@ -37,7 +33,7 @@ export function Table({
   const handleEventClick = (eventNumber: number) => {
     window.open(
       `https://spela.svenskaspel.se/${couponType}/statistik?event=${eventNumber}&openStatistic=`,
-      "_blank"
+      '_blank',
     );
   };
 
@@ -48,11 +44,7 @@ export function Table({
         return (
           <StyledListItem key={event.eventDescription}>
             <BetHeader event={event} />
-            <BetButtons
-              event={event}
-              initialBets={initialsBets}
-              onClick={handleBetClick}
-            />
+            <BetButtons event={event} initialBets={initialsBets} onClick={handleBetClick} />
 
             <BetsContainer>
               <BetRow title="Odds" odds={event.odds} />
@@ -64,9 +56,7 @@ export function Table({
             </BetsContainer>
 
             <BetsContainer>
-              <OutlinedButton
-                onClick={() => handleEventClick(event.eventNumber)}
-              >
+              <OutlinedButton onClick={() => handleEventClick(event.eventNumber)}>
                 Statistik
               </OutlinedButton>
             </BetsContainer>
@@ -93,24 +83,21 @@ const StyledListItem = styled.li`
   display: grid;
   grid-template-columns: 48px auto fit-content(100%) minmax(150px, 30%);
   grid-template-areas:
-    "badge description mSign betbuttons"
-    "tipsinfo tipsinfo tipsinfo tipsinfo"
-    "matchanalyses matchanalyses matchanalyses matchanalyses"
-    "eventcomment eventcomment eventcomment eventcomment";
+    'badge description mSign betbuttons'
+    'tipsinfo tipsinfo tipsinfo tipsinfo'
+    'matchanalyses matchanalyses matchanalyses matchanalyses'
+    'eventcomment eventcomment eventcomment eventcomment';
 
   align-items: center;
   padding: ${(p) => p.theme.spacing.s};
 
   ${(p) => p.theme.screens.small} {
-    grid-template-columns: minmax(100px, 1fr) fit-content(100%) minmax(
-        102px,
-        30%
-      );
+    grid-template-columns: minmax(100px, 1fr) fit-content(100%) minmax(102px, 30%);
     grid-template-areas:
-      "description mSign betbuttons"
-      "tipsinfo tipsinfo tipsinfo"
-      "eventcomment eventcomment eventcomment"
-      "matchanalyses matchanalyses matchanalyses";
+      'description mSign betbuttons'
+      'tipsinfo tipsinfo tipsinfo'
+      'eventcomment eventcomment eventcomment'
+      'matchanalyses matchanalyses matchanalyses';
 
     padding: ${(p) => p.theme.spacing.tiny} ${(p) => p.theme.spacing.s}
       ${(p) => p.theme.spacing.tiny} ${(p) => p.theme.spacing.xs};

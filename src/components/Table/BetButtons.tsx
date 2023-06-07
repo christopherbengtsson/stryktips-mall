@@ -1,7 +1,7 @@
-import styled from "styled-components";
-import { DrawEvent } from "../../api";
-import { BetButton } from "../BetButton";
-import { Bets, BettingOption, BettingState } from "../../stores/StorageService";
+import styled from 'styled-components';
+import { DrawEvent } from '../../api';
+import { BetButton } from '../BetButton';
+import { Bets, BettingOption, BettingState } from '../../stores/StorageService';
 
 export function BetButtons({
   event,
@@ -10,11 +10,7 @@ export function BetButtons({
 }: {
   event: DrawEvent;
   initialBets?: Bets;
-  onClick: (args: {
-    bet: BettingOption;
-    gameNumber: number;
-    state: BettingState;
-  }) => void;
+  onClick: (args: { bet: BettingOption; gameNumber: number; state: BettingState }) => void;
 }) {
   return (
     <BetButtonsContainer>
@@ -22,20 +18,16 @@ export function BetButtons({
         bet={1}
         gameNumber={event.eventNumber}
         onClick={onClick}
-        initialState={
-          initialBets ? initialBets[event.eventNumber - 1]?.[1] : undefined
-        }
+        initialState={initialBets ? initialBets[event.eventNumber - 1]?.[1] : undefined}
       >
         1
       </BetButton>
 
       <BetButton
-        bet={"X"}
+        bet={'X'}
         gameNumber={event.eventNumber}
         onClick={onClick}
-        initialState={
-          initialBets ? initialBets[event.eventNumber - 1]?.X : undefined
-        }
+        initialState={initialBets ? initialBets[event.eventNumber - 1]?.X : undefined}
       >
         X
       </BetButton>
@@ -44,9 +36,7 @@ export function BetButtons({
         bet={2}
         gameNumber={event.eventNumber}
         onClick={onClick}
-        initialState={
-          initialBets ? initialBets[event.eventNumber - 1]?.[2] : undefined
-        }
+        initialState={initialBets ? initialBets[event.eventNumber - 1]?.[2] : undefined}
       >
         2
       </BetButton>

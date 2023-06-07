@@ -1,2 +1,2 @@
-export * from "./ApiService";
-export * from "./StryktipsResponse";
+export * from './ApiService';
+export * from './StryktipsResponse';

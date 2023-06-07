@@ -1,6 +1,6 @@
-import { observer } from "mobx-react";
-import { Main } from "./screens/Main";
-import { useMainStore } from "./stores/useMainStore";
+import { observer } from 'mobx-react';
+import { Main } from './screens/Main';
+import { useMainStore } from './stores/useMainStore';
 
 export const Routes = observer(function Routes() {
   const store = useMainStore();

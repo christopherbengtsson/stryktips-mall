@@ -1,6 +1,6 @@
-import styled from "styled-components";
-import { Subtitle } from "../core/fonts";
-import { DrawEvent } from "../../api";
+import styled from 'styled-components';
+import { Subtitle } from '../core/fonts';
+import { DrawEvent } from '../../api';
 
 export function BetHeader({ event }: { event: DrawEvent }) {
   return (

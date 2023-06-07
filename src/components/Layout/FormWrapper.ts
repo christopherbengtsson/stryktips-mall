@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const FormWrapper = styled.main`
   width: 100%;
@@ -18,5 +18,5 @@ export const FormContentContainer = styled.div<{ bottomPadding?: boolean }>`
 
   gap: ${(p) => p.theme.spacing.m};
 
-  padding-bottom: ${(p) => (p.bottomPadding ? p.theme.spacing.xs : "0")};
+  padding-bottom: ${(p) => (p.bottomPadding ? p.theme.spacing.xs : '0')};
 `;

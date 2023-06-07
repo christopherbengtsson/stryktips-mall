@@ -1,24 +1,21 @@
-import { render, RenderOptions } from "@testing-library/react";
-import { ReactElement } from "react";
-import { MainStore } from "../stores/MainStore";
-import { Providers } from "./Providers";
+import { render, RenderOptions } from '@testing-library/react';
+import { ReactElement } from 'react';
+import { MainStore } from '../stores/MainStore';
+import { Providers } from './Providers';
 
-type CustomRenderOptions = Omit<RenderOptions, "wrapper"> & {
+type CustomRenderOptions = Omit<RenderOptions, 'wrapper'> & {
   store?: MainStore;
 };
 
-const customRender = (
-  ui: ReactElement,
-  { store, ...options }: CustomRenderOptions = {}
-) => {
+const customRender = (ui: ReactElement, { store, ...options }: CustomRenderOptions = {}) => {
   return render(ui, {
     wrapper: ({ children }) => <Providers store={store}>{children}</Providers>,
     ...options,
   });
 };
 
-export { screen, waitFor, within, act } from "@testing-library/react";
-export { default as userEvent } from "@testing-library/user-event";
+export { screen, waitFor, within, act } from '@testing-library/react';
+export { default as userEvent } from '@testing-library/user-event';
 export { customRender as render };
 
 export const suppressErrorLog = async (fn: () => Promise<void> | void) => {

@@ -1,8 +1,8 @@
-import { FunctionComponent, ReactNode } from "react";
-import styled, { css } from "styled-components";
-import { Body } from "../core/fonts";
-import type { StyledIcon } from "styled-icons/types";
-import { isMobile } from "../../utils/device";
+import { FunctionComponent, ReactNode } from 'react';
+import styled, { css } from 'styled-components';
+import { Body } from '../core/fonts';
+import type { StyledIcon } from 'styled-icons/types';
+import { isMobile } from '../../utils/device';
 
 export interface OutlineButtonProps {
   onClick?: () => void;
@@ -10,7 +10,7 @@ export interface OutlineButtonProps {
   mediumWeight?: boolean;
   disabled?: boolean;
   className?: string;
-  "data-testid"?: string;
+  'data-testid'?: string;
   Icon?: StyledIcon | FunctionComponent<React.SVGAttributes<SVGElement>>;
   displayText?: boolean;
 }

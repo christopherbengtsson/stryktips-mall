@@ -1,11 +1,11 @@
-import { ReactNode } from "react";
-import { AppContainer } from "./AppContainer";
-import { Footer } from "./Footer";
-import { FormContentContainer, FormWrapper } from "./FormWrapper";
-import { NavigationHeader } from "./NavigationHeader";
-import { ScrollContainer } from "./ScrollContainer";
-import { handleLayoutScroll } from "./handleLayoutScroll";
-import { LayoutIdMap } from "./Constants";
+import { ReactNode } from 'react';
+import { AppContainer } from './AppContainer';
+import { Footer } from './Footer';
+import { FormContentContainer, FormWrapper } from './FormWrapper';
+import { NavigationHeader } from './NavigationHeader';
+import { ScrollContainer } from './ScrollContainer';
+import { handleLayoutScroll } from './handleLayoutScroll';
+import { LayoutIdMap } from './Constants';
 
 export interface LayoutProps {
   hideHeader?: boolean;
@@ -49,9 +49,7 @@ export function Layout({
   children,
   footerProps,
 }: LayoutProps) {
-  const ScrollWrapper = scrollContainer
-    ? WrapperScrollContainer
-    : EmptyContainer;
+  const ScrollWrapper = scrollContainer ? WrapperScrollContainer : EmptyContainer;
 
   return (
     <AppContainer>
@@ -65,9 +63,7 @@ export function Layout({
 
       <FormWrapper>
         <ScrollWrapper>
-          <FormContentContainer bottomPadding={bottomPadding}>
-            {children}
-          </FormContentContainer>
+          <FormContentContainer bottomPadding={bottomPadding}>{children}</FormContentContainer>
         </ScrollWrapper>
       </FormWrapper>
       <Footer>{footerProps}</Footer>

@@ -1,6 +1,6 @@
-import { ReactNode, useState } from "react";
-import styled, { css } from "styled-components";
-import { BettingOption, BettingState } from "../../stores/StorageService";
+import { ReactNode, useState } from 'react';
+import styled, { css } from 'styled-components';
+import { BettingOption, BettingState } from '../../stores/StorageService';
 
 export function BetButton({
   initialState,
@@ -12,31 +12,25 @@ export function BetButton({
   initialState?: BettingState;
   gameNumber: number;
   bet: BettingOption;
-  onClick: (args: {
-    bet: BettingOption;
-    gameNumber: number;
-    state: BettingState;
-  }) => void;
+  onClick: (args: { bet: BettingOption; gameNumber: number; state: BettingState }) => void;
   children: ReactNode;
 }) {
-  const [clicked, setClicked] = useState<BettingState>(
-    initialState ?? "unclicked"
-  );
+  const [clicked, setClicked] = useState<BettingState>(initialState ?? 'unclicked');
 
   const handleClick = () => {
     let state: BettingState;
 
     switch (clicked) {
-      case "unclicked":
-        state = "clicked";
+      case 'unclicked':
+        state = 'clicked';
         break;
 
-      case "clicked":
-        state = "indeterminate";
+      case 'clicked':
+        state = 'indeterminate';
         break;
 
-      case "indeterminate":
-        state = "unclicked";
+      case 'indeterminate':
+        state = 'unclicked';
         break;
     }
 
@@ -46,7 +40,7 @@ export function BetButton({
 
   return (
     <BetBtn clicked={clicked} onClick={handleClick}>
-      <IndeterminateState indeterminate={clicked === "indeterminate"}>
+      <IndeterminateState indeterminate={clicked === 'indeterminate'}>
         {children}
       </IndeterminateState>
     </BetBtn>
@@ -71,11 +65,11 @@ const BetBtn = styled.button<{ clicked: BettingState }>`
       border-radius: ${props.theme.radius.s};
       border: ${props.theme.tokens.border.default.size} solid
         ${props.theme.tokens.palette.almostBlack};
-      background-color: ${props.clicked === "clicked"
+      background-color: ${props.clicked === 'clicked'
         ? props.theme.tokens.palette.deepOcean
         : props.theme.tokens.palette.white};
       color: ${themed.font.color.default};
-      color: ${props.clicked === "unclicked"
+      color: ${props.clicked === 'unclicked'
         ? props.theme.tokens.palette.almostBlack
         : themed.font.color.default};
       &:disabled {

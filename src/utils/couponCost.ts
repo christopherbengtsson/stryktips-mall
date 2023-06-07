@@ -1,4 +1,4 @@
-import { Bets } from "../stores/StorageService";
+import { Bets } from '../stores/StorageService';
 
 export function calculateCost(data: Bets) {
   const costPerBet = 1;
@@ -11,11 +11,11 @@ export function calculateCost(data: Bets) {
     let indetermined = 0;
 
     Object.values(item).forEach((bet) => {
-      if (bet === "clicked") {
+      if (bet === 'clicked') {
         garderingar += 1;
         indetermined += 1;
       }
-      if (bet === "indeterminate") {
+      if (bet === 'indeterminate') {
         indetermined += 1;
       }
     });

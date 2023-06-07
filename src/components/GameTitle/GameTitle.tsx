@@ -1,14 +1,8 @@
-import styled from "styled-components";
-import { Subtitle } from "../core/fonts";
-import { isMobile } from "../../utils/device";
+import styled from 'styled-components';
+import { Subtitle } from '../core/fonts';
+import { isMobile } from '../../utils/device';
 
-export function GameTitle({
-  title,
-  gameNumber,
-}: {
-  title: string;
-  gameNumber: number;
-}) {
+export function GameTitle({ title, gameNumber }: { title: string; gameNumber: number }) {
   const mobile = isMobile();
 
   return (

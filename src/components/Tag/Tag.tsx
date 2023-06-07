@@ -1,6 +1,6 @@
-import styled from "styled-components";
-import { Body } from "../core/fonts";
-import { useMemo } from "react";
+import styled from 'styled-components';
+import { Body } from '../core/fonts';
+import { useMemo } from 'react';
 
 const Container = styled.div<{
   backgroundColor?: string;
@@ -10,17 +10,16 @@ const Container = styled.div<{
   justify-content: center;
   align-items: center;
 
-  background-color: ${(p) => p.backgroundColor ?? "initial"};
+  background-color: ${(p) => p.backgroundColor ?? 'initial'};
   padding: 0 ${(p) => p.theme.spacing.s};
   border-radius: ${(p) => p.theme.radius.tiny};
   min-width: 30px;
   text-align: center;
-  color: ${(p) => (p.isDarkBackground ? "white" : "black")};
+  color: ${(p) => (p.isDarkBackground ? 'white' : 'black')};
 
   ${(p) => p.theme.screens.large} {
     border-radius: ${(p) => p.theme.radius.s};
-    box-shadow: inset 0 0 0 2px
-      ${(p) => darkenBackground(p.backgroundColor ?? "initial")};
+    box-shadow: inset 0 0 0 2px ${(p) => darkenBackground(p.backgroundColor ?? 'initial')};
   }
 `;
 
@@ -40,8 +39,8 @@ export function Tag({ value }: { value: string }) {
 }
 
 function getColorCode(value: string) {
-  if (value === "-") {
-    return "#ffffff";
+  if (value === '-') {
+    return '#ffffff';
   }
   const intensity = getColorIntensity(+value);
   return calculateHexColor(intensity);
@@ -84,7 +83,7 @@ function calculateHexColor(intensity: number): string {
     t = Math.round(510 - 5.1 * intensity);
   }
 
-  return "#" + ("000000" + (65536 * t + 256 * n + 0).toString(16)).slice(-6);
+  return '#' + ('000000' + (65536 * t + 256 * n + 0).toString(16)).slice(-6);
 }
 
 function darkenBackground(color: string): string {
@@ -101,7 +100,7 @@ function darkenBackground(color: string): string {
 }
 
 function convertToRGB(color: string): [number, number, number] {
-  const hexColor = color.replace("#", "");
+  const hexColor = color.replace('#', '');
 
   // Split the hex color into RGB components
   const r = parseInt(hexColor.substr(0, 2), 16);
@@ -111,10 +110,7 @@ function convertToRGB(color: string): [number, number, number] {
   return [r, g, b];
 }
 
-function darkenRGB(
-  rgbColor: [number, number, number],
-  amount: number
-): [number, number, number] {
+function darkenRGB(rgbColor: [number, number, number], amount: number): [number, number, number] {
   const [r, g, b] = rgbColor;
 
   // Reduce the brightness of each RGB component
@@ -129,9 +125,9 @@ function convertToHex(rgbColor: [number, number, number]): string {
   const [r, g, b] = rgbColor;
 
   // Convert the RGB components to hex values
-  const hexR = r.toString(16).padStart(2, "0");
-  const hexG = g.toString(16).padStart(2, "0");
-  const hexB = b.toString(16).padStart(2, "0");
+  const hexR = r.toString(16).padStart(2, '0');
+  const hexG = g.toString(16).padStart(2, '0');
+  const hexB = b.toString(16).padStart(2, '0');
 
   // Combine the hex values into a hex color code
   const hexColor = `#${hexR}${hexG}${hexB}`;
@@ -159,12 +155,9 @@ function calculateLuminance(rgbColor: [number, number, number]): number {
   const bsrgb = b / 255;
 
   // Calculate the luminance using the relative RGB values
-  const rL =
-    rsrgb <= 0.03928 ? rsrgb / 12.92 : Math.pow((rsrgb + 0.055) / 1.055, 2.4);
-  const gL =
-    gsrgb <= 0.03928 ? gsrgb / 12.92 : Math.pow((gsrgb + 0.055) / 1.055, 2.4);
-  const bL =
-    bsrgb <= 0.03928 ? bsrgb / 12.92 : Math.pow((bsrgb + 0.055) / 1.055, 2.4);
+  const rL = rsrgb <= 0.03928 ? rsrgb / 12.92 : Math.pow((rsrgb + 0.055) / 1.055, 2.4);
+  const gL = gsrgb <= 0.03928 ? gsrgb / 12.92 : Math.pow((gsrgb + 0.055) / 1.055, 2.4);
+  const bL = bsrgb <= 0.03928 ? bsrgb / 12.92 : Math.pow((bsrgb + 0.055) / 1.055, 2.4);
 
   // Calculate the relative luminance value
   const luminance = 0.2126 * rL + 0.7152 * gL + 0.0722 * bL;

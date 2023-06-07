@@ -1,5 +1,5 @@
-import { ReactNode } from "react";
-import styled from "styled-components";
+import { ReactNode } from 'react';
+import styled from 'styled-components';
 
 export function Footer({ children }: { children: ReactNode }) {
   return <StyledFooterContainer>{children}</StyledFooterContainer>;

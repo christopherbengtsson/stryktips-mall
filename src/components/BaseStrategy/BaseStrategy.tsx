@@ -1,5 +1,5 @@
-import { SvenskaFolket } from "../../api";
-import { Body } from "../core/fonts";
+import { SvenskaFolket } from '../../api';
+import { Body } from '../core/fonts';
 
 export function BaseStrategy({ peoplesOdds }: { peoplesOdds: SvenskaFolket }) {
   const procenttalOne: number = parseFloat(peoplesOdds.one);
@@ -76,10 +76,7 @@ export function BaseStrategy({ peoplesOdds }: { peoplesOdds: SvenskaFolket }) {
           <Body>Gardera 2</Body>
         </li>
       );
-    } else if (
-      (procenttalTwo >= 7 && procenttalTwo <= 29) ||
-      procenttalTwo >= 90
-    ) {
+    } else if ((procenttalTwo >= 7 && procenttalTwo <= 29) || procenttalTwo >= 90) {
       return (
         <li>
           <Body>Lönsam 2</Body>

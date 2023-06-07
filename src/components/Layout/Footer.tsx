@@ -1,8 +1,8 @@
-import styled from "styled-components";
-import { LayoutIdMap } from "./Constants";
+import styled from 'styled-components';
+import { LayoutIdMap } from './Constants';
 
-import { ReactNode } from "react";
-import { FooterShadow } from "./LayoutShadow";
+import { ReactNode } from 'react';
+import { FooterShadow } from './LayoutShadow';
 
 const FooterContainer = styled.footer`
   flex-shrink: 0;
@@ -23,9 +23,5 @@ export interface FooterProps {
   children?: ReactNode;
 }
 export function Footer({ children }: FooterProps) {
-  return (
-    <FooterContainer id={LayoutIdMap.footerContainer}>
-      {children}
-    </FooterContainer>
-  );
+  return <FooterContainer id={LayoutIdMap.footerContainer}>{children}</FooterContainer>;
 }

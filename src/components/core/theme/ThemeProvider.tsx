@@ -1,12 +1,12 @@
-import { ReactNode, useLayoutEffect, useMemo } from "react";
-import { ThemeProvider as StyledThemeProvider } from "styled-components";
-import { createTheme, ThemeVariants } from "./createTheme";
-import "./styles/reset.css";
-import "./styles/style.css";
+import { ReactNode, useLayoutEffect, useMemo } from 'react';
+import { ThemeProvider as StyledThemeProvider } from 'styled-components';
+import { createTheme, ThemeVariants } from './createTheme';
+import './styles/reset.css';
+import './styles/style.css';
 
 export function ThemeProvider({
   children,
-  variant = "light",
+  variant = 'light',
 }: {
   variant?: ThemeVariants;
   children: ReactNode;
@@ -16,7 +16,7 @@ export function ThemeProvider({
   useLayoutEffect(() => {
     const css = createCssVarsFromPalette(theme.tokens.palette);
 
-    const style = document.createElement("style");
+    const style = document.createElement('style');
     document.head.prepend(style);
     style.appendChild(document.createTextNode(css));
 
@@ -35,7 +35,7 @@ function createCssVarsFromPalette(palette: Record<string, string>) {
   const cssVars = Object.entries(palette).reduce((acc, curr) => {
     acc += `--${curr[0]}: ${curr[1]};\n`;
     return acc;
-  }, "");
+  }, '');
   const css = `:root {${cssVars}}`;
   return css;
 }

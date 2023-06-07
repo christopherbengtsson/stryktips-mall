@@ -1,9 +1,9 @@
-import { ReactNode } from "react";
-import styled from "styled-components";
+import { ReactNode } from 'react';
+import styled from 'styled-components';
 
-import { LayoutIdMap } from "./Constants";
-import { HeaderShadow } from "./LayoutShadow";
-import { HEADER_HEIGHT } from "../core/Constants";
+import { LayoutIdMap } from './Constants';
+import { HeaderShadow } from './LayoutShadow';
+import { HEADER_HEIGHT } from '../core/Constants';
 
 interface HeaderProps {
   leftNavigationItem?: ReactNode;

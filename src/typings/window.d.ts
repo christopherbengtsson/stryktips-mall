@@ -1,4 +1,4 @@
-import { MainStore } from "../stores/MainStore";
+import { MainStore } from '../stores/MainStore';
 
 export {};
 declare global {

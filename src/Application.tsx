@@ -1,9 +1,9 @@
-import { isDev } from "./Constants";
-import { Routes } from "./Routes";
-import { ThemeProvider } from "./components/core/theme";
+import { isDev } from './Constants';
+import { Routes } from './Routes';
+import { ThemeProvider } from './components/core/theme';
 
-import { MainStore } from "./stores/MainStore";
-import { MainStoreProvider } from "./stores/Providers/MainStoreProvider";
+import { MainStore } from './stores/MainStore';
+import { MainStoreProvider } from './stores/Providers/MainStoreProvider';
 
 const store = new MainStore();
 store.init();

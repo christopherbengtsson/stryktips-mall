@@ -1,7 +1,7 @@
-import styled from "styled-components";
-import { AppTheme } from "./theme";
+import styled from 'styled-components';
+import { AppTheme } from './theme';
 
-export type AppThemeColor = keyof AppTheme["font"]["color"];
+export type AppThemeColor = keyof AppTheme['font']['color'];
 
 export interface TypographyProps {
   color?: AppThemeColor;
@@ -24,9 +24,9 @@ const StyledHeadline = styled.h1<MappedProps>((p) => {
     fontSize: headline.size,
     fontWeight: headline.weight,
     lineHeight: headline.lineHeight,
-    color: p.color ? p.theme.font.color[p.color] : "inherit",
-    overflowWrap: "break-word",
-    outline: "none",
+    color: p.color ? p.theme.font.color[p.color] : 'inherit',
+    overflowWrap: 'break-word',
+    outline: 'none',
   };
 });
 
@@ -36,24 +36,19 @@ export function Headline({ children, ...props }: TitleProps) {
 
 /** @description h1 tag. Default 24px, 28px when large */
 const StyledTitle1 = styled.h1<MappedProps & { large?: boolean }>((p) => {
-  const title = p.large
-    ? p.theme.tokens.font.title1
-    : p.theme.tokens.font.title2;
+  const title = p.large ? p.theme.tokens.font.title1 : p.theme.tokens.font.title2;
   return {
     fontFamily: title.family,
     fontSize: title.size,
     fontWeight: title.weight,
     lineHeight: title.lineHeight,
-    color: p.color ? p.theme.font.color[p.color] : "inherit",
-    overflowWrap: "break-word",
-    outline: "none",
+    color: p.color ? p.theme.font.color[p.color] : 'inherit',
+    overflowWrap: 'break-word',
+    outline: 'none',
   };
 });
 
-export function Title1({
-  children,
-  ...props
-}: TitleProps & { large?: boolean }) {
+export function Title1({ children, ...props }: TitleProps & { large?: boolean }) {
   return <StyledTitle1 {...props}>{children}</StyledTitle1>;
 }
 
@@ -65,9 +60,9 @@ export const StyledTitle2 = styled.h2<MappedProps>((p) => {
     fontSize: title.size,
     fontWeight: title.weight,
     lineHeight: title.lineHeight,
-    color: p.color ? p.theme.font.color[p.color] : "inherit",
-    overflowWrap: "break-word",
-    outline: "none",
+    color: p.color ? p.theme.font.color[p.color] : 'inherit',
+    overflowWrap: 'break-word',
+    outline: 'none',
   };
 });
 
@@ -83,9 +78,9 @@ export const Subtitle = styled.h2<MappedProps>`
       fontSize: title.size,
       fontWeight: title.weight,
       lineHeight: title.lineHeight,
-      color: p.color ? p.theme.font.color[p.color] : "inherit",
-      overflowWrap: "break-word",
-      hyphens: "auto",
+      color: p.color ? p.theme.font.color[p.color] : 'inherit',
+      overflowWrap: 'break-word',
+      hyphens: 'auto',
     };
   }}
 
@@ -97,7 +92,7 @@ export const Subtitle = styled.h2<MappedProps>`
         fontSize: title.size,
         fontWeight: title.weight,
         lineHeight: title.lineHeight,
-        color: p.color ? p.theme.font.color[p.color] : "inherit",
+        color: p.color ? p.theme.font.color[p.color] : 'inherit',
       };
     }}
   }
@@ -111,7 +106,7 @@ export const Body = styled.span<MappedProps>`
       fontSize: title.size,
       fontWeight: title.weight,
       lineHeight: title.lineHeight,
-      color: p.color ? p.theme.font.color[p.color] : "inherit",
+      color: p.color ? p.theme.font.color[p.color] : 'inherit',
     };
   }}
   ${(p) => p.theme.screens.small} {
@@ -122,7 +117,7 @@ export const Body = styled.span<MappedProps>`
         fontSize: title.size,
         fontWeight: title.weight,
         lineHeight: title.lineHeight,
-        color: p.color ? p.theme.font.color[p.color] : "inherit",
+        color: p.color ? p.theme.font.color[p.color] : 'inherit',
       };
     }}
   }
@@ -139,7 +134,7 @@ export const SmallBody = styled.span<MappedProps>((p) => {
     fontSize: title.size,
     fontWeight: title.weight,
     lineHeight: title.lineHeight,
-    color: p.color ? p.theme.font.color[p.color] : "inherit",
+    color: p.color ? p.theme.font.color[p.color] : 'inherit',
   };
 });
 
@@ -154,7 +149,7 @@ export const Caption = styled.span<MappedProps>((p) => {
     fontSize: title.size,
     fontWeight: title.weight,
     lineHeight: title.lineHeight,
-    color: p.color ? p.theme.font.color[p.color] : "inherit",
+    color: p.color ? p.theme.font.color[p.color] : 'inherit',
   };
 });
 export const CaptionMedium = styled(Caption)`
@@ -168,6 +163,6 @@ export const Tiny = styled.span<MappedProps>((p) => {
     fontSize: title.size,
     fontWeight: title.weight,
     lineHeight: title.lineHeight,
-    color: p.color ? p.theme.font.color[p.color] : "inherit",
+    color: p.color ? p.theme.font.color[p.color] : 'inherit',
   };
 });

@@ -1,32 +1,27 @@
-import { observer } from "mobx-react";
-import { Layout, Table } from "../components";
-import { useMainStore } from "../stores/useMainStore";
-import {
-  Bets,
-  BettingOption,
-  BettingState,
-  initialSavedCoupon,
-} from "../stores/StorageService";
-import { ChangeEventHandler, useMemo, useState } from "react";
-import styled from "styled-components";
-import { Trash2 as Trash } from "@styled-icons/evaicons-solid";
-import { SvenskaSpelIcon } from "../components/assets/icons";
-import { Body, Title1 } from "../components/core/fonts";
-import { OutlinedButton } from "../components/OutlinedButton";
-import { buildSvenskaSpelURL } from "../utils/stryktipsUrl";
-import { calculateCost } from "../utils/couponCost";
-import { CouponType } from "../api";
-import { Select } from "../components/Select";
-import { Checkbox } from "../components/Checkbox";
+import { observer } from 'mobx-react';
+import { Layout, Table } from '../components';
+import { useMainStore } from '../stores/useMainStore';
+import { Bets, BettingOption, BettingState, initialSavedCoupon } from '../stores/StorageService';
+import { ChangeEventHandler, useMemo, useState } from 'react';
+import styled from 'styled-components';
+import { Trash2 as Trash } from '@styled-icons/evaicons-solid';
+import { SvenskaSpelIcon } from '../components/assets/icons';
+import { Body, Title1 } from '../components/core/fonts';
+import { OutlinedButton } from '../components/OutlinedButton';
+import { buildSvenskaSpelURL } from '../utils/stryktipsUrl';
+import { calculateCost } from '../utils/couponCost';
+import { CouponType } from '../api';
+import { Select } from '../components/Select';
+import { Checkbox } from '../components/Checkbox';
 
 const SELECT_OPTIONS = [
   {
-    label: "Stryktipset",
-    value: "stryktipset",
+    label: 'Stryktipset',
+    value: 'stryktipset',
   },
   {
-    label: "Europatipset",
-    value: "europatipset",
+    label: 'Europatipset',
+    value: 'europatipset',
   },
 ];
 
@@ -36,22 +31,17 @@ export const Main = observer(function Main() {
   const events = draw?.drawEvents;
 
   const [bets, setBets] = useState<Bets>(
-    store.storageService.getCoupon(store.drawNumber)?.bets ?? []
+    store.storageService.getCoupon(store.drawNumber)?.bets ?? [],
   );
   const [showAnalysis, setShowAnalysis] = useState(store.showAnalysis);
 
   const valid = useMemo(() => {
     return bets.every((bet) => {
-      return (
-        bet[1] === "clicked" || bet.X === "clicked" || bet[2] === "clicked"
-      );
+      return bet[1] === 'clicked' || bet.X === 'clicked' || bet[2] === 'clicked';
     });
   }, [bets]);
 
-  const { totalCost, totalCostIndetermined } = useMemo(
-    () => calculateCost(bets),
-    [bets]
-  );
+  const { totalCost, totalCostIndetermined } = useMemo(() => calculateCost(bets), [bets]);
 
   const handleBetClick = ({
     bet,
@@ -81,12 +71,10 @@ export const Main = observer(function Main() {
       valid,
       couponType: store.couponType,
     });
-    window.open(url, "_blank");
+    window.open(url, '_blank');
   };
 
-  const handleCouponChange: ChangeEventHandler<HTMLSelectElement> = async ({
-    target,
-  }) => {
+  const handleCouponChange: ChangeEventHandler<HTMLSelectElement> = async ({ target }) => {
     if (target.value) {
       const couponType = target.value as CouponType;
       store.storageService.setCouponType(couponType);
@@ -98,9 +86,7 @@ export const Main = observer(function Main() {
     }
   };
 
-  const handleShowAnalysis: ChangeEventHandler<HTMLInputElement> = ({
-    target,
-  }) => {
+  const handleShowAnalysis: ChangeEventHandler<HTMLInputElement> = ({ target }) => {
     const checked = target.checked;
     store.storageService.showAnalysis = checked;
     setShowAnalysis(checked);
@@ -128,14 +114,10 @@ export const Main = observer(function Main() {
       footerProps={
         draw && (
           <CoupongFooterContainer padding>
-            <OutlinedButton
-              Icon={StyledSvenskaSpelIcon}
-              onClick={openStryktipset}
-              displayText
-            >
+            <OutlinedButton Icon={StyledSvenskaSpelIcon} onClick={openStryktipset} displayText>
               {totalCost === totalCostIndetermined
                 ? totalCost
-                : `${totalCost} (${totalCostIndetermined})`}{" "}
+                : `${totalCost} (${totalCostIndetermined})`}{' '}
               KR
             </OutlinedButton>
           </CoupongFooterContainer>
@@ -143,14 +125,10 @@ export const Main = observer(function Main() {
       }
     >
       <Header>
-        <Title1>
-          {draw?.regCloseDescription ?? "Stryktipset öppnar tisdag kl. 07:00."}
-        </Title1>
+        <Title1>{draw?.regCloseDescription ?? 'Stryktipset öppnar tisdag kl. 07:00.'}</Title1>
 
         <SpaceBetweenContainer>
-          <Body>
-            Senast uppdaterad {store.lastUpdated?.toLocaleTimeString()}
-          </Body>
+          <Body>Senast uppdaterad {store.lastUpdated?.toLocaleTimeString()}</Body>
         </SpaceBetweenContainer>
 
         {draw && (

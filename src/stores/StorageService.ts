@@ -1,80 +1,76 @@
-import { CouponType } from "../api";
-import {
-  getLocalStorage,
-  isLocalStorageAvailable,
-  setLocalStorage,
-} from "../utils/storage";
+import { CouponType } from '../api';
+import { getLocalStorage, isLocalStorageAvailable, setLocalStorage } from '../utils/storage';
 
 export const initialSavedCoupon: Bets = [
   {
-    1: "unclicked",
-    X: "unclicked",
-    2: "unclicked",
+    1: 'unclicked',
+    X: 'unclicked',
+    2: 'unclicked',
   },
   {
-    1: "unclicked",
-    X: "unclicked",
-    2: "unclicked",
+    1: 'unclicked',
+    X: 'unclicked',
+    2: 'unclicked',
   },
   {
-    1: "unclicked",
-    X: "unclicked",
-    2: "unclicked",
+    1: 'unclicked',
+    X: 'unclicked',
+    2: 'unclicked',
   },
   {
-    1: "unclicked",
-    X: "unclicked",
-    2: "unclicked",
+    1: 'unclicked',
+    X: 'unclicked',
+    2: 'unclicked',
   },
   {
-    1: "unclicked",
-    X: "unclicked",
-    2: "unclicked",
+    1: 'unclicked',
+    X: 'unclicked',
+    2: 'unclicked',
   },
   {
-    1: "unclicked",
-    X: "unclicked",
-    2: "unclicked",
+    1: 'unclicked',
+    X: 'unclicked',
+    2: 'unclicked',
   },
   {
-    1: "unclicked",
-    X: "unclicked",
-    2: "unclicked",
+    1: 'unclicked',
+    X: 'unclicked',
+    2: 'unclicked',
   },
   {
-    1: "unclicked",
-    X: "unclicked",
-    2: "unclicked",
+    1: 'unclicked',
+    X: 'unclicked',
+    2: 'unclicked',
   },
   {
-    1: "unclicked",
-    X: "unclicked",
-    2: "unclicked",
+    1: 'unclicked',
+    X: 'unclicked',
+    2: 'unclicked',
   },
   {
-    1: "unclicked",
-    X: "unclicked",
-    2: "unclicked",
+    1: 'unclicked',
+    X: 'unclicked',
+    2: 'unclicked',
   },
   {
-    1: "unclicked",
-    X: "unclicked",
-    2: "unclicked",
+    1: 'unclicked',
+    X: 'unclicked',
+    2: 'unclicked',
   },
   {
-    1: "unclicked",
-    X: "unclicked",
-    2: "unclicked",
+    1: 'unclicked',
+    X: 'unclicked',
+    2: 'unclicked',
   },
   {
-    1: "unclicked",
-    X: "unclicked",
-    2: "unclicked",
+    1: 'unclicked',
+    X: 'unclicked',
+    2: 'unclicked',
   },
 ];
 
-export type BettingOption = 1 | "X" | 2;
-export type BettingState = "clicked" | "unclicked" | "indeterminate";
+export type BettingOption = 1 | 'X' | 2;
+export type BettingState = 'clicked' | 'unclicked' | 'indeterminate';
 
 export type Bet = Record<BettingOption, BettingState>;
 
@@ -84,7 +80,7 @@ export type SavedCoupon = {
   bets: Bets;
 };
 
-export const BASE_KEY = "saved_strykis_";
+export const BASE_KEY = 'saved_strykis_';
 
 export class StorageService {
   private _localStorageAvailable = false;
@@ -102,13 +98,13 @@ export class StorageService {
       return false;
     }
 
-    const saved = getLocalStorage(BASE_KEY + "showAnlysis");
+    const saved = getLocalStorage(BASE_KEY + 'showAnlysis');
 
-    return saved === "true" ? true : false;
+    return saved === 'true' ? true : false;
   }
 
   set showAnalysis(show: boolean) {
-    setLocalStorage(BASE_KEY + "showAnlysis", String(show));
+    setLocalStorage(BASE_KEY + 'showAnlysis', String(show));
   }
 
   public getCouponType(): CouponType | null {
@@ -116,7 +112,7 @@ export class StorageService {
       return null;
     }
 
-    const couponType = getLocalStorage(BASE_KEY + "couponType");
+    const couponType = getLocalStorage(BASE_KEY + 'couponType');
 
     if (couponType) {
       return couponType as CouponType;
@@ -126,7 +122,7 @@ export class StorageService {
   }
 
   public setCouponType(couponType: CouponType) {
-    setLocalStorage(BASE_KEY + "couponType", couponType);
+    setLocalStorage(BASE_KEY + 'couponType', couponType);
 
     return couponType;
   }

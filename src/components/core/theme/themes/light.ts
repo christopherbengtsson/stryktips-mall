@@ -1,4 +1,4 @@
-import { palette, DesignTokens } from "../DesignTokens";
+import { palette, DesignTokens } from '../DesignTokens';
 
 export const LightTheme = {
   font: {
@@ -56,7 +56,7 @@ export const LightTheme = {
   },
   radio: {
     background: {
-      default: "transparent",
+      default: 'transparent',
       action: palette.almostBlack,
       disabled: palette.concreteSuperLight,
     },

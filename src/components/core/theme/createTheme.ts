@@ -1,15 +1,15 @@
-import { MOBILE_SCREEN_WIDTH, zIndexes } from "../Constants";
-import { DesignTokens, ITokens } from "./DesignTokens";
-import { LightTheme } from "./themes/light";
+import { MOBILE_SCREEN_WIDTH, zIndexes } from '../Constants';
+import { DesignTokens, ITokens } from './DesignTokens';
+import { LightTheme } from './themes/light';
 
-export type ThemeVariants = "light";
+export type ThemeVariants = 'light';
 
 type ITheme = typeof LightTheme;
 
 export interface AppTheme extends ITheme {
   tokens: ITokens;
-  spacing: ITokens["spacing"];
-  radius: ITokens["radius"];
+  spacing: ITokens['spacing'];
+  radius: ITokens['radius'];
   screens: typeof screens;
   zIndexes: typeof zIndexes;
   variant: ThemeVariants;

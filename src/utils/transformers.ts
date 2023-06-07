@@ -1,19 +1,19 @@
-import { OddsLabel } from "../components/Table/BetRow";
+import { OddsLabel } from '../components/Table/BetRow';
 
 export const transformData = (type: OddsLabel, odds?: string) => {
   if (!odds) {
-    return "-";
+    return '-';
   }
-  if (type === "Favoritskap") {
-    return Math.floor(+odds) + "%";
-  }
-
-  if (type === "Svenska folket") {
-    return odds + "%";
+  if (type === 'Favoritskap') {
+    return Math.floor(+odds) + '%';
   }
 
-  if (type === "Odds i procent") {
-    return oddsToPercent(odds) + "%";
+  if (type === 'Svenska folket') {
+    return odds + '%';
+  }
+
+  if (type === 'Odds i procent') {
+    return oddsToPercent(odds) + '%';
   }
 
   return odds;
@@ -21,12 +21,12 @@ export const transformData = (type: OddsLabel, odds?: string) => {
 
 export const oddsValue = (odds?: string, svenskaFolket?: string) => {
   if (!odds || !svenskaFolket) {
-    return "-";
+    return '-';
   }
 
   return (oddsToPercent(odds) / +svenskaFolket).toFixed(2);
 };
 
 const oddsToPercent = (odds: string) => {
-  return Math.floor((1 / +odds.replace(",", ".")) * 100);
+  return Math.floor((1 / +odds.replace(',', '.')) * 100);
 };

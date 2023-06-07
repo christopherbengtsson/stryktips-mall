@@ -1,5 +1,5 @@
-import { HEADER_TITLE_OFFSET } from "../core/Constants";
-import { LayoutClassMap, LayoutIdMap } from "./Constants";
+import { HEADER_TITLE_OFFSET } from '../core/Constants';
+import { LayoutClassMap, LayoutIdMap } from './Constants';
 
 // Some imperative code to avoid passing contexts around and rerendering everything on scroll
 export const handleLayoutScroll = ({
@@ -22,9 +22,7 @@ export const handleLayoutScroll = ({
   }
   const isBottom =
     Math.abs(
-      scrollContainer.scrollHeight -
-        scrollContainer.scrollTop -
-        scrollContainer.clientHeight
+      scrollContainer.scrollHeight - scrollContainer.scrollTop - scrollContainer.clientHeight,
     ) <= 3.0;
 
   if (isBottom) {

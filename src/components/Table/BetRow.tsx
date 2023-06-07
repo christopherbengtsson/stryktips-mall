@@ -1,15 +1,11 @@
-import styled from "styled-components";
-import { DrawEvent, FavouriteOdds, Odds, SvenskaFolket } from "../../api";
-import { Body } from "../core/fonts";
-import { Tag } from "../Tag";
-import { BaseStrategy } from "../BaseStrategy";
-import { oddsValue, transformData } from "../../utils/transformers";
+import styled from 'styled-components';
+import { DrawEvent, FavouriteOdds, Odds, SvenskaFolket } from '../../api';
+import { Body } from '../core/fonts';
+import { Tag } from '../Tag';
+import { BaseStrategy } from '../BaseStrategy';
+import { oddsValue, transformData } from '../../utils/transformers';
 
-export type OddsLabel =
-  | "Odds"
-  | "Svenska folket"
-  | "Favoritskap"
-  | "Odds i procent";
+export type OddsLabel = 'Odds' | 'Svenska folket' | 'Favoritskap' | 'Odds i procent';
 export type OddsType = Odds | SvenskaFolket | FavouriteOdds;
 
 export function BetRow({
@@ -21,20 +17,20 @@ export function BetRow({
       odds?: OddsType;
     }
   | {
-      title: "Spelvärde" | "Utgångspunkt";
+      title: 'Spelvärde' | 'Utgångspunkt';
       odds: DrawEvent;
     }) {
   return (
     <BetRowContainer>
       <Body>{title}</Body>
-      <BetValues justifyStart={title === "Utgångspunkt"}>
-        {title === "Spelvärde" ? (
+      <BetValues justifyStart={title === 'Utgångspunkt'}>
+        {title === 'Spelvärde' ? (
           <>
             <Tag value={oddsValue(odds.odds?.one, odds.svenskaFolket.one)} />
             <Tag value={oddsValue(odds.odds?.x, odds.svenskaFolket.x)} />
             <Tag value={oddsValue(odds.odds?.two, odds.svenskaFolket.two)} />
           </>
-        ) : title === "Utgångspunkt" ? (
+        ) : title === 'Utgångspunkt' ? (
           <ul>
             <BaseStrategy peoplesOdds={odds.svenskaFolket} />
           </ul>
@@ -53,7 +49,7 @@ export function BetRow({
 const BetRowContainer = styled.div`
   display: grid;
   grid-template-columns: auto minmax(150px, 30%);
-  grid-template-areas: "title stats";
+  grid-template-areas: 'title stats';
   margin-top: ${(p) => p.theme.spacing.tiny};
   align-items: center;
   padding: ${(p) => p.theme.spacing.tiny} 0;
@@ -72,7 +68,7 @@ const BetValues = styled.div<{ justifyStart?: boolean }>`
   width: 100%;
   justify-content: space-around;
 
-  ${(p) => p.justifyStart && "justify-content: start;"}
+  ${(p) => p.justifyStart && 'justify-content: start;'}
 
   ${(p) => p.theme.screens.small} {
     gap: ${(p) => p.theme.spacing.xs};
