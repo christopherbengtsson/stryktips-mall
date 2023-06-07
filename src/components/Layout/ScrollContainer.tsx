@@ -16,7 +16,6 @@ export const ScrollContainer = styled.div`
     overflow-y: scroll;
     scrollbar-width: thin;
     scrollbar-color: ${(p) => p.theme.scrollBar.thumb.color} transparent;
-    padding-left: var(--scrollbarWidth);
 
     &::-webkit-scrollbar {
       width: var(--scrollbarWidth);

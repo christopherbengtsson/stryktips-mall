@@ -18,9 +18,5 @@ export const FormContentContainer = styled.div<{ bottomPadding?: boolean }>`
 
   gap: ${(p) => p.theme.spacing.m};
 
-  ${(p) => p.theme.screens.small} {
-    padding-left: ${(p) => p.theme.spacing.m};
-    padding-right: ${(p) => p.theme.spacing.m};
-  }
   padding-bottom: ${(p) => (p.bottomPadding ? p.theme.spacing.xs : "0")};
 `;

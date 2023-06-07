@@ -2,12 +2,16 @@ import styled from "styled-components";
 import { Body } from "../core/fonts";
 
 const Container = styled.div<{ color?: string }>`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
   background-color: ${(p) => p.color ?? "initial"};
-  padding: 0 ${(p) => p.theme.spacing.xs};
+  padding: 0 ${(p) => p.theme.spacing.s};
   border-radius: ${(p) => p.theme.radius.m};
   border: 1px solid ${(p) => p.color ?? "initial"};
   box-shadow: 0 0 0 2px ${(p) => darkenBackground(p.color ?? "initial")};
-  min-width: 48px;
+  min-width: 30px;
   text-align: center;
 `;
 

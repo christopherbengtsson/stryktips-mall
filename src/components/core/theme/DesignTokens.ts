@@ -26,7 +26,7 @@ export const palette = {
   /** used on error body text */
   bloodIn: "#C30007",
   /** Main action color */
-  deepOcean: "#0000ff",
+  deepOcean: "#00427a",
 } as const;
 
 export const spacing = {

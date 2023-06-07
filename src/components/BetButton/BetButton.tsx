@@ -58,8 +58,9 @@ const BetBtn = styled.button<{ clicked: BettingState }>`
   justify-content: center;
   align-items: center;
 
-  height: 30px;
-  min-width: 45px;
+  min-height: 30px;
+  min-width: 30px;
+  width: 100%;
   cursor: pointer;
   transition: background 0.25s ease, color 0.25s ease;
 

@@ -118,21 +118,25 @@ export const Main = observer(function Main() {
         )
       }
     >
-      <Title1>
-        {draw?.regCloseDescription ?? "Stryktipset öppnar tisdag kl. 07:00."}
-      </Title1>
+      <Header>
+        <Title1>
+          {draw?.regCloseDescription ?? "Stryktipset öppnar tisdag kl. 07:00."}
+        </Title1>
 
-      <SpaceBetweenContainer>
-        <Body>Senast uppdaterad {store.lastUpdated?.toLocaleTimeString()}</Body>
-      </SpaceBetweenContainer>
+        <SpaceBetweenContainer>
+          <Body>
+            Senast uppdaterad {store.lastUpdated?.toLocaleTimeString()}
+          </Body>
+        </SpaceBetweenContainer>
 
-      {draw && (
-        <CoupongActionsContainer>
-          <OutlinedButton Icon={Trash} onClick={clearCoupong}>
-            Rensa kupong
-          </OutlinedButton>
-        </CoupongActionsContainer>
-      )}
+        {draw && (
+          <CoupongActionsContainer>
+            <OutlinedButton Icon={Trash} onClick={clearCoupong}>
+              Rensa kupong
+            </OutlinedButton>
+          </CoupongActionsContainer>
+        )}
+      </Header>
 
       {events && (
         <Table
@@ -144,6 +148,10 @@ export const Main = observer(function Main() {
     </Layout>
   );
 });
+
+const Header = styled.div`
+  padding: 8px 16px;
+`;
 
 const StyledSvenskaSpelIcon = styled(SvenskaSpelIcon)`
   width: 20px;

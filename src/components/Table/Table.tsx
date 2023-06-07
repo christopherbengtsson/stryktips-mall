@@ -1,11 +1,9 @@
 import { DrawEvent } from "../../api";
 import styled from "styled-components";
-import { BaseStrategy } from "../BaseStrategy";
 import { Bets, BettingOption, BettingState } from "../../stores/StorageService";
-import { InnerRow, ThinRow } from "./shared";
-import { HeaderRow } from "./HeaderRow";
-import { TableRow } from "./TableRow";
-import { isMobile } from "../../utils/device";
+import { BetHeader } from "./BetHeader";
+import { BetButtons } from "./BetButtons";
+import { BetRow } from "./BetRow";
 
 export function Table({
   events,
@@ -30,61 +28,23 @@ export function Table({
 
   return (
     <StyledList>
-      {events.map((event: DrawEvent, idx) => {
-        const fullGameTitle = `${event.match.participants.at(0)?.name} - ${
-          event.match.participants.at(1)?.name
-        }`;
-
-        const shortGameTitle = `${
-          event.match.participants.at(0)?.mediumName
-        } - ${event.match.participants.at(1)?.mediumName}`;
-
+      {events.map((event: DrawEvent) => {
         return (
           <StyledListItem key={event.eventDescription}>
-            <HeaderRow
-              bets={[
-                {
-                  bet: 1,
-                  gameNumber: idx + 1,
-                  onClick: handleClick,
-                  initialState: initialsBets ? initialsBets[idx][1] : undefined,
-                },
-                {
-                  bet: "X",
-                  gameNumber: idx + 1,
-                  onClick: handleClick,
-                  initialState: initialsBets ? initialsBets[idx].X : undefined,
-                },
-                {
-                  bet: 2,
-                  gameNumber: idx + 1,
-                  onClick: handleClick,
-                  initialState: initialsBets ? initialsBets[idx][2] : undefined,
-                },
-              ]}
-              eventNumber={event.eventNumber}
-              eventDescription={isMobile() ? shortGameTitle : fullGameTitle}
+            <BetHeader event={event} />
+            <BetButtons
+              event={event}
+              initialBets={initialsBets}
+              onClick={handleClick}
             />
 
-            <TableRow type="Odds" odds={event.odds} />
-            <TableRow type="Favoritskap" odds={event.favouriteOdds} />
-            <TableRow type="Svenska folket" odds={event.svenskaFolket} />
-            <TableRow
-              type="Spelvärde"
-              odds={{
-                favoriteOdds: event.favouriteOdds,
-                svenskaFolket: event.svenskaFolket,
-              }}
-            />
-
-            <ThinRow fullHeight>
-              <p>Utgångspunkt</p>
-              <InnerRow>
-                <ul>
-                  <BaseStrategy peoplesOdds={event.svenskaFolket} />
-                </ul>
-              </InnerRow>
-            </ThinRow>
+            <BetsContainer>
+              <BetRow title="Odds" odds={event.odds} />
+              <BetRow title="Favoritskap" odds={event.favouriteOdds} />
+              <BetRow title="Svenska folket" odds={event.svenskaFolket} />
+              <BetRow title="Spelvärde" odds={event} />
+              <BetRow title="Utgångspunkt" odds={event} />
+            </BetsContainer>
           </StyledListItem>
         );
       })}
@@ -99,13 +59,45 @@ const StyledList = styled.ol`
   > li:nth-child(even) {
     background: ${(p) => p.theme.tokens.palette.fog};
   }
+
+
 `;
 
 const StyledListItem = styled.li`
-  display: flex;
-  flex-direction: column;
-  gap: ${(p) => p.theme.spacing.xs};
+  display: grid;
+  grid-template-columns: 48px auto fit-content(100%) minmax(150px, 30%);
+  grid-template-areas:
+    "badge description mSign betbuttons"
+    "tipsinfo tipsinfo tipsinfo tipsinfo"
+    "matchanalyses matchanalyses matchanalyses matchanalyses"
+    "eventcomment eventcomment eventcomment eventcomment";
 
-  padding: 16px 8px;
-  border-top: 1px solid ${(p) => p.theme.border.color.default};
+  align-items: center;
+  padding: ${(p) => p.theme.spacing.s};
+
+  ${(p) => p.theme.screens.small} {
+    grid-template-columns: minmax(100px, 1fr) fit-content(100%) minmax(
+        102px,
+        30%
+      );
+    grid-template-areas:
+      "description mSign betbuttons"
+      "tipsinfo tipsinfo tipsinfo"
+      "eventcomment eventcomment eventcomment"
+      "matchanalyses matchanalyses matchanalyses";
+
+    padding: ${(p) => p.theme.spacing.tiny} ${(p) => p.theme.spacing.s}
+      ${(p) => p.theme.spacing.tiny} ${(p) => p.theme.spacing.xs};
+  }
+`;
+
+const BetsContainer = styled.div`
+  grid-column-start: 1;
+  grid-column-end: 5;
+  margin-top: 18px;
+
+  ${(p) => p.theme.screens.small} {
+    grid-column-end: 4;
+    margin-top: 0;
+  }
 `;

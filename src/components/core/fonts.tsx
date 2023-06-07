@@ -75,29 +75,58 @@ export function Title2({ children, ...props }: TitleProps) {
   return <StyledTitle2 {...props}>{children}</StyledTitle2>;
 }
 
-export const Subtitle = styled.h2<MappedProps>((p) => {
-  const title = p.theme.tokens.font.subtitle;
-  return {
-    fontFamily: title.family,
-    fontSize: title.size,
-    fontWeight: title.weight,
-    lineHeight: title.lineHeight,
-    color: p.color ? p.theme.font.color[p.color] : "inherit",
-    overflowWrap: "break-word",
-    hyphens: "auto",
-  };
-});
+export const Subtitle = styled.h2<MappedProps>`
+  ${(p) => {
+    const title = p.theme.tokens.font.subtitle;
+    return {
+      fontFamily: title.family,
+      fontSize: title.size,
+      fontWeight: title.weight,
+      lineHeight: title.lineHeight,
+      color: p.color ? p.theme.font.color[p.color] : "inherit",
+      overflowWrap: "break-word",
+      hyphens: "auto",
+    };
+  }}
 
-export const Body = styled.span<MappedProps>((p) => {
-  const title = p.theme.tokens.font.body;
-  return {
-    fontFamily: title.family,
-    fontSize: title.size,
-    fontWeight: title.weight,
-    lineHeight: title.lineHeight,
-    color: p.color ? p.theme.font.color[p.color] : "inherit",
-  };
-});
+  ${(p) => p.theme.screens.small} {
+    ${(p) => {
+      const title = p.theme.tokens.font.body;
+      return {
+        fontFamily: title.family,
+        fontSize: title.size,
+        fontWeight: title.weight,
+        lineHeight: title.lineHeight,
+        color: p.color ? p.theme.font.color[p.color] : "inherit",
+      };
+    }}
+  }
+`;
+
+export const Body = styled.span<MappedProps>`
+  ${(p) => {
+    const title = p.theme.tokens.font.body;
+    return {
+      fontFamily: title.family,
+      fontSize: title.size,
+      fontWeight: title.weight,
+      lineHeight: title.lineHeight,
+      color: p.color ? p.theme.font.color[p.color] : "inherit",
+    };
+  }}
+  ${(p) => p.theme.screens.small} {
+    ${(p) => {
+      const title = p.theme.tokens.font.smallBody;
+      return {
+        fontFamily: title.family,
+        fontSize: title.size,
+        fontWeight: title.weight,
+        lineHeight: title.lineHeight,
+        color: p.color ? p.theme.font.color[p.color] : "inherit",
+      };
+    }}
+  }
+`;
 
 export const BodyMedium = styled(Body)`
   font-family: ${(props) => props.theme.tokens.font.bodyMedium.family};
