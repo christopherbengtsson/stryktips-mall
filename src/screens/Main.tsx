@@ -17,6 +17,7 @@ import { buildSvenskaSpelURL } from "../utils/stryktipsUrl";
 import { calculateCost } from "../utils/couponCost";
 import { CouponType } from "../api";
 import { Select } from "../components/Select";
+import { Checkbox } from "../components/Checkbox";
 
 const SELECT_OPTIONS = [
   {
@@ -37,6 +38,7 @@ export const Main = observer(function Main() {
   const [bets, setBets] = useState<Bets>(
     store.storageService.getCoupon(store.drawNumber)?.bets ?? []
   );
+  const [showAnalysis, setShowAnalysis] = useState(store.showAnalysis);
 
   const valid = useMemo(() => {
     return bets.every((bet) => {
@@ -96,6 +98,22 @@ export const Main = observer(function Main() {
     }
   };
 
+  const handleShowAnalysis: ChangeEventHandler<HTMLInputElement> = ({
+    target,
+  }) => {
+    const checked = target.checked;
+    store.storageService.showAnalysis = checked;
+    setShowAnalysis(checked);
+
+    if (checked && !store.gameAnalysis) {
+      store.fetchState({
+        couponType: store.couponType,
+        fetchAnalysis: true,
+        inBackground: true,
+      });
+    }
+  };
+
   return (
     <Layout
       scrollContainer
@@ -109,7 +127,7 @@ export const Main = observer(function Main() {
       }
       footerProps={
         draw && (
-          <CoupongActionsContainer padding>
+          <CoupongFooterContainer padding>
             <OutlinedButton
               Icon={StyledSvenskaSpelIcon}
               onClick={openStryktipset}
@@ -120,7 +138,7 @@ export const Main = observer(function Main() {
                 : `${totalCost} (${totalCostIndetermined})`}{" "}
               KR
             </OutlinedButton>
-          </CoupongActionsContainer>
+          </CoupongFooterContainer>
         )
       }
     >
@@ -136,11 +154,17 @@ export const Main = observer(function Main() {
         </SpaceBetweenContainer>
 
         {draw && (
-          <CoupongActionsContainer>
+          <CouponActionsContainer>
+            <Checkbox
+              name="showAnalysis"
+              label="Visa Henriks analys"
+              checked={showAnalysis}
+              onChange={handleShowAnalysis}
+            />
             <OutlinedButton Icon={Trash} onClick={clearCoupong}>
               Rensa kupong
             </OutlinedButton>
-          </CoupongActionsContainer>
+          </CouponActionsContainer>
         )}
       </Header>
 
@@ -150,6 +174,7 @@ export const Main = observer(function Main() {
           initialsBets={bets}
           events={events}
           onBetClick={handleBetClick}
+          gameAnalysis={store.gameAnalysis}
         />
       )}
     </Layout>
@@ -172,9 +197,13 @@ const SpaceBetweenContainer = styled.div`
   align-items: center;
 `;
 
-const CoupongActionsContainer = styled.div<{ padding?: boolean }>`
+const CoupongFooterContainer = styled.div<{ padding?: boolean }>`
   display: flex;
   justify-content: flex-end;
-
-  ${(p) => p.padding && `padding: ${p.theme.spacing.xs} ${p.theme.spacing.s}`}
+  gap: ${(p) => p.theme.spacing.m}
+    ${(p) => p.padding && `padding: ${p.theme.spacing.xs} ${p.theme.spacing.s}`};
+`;
+const CouponActionsContainer = styled(CoupongFooterContainer)`
+  justify-content: space-between;
+  margin-top: ${(p) => p.theme.spacing.xxl};
 `;

@@ -5,12 +5,16 @@ import { BetHeader } from "./BetHeader";
 import { BetButtons } from "./BetButtons";
 import { BetRow } from "./BetRow";
 import { OutlinedButton } from "../OutlinedButton";
+import { GameAnalyse } from "../../api/AnalysResponse";
+import { Caption } from "../core/fonts";
+import { stripHtml } from "string-strip-html";
 
 export function Table({
   events,
   initialsBets,
   onBetClick,
   couponType,
+  gameAnalysis,
 }: {
   events: DrawEvent[];
   initialsBets?: Bets;
@@ -20,6 +24,7 @@ export function Table({
     state: BettingState;
   }) => void;
   couponType: CouponType;
+  gameAnalysis?: GameAnalyse[];
 }) {
   const handleBetClick = (args: {
     bet: BettingOption;
@@ -38,7 +43,8 @@ export function Table({
 
   return (
     <StyledList>
-      {events.map((event: DrawEvent) => {
+      {events.map((event: DrawEvent, idx) => {
+        const analysis = gameAnalysis?.at(idx)?.body;
         return (
           <StyledListItem key={event.eventDescription}>
             <BetHeader event={event} />
@@ -61,9 +67,11 @@ export function Table({
               <OutlinedButton
                 onClick={() => handleEventClick(event.eventNumber)}
               >
-                Analys
+                Statistik
               </OutlinedButton>
             </BetsContainer>
+
+            {analysis && <Caption>{stripHtml(analysis).result}</Caption>}
           </StyledListItem>
         );
       })}
@@ -79,8 +87,6 @@ const StyledList = styled.ol`
   > li:nth-child(even) {
     background: ${(p) => p.theme.tokens.palette.fog};
   }
-
-
 `;
 
 const StyledListItem = styled.li`

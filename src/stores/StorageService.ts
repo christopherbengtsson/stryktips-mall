@@ -97,6 +97,20 @@ export class StorageService {
     return this._localStorageAvailable;
   }
 
+  get showAnalysis() {
+    if (!this.localStorageAvailable) {
+      return false;
+    }
+
+    const saved = getLocalStorage(BASE_KEY + "showAnlysis");
+
+    return saved === "true" ? true : false;
+  }
+
+  set showAnalysis(show: boolean) {
+    setLocalStorage(BASE_KEY + "showAnlysis", String(show));
+  }
+
   public getCouponType(): CouponType | null {
     if (!this.localStorageAvailable) {
       return null;
