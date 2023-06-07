@@ -23,7 +23,7 @@ export function BetButtons({
         gameNumber={event.eventNumber}
         onClick={onClick}
         initialState={
-          initialBets ? initialBets[event.eventNumber - 1][1] : undefined
+          initialBets ? initialBets[event.eventNumber - 1]?.[1] : undefined
         }
       >
         1
@@ -34,7 +34,7 @@ export function BetButtons({
         gameNumber={event.eventNumber}
         onClick={onClick}
         initialState={
-          initialBets ? initialBets[event.eventNumber - 1].X : undefined
+          initialBets ? initialBets[event.eventNumber - 1]?.X : undefined
         }
       >
         X
@@ -45,7 +45,7 @@ export function BetButtons({
         gameNumber={event.eventNumber}
         onClick={onClick}
         initialState={
-          initialBets ? initialBets[event.eventNumber - 1][2] : undefined
+          initialBets ? initialBets[event.eventNumber - 1]?.[2] : undefined
         }
       >
         2
