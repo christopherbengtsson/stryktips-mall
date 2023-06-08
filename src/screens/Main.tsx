@@ -113,7 +113,7 @@ export const Main = observer(function Main() {
       }
       footerProps={
         draw && (
-          <CoupongFooterContainer>
+          <CoupongFooterContainer padding>
             <OutlinedButton Icon={StyledSvenskaSpelIcon} onClick={openStryktipset} displayText>
               {totalCost === totalCostIndetermined
                 ? totalCost
@@ -182,11 +182,11 @@ const SpaceBetweenContainer = styled.div`
   align-items: center;
 `;
 
-const CoupongFooterContainer = styled.div`
+const CoupongFooterContainer = styled.div<{ padding?: boolean }>`
   display: flex;
   justify-content: flex-end;
   gap: ${(p) => p.theme.spacing.m};
-  ${(p) => `padding: ${p.theme.spacing.xs} ${p.theme.spacing.s}`};
+  ${(p) => p.padding && `padding: ${p.theme.spacing.xs} ${p.theme.spacing.s}`};
 `;
 const CouponActionsContainer = styled(CoupongFooterContainer)`
   justify-content: space-between;
