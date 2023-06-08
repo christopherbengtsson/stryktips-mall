@@ -14,12 +14,14 @@ export function Table({
   initialsBets,
   onBetClick,
   couponType,
+  showAnalysis,
   gameAnalysis,
 }: {
   events: DrawEvent[];
   initialsBets?: Bets;
   onBetClick: (args: { bet: BettingOption; gameNumber: number; state: BettingState }) => void;
   couponType: CouponType;
+  showAnalysis: boolean;
   gameAnalysis?: GameAnalyse[];
 }) {
   const handleBetClick = (args: {
@@ -59,9 +61,12 @@ export function Table({
               <OutlinedButton onClick={() => handleEventClick(event.eventNumber)}>
                 Statistik
               </OutlinedButton>
+              {showAnalysis && analysis ? (
+                <Caption>{stripHtml(analysis).result}</Caption>
+              ) : showAnalysis ? (
+                <Caption>För tillfället finns inget spelanalys</Caption>
+              ) : null}
             </BetsContainer>
-
-            {analysis && <Caption>{stripHtml(analysis).result}</Caption>}
           </StyledListItem>
         );
       })}

@@ -141,7 +141,7 @@ export const Main = observer(function Main() {
           <CouponActionsContainer>
             <Checkbox
               name="showAnalysis"
-              label="Visa Henriks analys"
+              label="Visa spelanalyser"
               checked={showAnalysis}
               onChange={handleShowAnalysis}
             />
@@ -158,6 +158,7 @@ export const Main = observer(function Main() {
           initialsBets={bets}
           events={events}
           onBetClick={handleBetClick}
+          showAnalysis={showAnalysis}
           gameAnalysis={store.gameAnalysis}
         />
       )}
