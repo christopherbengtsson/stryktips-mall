@@ -94,7 +94,7 @@ export const Main = observer(function Main() {
     if (checked && !store.gameAnalysis) {
       store.fetchState({
         couponType: store.couponType,
-        fetchAnalysis: true,
+        fetchAnalysis: !store.analysisResponse,
         inBackground: true,
       });
     }
@@ -113,7 +113,7 @@ export const Main = observer(function Main() {
       }
       footerProps={
         draw && (
-          <CoupongFooterContainer padding>
+          <CoupongFooterContainer>
             <OutlinedButton Icon={StyledSvenskaSpelIcon} onClick={openStryktipset} displayText>
               {totalCost === totalCostIndetermined
                 ? totalCost
@@ -182,11 +182,11 @@ const SpaceBetweenContainer = styled.div`
   align-items: center;
 `;
 
-const CoupongFooterContainer = styled.div<{ padding?: boolean }>`
+const CoupongFooterContainer = styled.div`
   display: flex;
   justify-content: flex-end;
-  gap: ${(p) => p.theme.spacing.m}
-    ${(p) => p.padding && `padding: ${p.theme.spacing.xs} ${p.theme.spacing.s}`};
+  gap: ${(p) => p.theme.spacing.m};
+  ${(p) => `padding: ${p.theme.spacing.xs} ${p.theme.spacing.s}`};
 `;
 const CouponActionsContainer = styled(CoupongFooterContainer)`
   justify-content: space-between;

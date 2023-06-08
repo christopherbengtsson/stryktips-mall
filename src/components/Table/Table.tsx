@@ -79,9 +79,8 @@ const StyledList = styled.ol`
   padding: 0;
   border-left: 6px solid white;
 
-  > li:nth-child(even) {
-    background: ${(p) => p.theme.tokens.palette.fog};
-  }
+
+
 `;
 
 const StyledListItem = styled.li`
@@ -95,6 +94,7 @@ const StyledListItem = styled.li`
 
   align-items: center;
   padding: ${(p) => p.theme.spacing.s};
+  border-top: 1px solid ${(p) => p.theme.border.color.default};
 
   ${(p) => p.theme.screens.small} {
     grid-template-columns: minmax(100px, 1fr) fit-content(100%) minmax(102px, 30%);

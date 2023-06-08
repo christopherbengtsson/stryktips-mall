@@ -53,7 +53,10 @@ const BetRowContainer = styled.div`
   margin-top: ${(p) => p.theme.spacing.tiny};
   align-items: center;
   padding: ${(p) => p.theme.spacing.tiny} 0;
-  border-bottom: 1px dashed #86848c;
+
+  :nth-of-type(odd) {
+    background: ${(p) => p.theme.tokens.palette.fog};
+  }
 
   ${(p) => p.theme.screens.small} {
     grid-template-columns: auto minmax(102px, 30%);
