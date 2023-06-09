@@ -127,8 +127,8 @@ export class StorageService {
     return couponType;
   }
 
-  public getCoupon(drawNumber: number) {
-    if (!this.localStorageAvailable) {
+  public getSavedCoupon(drawNumber?: number) {
+    if (!this.localStorageAvailable || !drawNumber) {
       return null;
     }
 

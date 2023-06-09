@@ -31,9 +31,10 @@ export const Main = observer(function Main() {
   const events = draw?.drawEvents;
 
   const [bets, setBets] = useState<Bets>(
-    store.storageService.getCoupon(store.drawNumber)?.bets ?? [],
+    store.storageService.getSavedCoupon(store.drawNumber)?.bets ?? [],
   );
-  const [showAnalysis, setShowAnalysis] = useState(store.showAnalysis);
+
+  const [showAnalysis, setShowAnalysis] = useState(store.showGameAnalysis);
 
   const valid = useMemo(() => {
     return bets.every((bet) => {
@@ -56,12 +57,16 @@ export const Main = observer(function Main() {
     newBets[gameNumber - 1][bet] = state;
 
     setBets(newBets);
-    store.storageService.setBets(newBets, store.drawNumber);
+    if (store.drawNumber) {
+      store.storageService.setBets(newBets, store.drawNumber);
+    }
   };
 
   const clearCoupong = () => {
     setBets([]);
-    store.storageService.setBets(initialSavedCoupon, store.drawNumber);
+    if (store.drawNumber) {
+      store.storageService.setBets(initialSavedCoupon, store.drawNumber);
+    }
   };
 
   const openStryktipset = () => {
@@ -81,7 +86,7 @@ export const Main = observer(function Main() {
 
       await store.fetchState({ couponType });
 
-      const coupon = store.storageService.getCoupon(store.drawNumber);
+      const coupon = store.storageService.getSavedCoupon(store.drawNumber);
       setBets(coupon?.bets ?? []);
     }
   };

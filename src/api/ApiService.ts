@@ -20,7 +20,8 @@ export class ApiService {
   async fetchLatestAnalyse(couponType: CouponType, drawNumber: number) {
     this.initialized = true;
 
-    const res = await fetch(buildAnalysUrl({ couponType, drawNumber }));
+    const url = buildAnalysUrl({ couponType, drawNumber });
+    const res = await fetch(url);
     const data: AnalysisResponse = await res.json();
 
     return data;

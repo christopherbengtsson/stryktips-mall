@@ -14,11 +14,10 @@ export class MainStore {
   analysisResponse: AnalysisResponse | null = null;
   lastUpdated: Date | null = null;
 
-  showAnalysis: boolean;
-
   constructor() {
     makeAutoObservable(this, {
       stryktipsResponse: observable.ref,
+      analysisResponse: observable.ref,
 
       apiService: false,
       storageService: false,
@@ -26,7 +25,6 @@ export class MainStore {
 
     this.apiService = new ApiService();
     this.storageService = new StorageService();
-    this.showAnalysis = this.storageService.showAnalysis;
   }
 
   public async init() {
@@ -48,11 +46,15 @@ export class MainStore {
   }
 
   get drawNumber() {
-    return this.draws?.at(0)?.drawNumber ?? -1;
+    return this.draws?.at(0)?.drawNumber;
   }
 
   get draws() {
     return this.stryktipsResponse?.draws;
+  }
+
+  get showGameAnalysis() {
+    return this.storageService.showAnalysis;
   }
 
   get gameAnalysis() {
@@ -61,7 +63,7 @@ export class MainStore {
 
   public async fetchState({
     couponType = 'stryktipset',
-    fetchAnalysis = this.showAnalysis,
+    fetchAnalysis = this.showGameAnalysis,
     inBackground,
   }: {
     couponType?: CouponType;
@@ -73,19 +75,13 @@ export class MainStore {
     }
 
     try {
-      const promises: [Promise<StryktipsResponse>, Promise<AnalysisResponse>?] = [
-        this.apiService.fetchLatestCoupon(couponType),
-      ];
-
-      if (fetchAnalysis) {
-        promises.push(this.apiService.fetchLatestAnalyse(this.couponType, this.drawNumber));
-      }
-
-      const [couponRes, analysisRes] = await Promise.all(promises);
+      const couponRes = await this.apiService.fetchLatestCoupon(couponType);
       this.setCouponResponse(couponRes);
 
-      if (analysisRes) {
-        this.analysisResponse = analysisRes;
+      const drawNumber = couponRes.draws.at(0)?.drawNumber;
+      if (drawNumber && fetchAnalysis) {
+        const analysRes = await this.apiService.fetchLatestAnalyse(this.couponType, drawNumber);
+        runInAction(() => (this.analysisResponse = analysRes));
       }
     } catch (error) {
       console.error('Error fetching state', error);
