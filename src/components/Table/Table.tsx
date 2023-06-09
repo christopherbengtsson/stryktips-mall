@@ -58,14 +58,17 @@ export function Table({
             </BetsContainer>
 
             <BetsContainer>
-              <OutlinedButton onClick={() => handleEventClick(event.eventNumber)}>
-                Statistik
-              </OutlinedButton>
-              {showAnalysis && analysis ? (
-                <Caption>{stripHtml(analysis).result}</Caption>
-              ) : showAnalysis ? (
-                <Caption>För tillfället finns inget spelanalys</Caption>
-              ) : null}
+              <GridContainer>
+                {showAnalysis && analysis ? (
+                  <Caption>{stripHtml(analysis).result}</Caption>
+                ) : showAnalysis ? (
+                  <Caption>För tillfället finns inget spelanalys</Caption>
+                ) : null}
+
+                <OutlinedButton onClick={() => handleEventClick(event.eventNumber)}>
+                  Statistik
+                </OutlinedButton>
+              </GridContainer>
             </BetsContainer>
           </StyledListItem>
         );
@@ -118,4 +121,9 @@ const BetsContainer = styled.div`
     grid-column-end: 4;
     margin-top: ${(p) => p.theme.spacing.xs};
   }
+`;
+
+const GridContainer = styled.div`
+  display: grid;
+  gap: ${(p) => p.theme.spacing.xs};
 `;
