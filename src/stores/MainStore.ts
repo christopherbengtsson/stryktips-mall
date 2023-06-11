@@ -34,7 +34,7 @@ export class MainStore {
   }
 
   get isLoading() {
-    if (!this.drawNumber || this.fetchingState === 'LOADING') {
+    if (this.fetchingState === 'LOADING') {
       return true;
     }
 
