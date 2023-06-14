@@ -10,11 +10,15 @@ import { Body, Title1 } from '../components/core/fonts';
 import { OutlinedButton } from '../components/OutlinedButton';
 import { buildSvenskaSpelURL } from '../utils/stryktipsUrl';
 import { calculateCost } from '../utils/couponCost';
-import { CouponType } from '../api';
+import { CouponType, Draw } from '../api';
 import { Select } from '../components/Select';
 import { Checkbox } from '../components/Checkbox';
+import { DatePicker } from '../components/DatePicker';
+import { CouponResultResponse, EventResult } from '../api/CouponResultResponse';
+import { formatRelative } from 'date-fns';
+import { sv } from 'date-fns/locale';
 
-const SELECT_OPTIONS = [
+const COUPON_TYPE_SELECT_OPTIONS = [
   {
     label: 'Stryktipset',
     value: 'stryktipset',
@@ -25,10 +29,41 @@ const SELECT_OPTIONS = [
   },
 ];
 
+const getHeader = ({
+  draw,
+  result,
+  couponType,
+  isResult,
+}: {
+  draw?: Draw;
+  result: CouponResultResponse | null;
+  couponType: CouponType;
+  isResult: boolean;
+}) => {
+  {
+    if (isResult && result) {
+      return `Resultat ${result.result.productName} ${formatRelative(
+        new Date(result.result.regCloseTime),
+        new Date(),
+        {
+          locale: sv,
+          weekStartsOn: 1,
+        },
+      )}`;
+    }
+
+    return draw?.regCloseDescription
+      ? draw?.regCloseDescription
+      : couponType === 'europatipset'
+      ? 'Europatipset öppnar snart för spel igen.'
+      : 'Stryktipset öppnar snart för spel igen.';
+  }
+};
+
 export const Main = observer(function Main() {
   const store = useMainStore();
   const draw = store.draws?.at(0);
-  const events = draw?.drawEvents;
+  const events = store.resultResponse?.result?.events ?? draw?.drawEvents;
 
   const [bets, setBets] = useState<Bets>(
     store.storageService.getSavedCoupon(store.drawNumber)?.bets ?? [],
@@ -43,6 +78,7 @@ export const Main = observer(function Main() {
   }, [bets]);
 
   const { totalCost, totalCostIndetermined } = useMemo(() => calculateCost(bets), [bets]);
+  const isResult = !!(events?.at(0) as EventResult).outcome;
 
   const handleBetClick = ({
     bet,
@@ -82,6 +118,7 @@ export const Main = observer(function Main() {
   const handleCouponChange: ChangeEventHandler<HTMLSelectElement> = async ({ target }) => {
     if (target.value) {
       const couponType = target.value as CouponType;
+      store.clearResults();
       store.storageService.setCouponType(couponType);
 
       await store.fetchState({ couponType });
@@ -108,18 +145,26 @@ export const Main = observer(function Main() {
   return (
     <Layout
       scrollContainer
-      leftNavigationItem={
-        <Select
-          name="coupon-select"
-          value={store.couponType}
-          options={SELECT_OPTIONS}
-          onChange={handleCouponChange}
-        />
+      headerProps={
+        <>
+          <Select
+            name="coupon-select"
+            value={store.couponType}
+            options={COUPON_TYPE_SELECT_OPTIONS}
+            onChange={handleCouponChange}
+          />
+          <DatePicker />
+        </>
       }
       footerProps={
         draw && (
           <CoupongFooterContainer padding>
-            <OutlinedButton Icon={StyledSvenskaSpelIcon} onClick={openStryktipset} displayText>
+            <OutlinedButton
+              Icon={StyledSvenskaSpelIcon}
+              disabled={isResult}
+              onClick={openStryktipset}
+              displayText
+            >
               {totalCost === totalCostIndetermined
                 ? totalCost
                 : `${totalCost} (${totalCostIndetermined})`}{' '}
@@ -131,18 +176,19 @@ export const Main = observer(function Main() {
     >
       <Header>
         <Title1>
-          {draw?.regCloseDescription
-            ? draw?.regCloseDescription
-            : store.couponType === 'europatipset'
-            ? 'Europatipset öppnar snart för spel igen.'
-            : 'Stryktipset öppnar snart för spel igen.'}
+          {getHeader({
+            couponType: store.couponType,
+            isResult,
+            draw,
+            result: store.resultResponse,
+          })}
         </Title1>
 
         <SpaceBetweenContainer>
           <Body>Senast uppdaterad {store.lastUpdated?.toLocaleTimeString()}</Body>
         </SpaceBetweenContainer>
 
-        {draw && (
+        {draw && !isResult && (
           <CouponActionsContainer>
             <Checkbox
               name="showAnalysis"

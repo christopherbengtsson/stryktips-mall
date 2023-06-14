@@ -12,9 +12,11 @@
     "prettier:fix": "prettier --write 'src/**/*.{ts,tsx}'"
   },
   "dependencies": {
+    "date-fns": "^2.30.0",
     "mobx": "^6.9.0",
     "mobx-react": "^7.6.0",
     "react": "^18.2.0",
+    "react-datepicker": "^4.13.0",
     "react-dom": "^18.2.0",
     "string-strip-html": "^13.4.1",
     "styled-components": "^5.3.11",
@@ -27,6 +29,7 @@
     "@testing-library/react": "^14.0.0",
     "@testing-library/user-event": "^14.4.3",
     "@types/react": "^18.0.28",
+    "@types/react-datepicker": "^4.11.2",
     "@types/react-dom": "^18.0.11",
     "@types/styled-components": "^5.1.26",
     "@types/ua-parser-js": "^0.7.36",

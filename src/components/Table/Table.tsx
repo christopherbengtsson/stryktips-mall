@@ -8,6 +8,7 @@ import { OutlinedButton } from '../OutlinedButton';
 import { GameAnalyse } from '../../api/AnalysResponse';
 import { Caption } from '../core/fonts';
 import { stripHtml } from 'string-strip-html';
+import { EventResult } from '../../api/CouponResultResponse';
 
 export function Table({
   events,
@@ -17,7 +18,7 @@ export function Table({
   showAnalysis,
   gameAnalysis,
 }: {
-  events: DrawEvent[];
+  events: EventResult[] | DrawEvent[];
   initialsBets?: Bets;
   onBetClick: (args: { bet: BettingOption; gameNumber: number; state: BettingState }) => void;
   couponType: CouponType;
@@ -41,35 +42,40 @@ export function Table({
 
   return (
     <StyledList>
-      {events.map((event: DrawEvent, idx) => {
+      {events.map((event: EventResult | DrawEvent, idx) => {
         const analysis = gameAnalysis?.at(idx)?.body;
+        const isResult = !!(event as EventResult)?.outcome?.length;
+
         return (
           <StyledListItem key={event.eventDescription}>
             <BetHeader event={event} />
             <BetButtons event={event} initialBets={initialsBets} onClick={handleBetClick} />
 
-            <BetsContainer>
-              <BetRow title="Odds" odds={event.odds} />
-              <BetRow title="Odds i procent" odds={event.odds} />
-              <BetRow title="Favoritskap" odds={event.favouriteOdds} />
-              <BetRow title="Svenska folket" odds={event.svenskaFolket} />
-              <BetRow title="Spelvärde" odds={event} />
-              <BetRow title="Utgångspunkt" odds={event} />
-            </BetsContainer>
+            {!isResult && (
+              <>
+                <BetsContainer>
+                  <BetRow title="Odds" odds={(event as DrawEvent).odds} />
+                  <BetRow title="Odds i procent" odds={(event as DrawEvent).odds} />
+                  <BetRow title="Favoritskap" odds={(event as DrawEvent).favouriteOdds} />
+                  <BetRow title="Svenska folket" odds={(event as DrawEvent).svenskaFolket} />
+                  <BetRow title="Spelvärde" odds={event as DrawEvent} />
+                  <BetRow title="Utgångspunkt" odds={event as DrawEvent} />
+                </BetsContainer>
+                <BetsContainer>
+                  <GridContainer>
+                    {showAnalysis && analysis ? (
+                      <Caption>{stripHtml(analysis).result}</Caption>
+                    ) : showAnalysis ? (
+                      <Caption>För tillfället finns inget spelanalys</Caption>
+                    ) : null}
 
-            <BetsContainer>
-              <GridContainer>
-                {showAnalysis && analysis ? (
-                  <Caption>{stripHtml(analysis).result}</Caption>
-                ) : showAnalysis ? (
-                  <Caption>För tillfället finns inget spelanalys</Caption>
-                ) : null}
-
-                <OutlinedButton onClick={() => handleEventClick(event.eventNumber)}>
-                  Statistik
-                </OutlinedButton>
-              </GridContainer>
-            </BetsContainer>
+                    <OutlinedButton onClick={() => handleEventClick(event.eventNumber)}>
+                      Statistik
+                    </OutlinedButton>
+                  </GridContainer>
+                </BetsContainer>{' '}
+              </>
+            )}
           </StyledListItem>
         );
       })}

@@ -7,12 +7,12 @@ html {
 
 body {
   margin: 0;
-  font-family: "Helvetica Neue", "Arial", sans-serif;
+  font-family: 'Helvetica Neue', 'Arial', sans-serif;
   background: var(--fog);
   color: var(--black);
 }
 
-body[data-theme="light"] {
+body[data-theme='light'] {
   background-color: var(--fog);
 }
 
@@ -28,6 +28,7 @@ body[data-theme="light"] {
   right: 0;
   max-height: 90vh;
   max-width: 924px;
+  min-height: 30vh;
   overflow: hidden;
   top: 24px;
   border-radius: 16px;

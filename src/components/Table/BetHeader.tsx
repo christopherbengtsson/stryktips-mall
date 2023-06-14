@@ -1,15 +1,19 @@
 import styled from 'styled-components';
 import { Subtitle } from '../core/fonts';
 import { DrawEvent } from '../../api';
+import { EventResult } from '../../api/CouponResultResponse';
 
-export function BetHeader({ event }: { event: DrawEvent }) {
+export function BetHeader({ event }: { event: EventResult | DrawEvent }) {
+  const participants =
+    (event as EventResult).participants ?? (event as DrawEvent).match.participants;
+
   return (
     <BetHeaderContainer>
       <BetHeaderInner>
         <GameNumber>{event.eventNumber}</GameNumber>
-        <Participant>{event.match.participants.at(0)?.name}</Participant>
+        <Participant>{participants.at(0)?.name}</Participant>
         <span>-</span>
-        <Participant>{event.match.participants.at(1)?.name}</Participant>
+        <Participant>{participants.at(1)?.name}</Participant>
       </BetHeaderInner>
     </BetHeaderContainer>
   );

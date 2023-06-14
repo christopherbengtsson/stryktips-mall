@@ -8,12 +8,16 @@ export function BetButton({
   bet,
   onClick,
   children,
+  disabled,
+  correctResult,
 }: {
   initialState?: BettingState;
   gameNumber: number;
   bet: BettingOption;
   onClick: (args: { bet: BettingOption; gameNumber: number; state: BettingState }) => void;
   children: ReactNode;
+  disabled?: boolean;
+  correctResult?: boolean;
 }) {
   const [clicked, setClicked] = useState<BettingState>(initialState ?? 'unclicked');
 
@@ -39,7 +43,12 @@ export function BetButton({
   };
 
   return (
-    <BetBtn clicked={clicked} onClick={handleClick}>
+    <BetBtn
+      clicked={clicked}
+      onClick={handleClick}
+      disabled={disabled}
+      correctResult={correctResult}
+    >
       <IndeterminateState indeterminate={clicked === 'indeterminate'}>
         {children}
       </IndeterminateState>
@@ -47,7 +56,7 @@ export function BetButton({
   );
 }
 
-const BetBtn = styled.button<{ clicked: BettingState }>`
+const BetBtn = styled.button<{ clicked: BettingState; correctResult?: boolean }>`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -73,11 +82,15 @@ const BetBtn = styled.button<{ clicked: BettingState }>`
         ? props.theme.tokens.palette.almostBlack
         : themed.font.color.default};
       &:disabled {
-        background-color: ${themed.background.disabled};
         cursor: not-allowed;
       }
     `;
   }};
+
+  ${(p) =>
+    p.correctResult && {
+      border: `${p.theme.spacing.tiny} solid green`,
+    }}
 `;
 
 const IndeterminateState = styled.div<{ indeterminate: boolean }>`
