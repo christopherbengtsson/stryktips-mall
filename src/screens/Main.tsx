@@ -145,17 +145,15 @@ export const Main = observer(function Main() {
   return (
     <Layout
       scrollContainer
-      headerProps={
-        <>
-          <Select
-            name="coupon-select"
-            value={store.couponType}
-            options={COUPON_TYPE_SELECT_OPTIONS}
-            onChange={handleCouponChange}
-          />
-          <DatePicker />
-        </>
+      leftNavigationItem={
+        <Select
+          name="coupon-select"
+          value={store.couponType}
+          options={COUPON_TYPE_SELECT_OPTIONS}
+          onChange={handleCouponChange}
+        />
       }
+      rightNavigationItem={<DatePicker />}
       footerProps={
         draw && (
           <CoupongFooterContainer padding>

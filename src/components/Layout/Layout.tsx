@@ -12,7 +12,9 @@ export interface LayoutProps {
 
   scrollContainer?: boolean;
 
-  headerProps?: ReactNode;
+  leftNavigationItem?: ReactNode;
+  centerNavigationItem?: ReactNode;
+  rightNavigationItem?: ReactNode;
 
   /** Defaults to true. Adds spacing to the bottom of the container. */
   bottomPadding?: boolean;
@@ -40,7 +42,9 @@ function EmptyContainer({ children }: { children: ReactNode }) {
 export function Layout({
   hideHeader,
   scrollContainer,
-  headerProps,
+  leftNavigationItem,
+  centerNavigationItem,
+  rightNavigationItem,
   bottomPadding = true,
   children,
   footerProps,
@@ -49,7 +53,13 @@ export function Layout({
 
   return (
     <AppContainer>
-      {!hideHeader && <NavigationHeader headerProps={headerProps} />}
+      {!hideHeader && (
+        <NavigationHeader
+          centerNavigationItem={centerNavigationItem}
+          leftNavigationItem={leftNavigationItem}
+          rightNavigationItem={rightNavigationItem}
+        />
+      )}
 
       <FormWrapper>
         <ScrollWrapper>
