@@ -1,5 +1,3 @@
-import { CouponType } from '.';
-
 export interface StryktipsResponse {
   draws: Draw[];
   error: any;
