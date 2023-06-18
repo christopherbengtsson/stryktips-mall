@@ -78,7 +78,7 @@ export const Main = observer(function Main() {
   }, [bets]);
 
   const { totalCost, totalCostIndetermined } = useMemo(() => calculateCost(bets), [bets]);
-  const isResult = !!(events?.at(0) as EventResult).outcome;
+  const isResult = !!(events?.at(0) as EventResult)?.outcome;
 
   const handleBetClick = ({
     bet,
